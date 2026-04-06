@@ -155,20 +155,31 @@
     if (e.key === "ArrowLeft") prev();
   });
 
-  // Swipe support for mobile
-  let touchStartX = 0;
-  let touchEndX = 0;
-
-  overlay.addEventListener("touchstart", function (e) {
-    touchStartX = e.changedTouches[0].screenX;
+  // Touch support for mobile — drag to pan
+  img.addEventListener("touchstart", function (e) {
+    if (e.touches.length !== 1) return;
+    var t = e.touches[0];
+    startTranslateX = translateX;
+    startTranslateY = translateY;
+    dragStartX = t.clientX;
+    dragStartY = t.clientY;
+    isDragging = true;
+    overlay.classList.add("lightbox-dragging");
   }, { passive: true });
 
-  overlay.addEventListener("touchend", function (e) {
-    touchEndX = e.changedTouches[0].screenX;
-    const diff = touchStartX - touchEndX;
-    if (Math.abs(diff) > 50) {
-      if (diff > 0) next();
-      else prev();
-    }
+  img.addEventListener("touchmove", function (e) {
+    if (!isDragging || e.touches.length !== 1) return;
+    var t = e.touches[0];
+    translateX = startTranslateX + (t.clientX - dragStartX);
+    translateY = startTranslateY + (t.clientY - dragStartY);
+    clampTranslate();
+    applyTransform();
+    e.preventDefault();
+  }, { passive: false });
+
+  img.addEventListener("touchend", function () {
+    if (!isDragging) return;
+    isDragging = false;
+    overlay.classList.remove("lightbox-dragging");
   }, { passive: true });
 })();

@@ -24,6 +24,16 @@ npm run dev
 
 Opens at `http://localhost:4321/`. Ghost must be running for post pages to load. Content changes in Ghost require restarting the dev server.
 
+## Testing on mobile
+
+The dev server proxies images from Ghost on `localhost`, which your phone can't reach. Use a preview build instead:
+
+```
+npx astro build && npx astro preview --host 0.0.0.0
+```
+
+Then open `http://<your-mac-ip>:4321/` on your phone (both devices must be on the same Wi-Fi). Find your Mac's IP with `ipconfig getifaddr en0`.
+
 ## Deploy
 
 ```
