@@ -1,0 +1,299 @@
+/* Ghost content styles — renders kg- card markup from Ghost's Content API */
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&display=swap');
+
+/* Make rem-based sizing work (Ghost uses 62.5% trick) */
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: 'Literata', Georgia, serif;
+  font-size: 1.6rem;
+  color: #2A1F23;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: #FCF4EE;
+}
+
+h1, h2, h3 {
+  color: #5C2A3E;
+}
+
+/* Content grid — mirrors Ghost/Casper's layout system */
+.gh-content {
+  --content-width: 720px;
+  --container-width: 1200px;
+  --container-gap: clamp(24px, 1.7rem + 1.94vw, 48px);
+
+  display: grid;
+  grid-template-columns:
+    [full-start] minmax(var(--container-gap), 1fr) [wide-start] minmax(0, calc((var(--container-width) - var(--content-width)) / 2)) [main-start] min(var(--content-width), 100% - var(--container-gap) * 2) [main-end] minmax(0, calc((var(--container-width) - var(--content-width)) / 2)) [wide-end] minmax(var(--container-gap), 1fr) [full-end];
+
+  font-size: 1.7rem;
+  letter-spacing: -0.01em;
+}
+
+/* All content sits in the main column by default */
+.gh-content>* {
+  grid-column: main;
+  margin-block: 0;
+}
+
+/* Width variants */
+.gh-content .kg-width-wide {
+  grid-column: wide;
+}
+
+.gh-content .kg-width-full {
+  grid-column: full;
+}
+
+/* Spacing between elements — mirrors Casper's vertical rhythm */
+.gh-content>*+* {
+  margin-top: 28px;
+}
+
+/* Before headings */
+.gh-content>:is(h2, h3):not(:first-child) {
+  margin-top: 48px;
+}
+
+/* Heading → paragraph: tighter */
+.gh-content>:is(h2, h3)+p {
+  margin-top: 12px;
+}
+
+/* Around hr and blockquote */
+.gh-content>:is(hr, blockquote) {
+  margin-top: 48px;
+}
+
+.gh-content>:is(hr, blockquote)+* {
+  margin-top: 48px;
+}
+
+/* Paragraph ↔ card */
+.gh-content>:not(.kg-card):not(table)+:is(.kg-card, table),
+.gh-content>:is(.kg-card, table)+:not(.kg-card):not(table) {
+  margin-top: 48px;
+}
+
+/* Paragraph ↔ full-bleed card: extra breathing room */
+.gh-content>.kg-card.kg-width-full+:not(.kg-card),
+.gh-content>:not(.kg-card)+.kg-card.kg-width-full {
+  margin-top: 68px;
+}
+
+/* Image and gallery cards */
+.kg-image-card,
+.kg-gallery-card {
+  --gap: 1.2rem;
+}
+
+/* Gallery */
+.kg-gallery-card,
+.kg-gallery-card * {
+  box-sizing: border-box;
+}
+
+.kg-gallery-container {
+  position: relative;
+}
+
+.kg-gallery-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.kg-gallery-row:not(:first-of-type) {
+  margin: var(--gap) 0 0;
+}
+
+.kg-gallery-image:not(:first-of-type) {
+  margin: 0 0 0 var(--gap);
+}
+
+.kg-gallery-image img {
+  display: block;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Mobile gallery */
+@media (max-width: 600px) {
+
+  .kg-image-card,
+  .kg-gallery-card {
+    --gap: 0.6rem;
+  }
+
+  .kg-gallery-row {
+    flex-direction: column;
+  }
+
+  .kg-gallery-image:not(:first-of-type) {
+    margin: var(--gap) 0 0;
+  }
+
+  .kg-gallery-image {
+    flex: 1 1 100% !important;
+  }
+}
+
+/* Consecutive image/gallery cards use tighter spacing */
+.kg-image-card:not(.kg-card-hascaption)+.kg-image-card,
+.kg-image-card:not(.kg-card-hascaption)+.kg-gallery-card,
+.kg-gallery-card:not(.kg-card-hascaption)+.kg-image-card,
+.kg-gallery-card:not(.kg-card-hascaption)+.kg-gallery-card {
+  margin-top: var(--gap);
+}
+
+.kg-image {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Image caption */
+.kg-card figcaption {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 1.3rem;
+  line-height: 1.4;
+  padding-top: 8px;
+  text-align: center;
+}
+
+/* Ghost caption lines — each top-level run in the caption's <p> becomes its own line */
+.kg-card figcaption p > span,
+.kg-card figcaption p > strong,
+.kg-card figcaption p > b {
+  display: block;
+}
+
+/* Typography */
+h1,
+h2,
+h3 {
+  font-family: 'Bricolage Grotesque', system-ui, -apple-system, sans-serif;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.gh-content h2 {
+  font-size: 3.2rem;
+  letter-spacing: -0.02em;
+}
+
+.gh-content h3 {
+  font-size: 1.3em;
+  letter-spacing: -0.017em;
+}
+
+.gh-content a {
+  color: #15171a;
+  text-decoration: underline;
+}
+
+/* Lists */
+.gh-content ul,
+.gh-content ol {
+  padding-left: 0;
+}
+
+.gh-content ol {
+  padding-left: 28px;
+}
+
+.gh-content ul {
+  list-style: none;
+}
+
+.gh-content ul > li {
+  padding-left: 1.5em;
+  position: relative;
+}
+
+.gh-content ul > li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: #5C2A3E;
+  font-weight: 500;
+}
+
+.gh-content li+li {
+  margin-top: 8px;
+}
+
+/* Hero heading — "Hej Grafana!" */
+#hej-grafana {
+  font-size: 6rem;
+}
+
+/* Inline icons — SVGs dropped into prose via {{name}} tokens */
+.inline-icon {
+  display: inline-flex;
+  align-items: center;
+  height: 1.6em;
+  vertical-align: -0.45em;
+  margin: 0 0.15em;
+}
+
+.inline-icon svg {
+  height: 100%;
+  width: auto;
+}
+
+/* Video cards */
+.kg-video-card video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+/* Horizontal rule */
+.gh-content hr {
+  background-color: rgba(0, 0, 0, 0.15);
+  border: 0;
+  height: 1px;
+  width: 100%;
+}
+
+/* Blockquote */
+.gh-content blockquote {
+  border-left: 3px solid rgba(0, 0, 0, 0.2);
+  margin-left: 0;
+  padding-left: 1.5rem;
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+/* Fact sheet card — horizontal, 70% of main column */
+.gh-content > .fact-sheet {
+  width: 50%;
+  justify-self: center;
+  padding: 1.5em 1.75em;
+  background: rgba(92, 42, 62, 0.06);
+  border: 1px solid rgba(92, 42, 62, 0.15);
+  border-radius: 12px;
+  font-style: normal;
+  font-size: 0.88em;
+  line-height: 1.55;
+  color: inherit;
+}
+
+.gh-content > .fact-sheet .fact-sheet__label {
+  margin: 1em 0 0.5em;
+  font-weight: 600;
+}
+
+.gh-content > .fact-sheet ul {
+  margin: 0;
+}

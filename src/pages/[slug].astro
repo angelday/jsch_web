@@ -1,0 +1,155 @@
+---
+import '../styles/ghost-content.css';
+import '../styles/lightbox.css';
+import grafanaLogo from '../assets/grafana_logo.svg?raw';
+
+// Inline icons — use {{name}} tokens in Ghost prose to drop these into the text flow
+const icons: Record<string, string> = {
+  grafana: grafanaLogo,
+};
+
+export async function getStaticPaths() {
+  const GHOST_URL = import.meta.env.GHOST_URL;
+  const GHOST_API_KEY = import.meta.env.GHOST_API_KEY;
+
+  const res = await fetch(
+    `${GHOST_URL}/ghost/api/content/posts/?key=${GHOST_API_KEY}&include=tags`
+  );
+  const { posts } = await res.json();
+
+  return posts.map((post: any) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const GHOST_URL = import.meta.env.GHOST_URL;
+const { post } = Astro.props;
+
+/**
+ * Ghost alt-text conventions (signals stripped from output, never visible to users):
+ *
+ *   no-zoom    — disables lightbox on this image (adds data-no-lightbox)
+ *
+ * Ghost blockquote conventions (detected by content, styled via CSS):
+ *
+ *   "Fact sheet" as first line — styled as a bespoke fact-sheet card
+ *
+ * These conventions let us control rendering from Ghost's editor
+ * without resorting to HTML cards or custom attributes Ghost doesn't support.
+ */
+
+// Process alt text conventions — strip signals, add data attributes
+post.html = post.html.replace(
+  /(<img\s[^>]*?)alt="([^"]*no-zoom[^"]*)"([^>]*>)/g,
+  (match: string, before: string, alt: string, after: string) => {
+    const cleanAlt = alt.replace(/\s*no-zoom\s*/g, '').trim();
+    return `${before}alt="${cleanAlt}" data-no-lightbox${after}`;
+  }
+);
+
+// Replace Ghost's video player markup with a simple <video> tag
+post.html = post.html.replace(
+  /<figure class="kg-card kg-video-card([^"]*)"[^>]*data-kg-thumbnail="([^"]*)"[^>]*>[\s\S]*?<video src="([^"]*)"([^>]*)>[\s\S]*?(<figcaption[\s\S]*?<\/figcaption>)?\s*<\/figure>/g,
+  (match: string, classes: string, thumbnail: string, src: string, videoAttrs: string, figcaption: string | undefined) => {
+    const isLoop = videoAttrs.includes('loop');
+    const attrs = isLoop
+      ? 'loop autoplay muted playsinline preload="metadata"'
+      : 'controls playsinline preload="metadata"';
+    const width = (videoAttrs.match(/width="(\d+)"/) || [])[1] || '';
+    const height = (videoAttrs.match(/height="(\d+)"/) || [])[1] || '';
+    return `<figure class="kg-card kg-video-card${classes}">` +
+      `<video src="${src}" poster="${thumbnail}" width="${width}" height="${height}" ${attrs}></video>` +
+      (figcaption || '') +
+      `</figure>`;
+  }
+);
+
+// Tag "Fact sheet" blockquotes for custom styling, strip the label
+post.html = post.html.replace(
+  /<blockquote>\s*Fact sheet\s*(<br\s*\/?>)?\s*/gi,
+  '<blockquote class="fact-sheet">'
+);
+
+// Convert "My contribution:" list inside fact sheet into a <ul>
+post.html = post.html.replace(
+  /(<blockquote class="fact-sheet">)([\s\S]*?)(<\/blockquote>)/g,
+  (_m: string, open: string, inner: string, close: string) => {
+    const parts = inner.split(/My contribution:\s*<br\s*\/?>/i);
+    if (parts.length !== 2) return `${open}${inner}${close}`;
+    const items = parts[1]
+      .split(/<br\s*\/?>/i)
+      .map((s: string) => s.trim())
+      .filter(Boolean);
+    const list = '<ul>' + items.map((i: string) => `<li>${i}</li>`).join('') + '</ul>';
+    return `${open}${parts[0].replace(/(<br\s*\/?>\s*)+$/i, '')}<p class="fact-sheet__label">My contribution</p>${list}${close}`;
+  }
+);
+
+// Replace {{name}} tokens with inline SVG icons
+post.html = post.html.replace(/\{(\w+)\}/g, (match: string, name: string) => {
+  const svg = icons[name];
+  return svg ? `<span class="inline-icon">${svg}</span>` : match;
+});
+
+// Only rewrite Ghost URLs in production builds — in dev, Ghost serves them directly
+if (import.meta.env.PROD) {
+  post.html = post.html.replaceAll(GHOST_URL, '');
+}
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{post.title}</title>
+    <style is:global>
+      .gh-content {
+        padding: 14rem 0;
+      }
+      .back-nav {
+        position: fixed;
+        top: 24px;
+        left: 24px;
+        z-index: 100;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5em;
+        padding: 0.6em 1.1em;
+        background: rgba(92, 42, 62, 0.12);
+        backdrop-filter: blur(12px) saturate(1.4);
+        -webkit-backdrop-filter: blur(12px) saturate(1.4);
+        border: 2px solid rgba(42, 31, 35, 0.8);
+        border-radius: 999px;
+        color: #2A1F23;
+        font-family: 'Bricolage Grotesque', system-ui, -apple-system, sans-serif;
+        font-size: 2.1rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+      }
+      .back-nav:hover {
+        background: #5C2A3E;
+        color: #FCF4EE;
+        border-color: #5C2A3E;
+      }
+      .back-nav-arrow {
+        font-size: 1.1em;
+        line-height: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <a class="back-nav" href="https://jozsefschaffer.com">
+      <span class="back-nav-arrow">←</span>
+      <span>jozsefschaffer.com</span>
+    </a>
+    <article>
+      <div class="gh-content">
+        <Fragment set:html={post.html} />
+      </div>
+    </article>
+    <script is:inline src="/js/ghost-cards.js"></script>
+    <script is:inline src="/js/lightbox.js"></script>
+  </body>
+</html>
