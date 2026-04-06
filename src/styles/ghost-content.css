@@ -16,7 +16,9 @@ body {
   background-color: #FCF4EE;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   color: #5C2A3E;
 }
 
@@ -123,11 +125,14 @@ h1, h2, h3 {
   object-fit: cover;
 }
 
-/* Mobile gallery */
+/* Mobile */
 @media (max-width: 600px) {
 
   .kg-image-card,
-  .kg-gallery-card {
+  .kg-gallery-card,
+  .kg-video-card {
+    grid-column: full !important;
+    margin-inline: 8px;
     --gap: 0.6rem;
   }
 
@@ -142,6 +147,7 @@ h1, h2, h3 {
   .kg-gallery-image {
     flex: 1 1 100% !important;
   }
+
 }
 
 /* Consecutive image/gallery cards use tighter spacing */
@@ -170,9 +176,9 @@ h1, h2, h3 {
 }
 
 /* Ghost caption lines — each top-level run in the caption's <p> becomes its own line */
-.kg-card figcaption p > span,
-.kg-card figcaption p > strong,
-.kg-card figcaption p > b {
+.kg-card figcaption p>span,
+.kg-card figcaption p>strong,
+.kg-card figcaption p>b {
   display: block;
 }
 
@@ -214,12 +220,12 @@ h3 {
   list-style: none;
 }
 
-.gh-content ul > li {
+.gh-content ul>li {
   padding-left: 1.5em;
   position: relative;
 }
 
-.gh-content ul > li::before {
+.gh-content ul>li::before {
   content: '—';
   position: absolute;
   left: 0;
@@ -276,9 +282,10 @@ h3 {
 }
 
 /* Fact sheet card — horizontal, 70% of main column */
-.gh-content > .fact-sheet {
-  width: 50%;
+.gh-content>.fact-sheet {
+  width: 70%;
   justify-self: center;
+  margin-inline: 0;
   padding: 1.5em 1.75em;
   background: rgba(92, 42, 62, 0.06);
   border: 1px solid rgba(92, 42, 62, 0.15);
@@ -289,11 +296,21 @@ h3 {
   color: inherit;
 }
 
-.gh-content > .fact-sheet .fact-sheet__label {
+.gh-content>.fact-sheet .fact-sheet__label {
   margin: 1em 0 0.5em;
   font-weight: 600;
 }
 
-.gh-content > .fact-sheet ul {
+.gh-content>.fact-sheet ul {
   margin: 0;
+}
+
+/* Mobile — fact sheet full width (must come after base .fact-sheet rules) */
+@media (max-width: 600px) {
+  .gh-content>.fact-sheet {
+    width: 100%;
+    justify-self: stretch;
+    box-sizing: border-box;
+    padding: 1.2em 1.5em 1.2em 1.2em;
+  }
 }
