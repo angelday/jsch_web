@@ -1,0 +1,144 @@
+@media (max-width: 900px) {
+  :root {
+    --hero-radius: 28px;
+    --section-height: calc(80svh - var(--shell-padding));
+    --type-nameplate-size: min(84px, 11vw);
+    --type-body-size: 32px;
+    --type-copy-size: 18px;
+  }
+
+  .hero {
+    --hero-inline-padding: 28px;
+    --hero-block-start: 96px;
+    --hero-block-end: 56px;
+  }
+
+  .hero__nav {
+    padding-top: 16px;
+  }
+
+  .hero__nav-item {
+    padding-right: 32px;
+  }
+
+  .hero__content {
+    gap: 20px;
+    padding: 0;
+  }
+
+  .section__brand {
+    top: 34px;
+    left: 40px;
+  }
+
+  .section__brand-logo {
+    width: 110px;
+  }
+
+  .section__copy {
+    right: 40px;
+    width: min(520px, calc(100% - 120px));
+  }
+
+  .section--about {
+    padding: 0;
+  }
+
+  .section__about-content {
+    gap: 3.5rem;
+    padding: 34px 40px 0;
+  }
+
+  .theatre-modal {
+    --theatre-panel-padding: 40px;
+    padding: 20px;
+  }
+
+  .theatre-modal__panel {
+    min-height: min(100%, 760px);
+  }
+}
+
+@media (max-width: 540px) {
+  :root {
+    --shell-padding: 12px;
+    --section-height: calc(80svh - var(--shell-padding));
+    --type-nameplate-size: min(56px, 14vw);
+    --type-body-size: 24px;
+    --type-copy-size: 20px;
+  }
+
+  .page-shell {
+    max-width: calc(var(--layout-max) + 24px);
+  }
+
+  .hero {
+    --hero-inline-padding: 18px;
+    --hero-block-start: 104px;
+    --hero-block-end: 40px;
+  }
+
+  .hero__content {
+    gap: 16px;
+    padding: 0;
+  }
+
+  .section__brand {
+    top: 24px;
+    left: 24px;
+  }
+
+  .section__brand-logo {
+    width: 100px;
+  }
+
+  .section__copy {
+    right: 24px;
+    width: min(320px, calc(100% - 72px));
+  }
+
+  .section--about {
+    padding: 0;
+  }
+
+  .section__about-content {
+    gap: 2.5rem;
+    padding: 24px 24px 0;
+  }
+
+  .section__contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section__contact-card {
+    min-height: calc(var(--section-height) / 3);
+    padding: 24px;
+  }
+
+  .theatre-modal {
+    --theatre-panel-padding: 24px;
+    padding: 12px;
+  }
+
+  .theatre-modal__frame {
+    height: calc(100svh - 24px);
+    max-height: calc(100svh - 24px);
+  }
+
+  .theatre-modal__panel {
+    border-radius: 38px;
+  }
+
+  .theatre-modal__close {
+    top: 12px;
+    right: 12px;
+  }
+
+}
+
+@media (max-width: 440px) {
+  .hero h1 {
+    white-space: normal;
+    text-wrap: balance;
+  }
+}

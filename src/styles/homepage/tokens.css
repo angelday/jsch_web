@@ -1,0 +1,17 @@
+:root {
+  --page-bg: #e5e5e5;
+  --layout-max: 1200px;
+  --shell-padding: 32px;
+  --section-height: calc(90svh - var(--shell-padding));
+  --type-nameplate-size: min(130px, 10.4vw);
+  --type-body-size: 48px;
+  --type-copy-size: 22px;
+  --hero-bg: #000;
+  --hero-fg: #fff;
+  --ikea-blue: #0158a3;
+  --ikea-yellow: #ffdb00;
+  --cga-white: #fff;
+  --cga-pink: #fc54fc;
+  --hero-radius: 40px;
+  color-scheme: dark;
+}

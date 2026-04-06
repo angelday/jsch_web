@@ -1,0 +1,217 @@
+.section {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--hero-radius);
+}
+
+.section--ikea {
+  display: flex;
+  min-height: var(--section-height);
+  background: var(--ikea-yellow);
+  padding: 0;
+}
+
+.section__touch-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: transparent;
+  pointer-events: auto;
+  touch-action: pan-y;
+}
+
+.section--about {
+  display: grid;
+  background: var(--cga-pink);
+  padding: 0;
+}
+
+.section--contact {
+  overflow: visible;
+  border-radius: 0;
+  background: transparent;
+}
+
+.section__contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--shell-padding);
+}
+
+.section__contact-card {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: calc(var(--section-height) / 2);
+  padding: 32px;
+  border-radius: var(--hero-radius);
+  overflow: hidden;
+  border: 2px solid #d0d0d0;
+  background: var(--page-bg);
+  color: #000;
+  font-family: "Trial Arlen Light", sans-serif;
+  font-size: var(--type-body-size);
+  font-weight: 100;
+  line-height: 1.2;
+  text-decoration: none;
+  text-align: center;
+  isolation: isolate;
+}
+
+.section__contact-card:hover,
+.section__contact-card:focus-visible {
+  border: 6px solid #fff;
+  outline: none;
+}
+
+.section__contact-shader {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.section__contact-card-label {
+  position: relative;
+  z-index: 1;
+}
+
+.page-byline {
+  margin: 0;
+  color: #aaa;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: var(--type-copy-size);
+  font-weight: 400;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.section__brand {
+  position: absolute;
+  top: 42px;
+  left: 42px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.section__brand-logo {
+  display: block;
+  width: 160px;
+  height: auto;
+}
+
+.section__copy {
+  position: absolute;
+  top: 50%;
+  right: 22px;
+  z-index: 3;
+  width: min(720px, calc(100% - 144px));
+  transform: translateY(-50%);
+}
+
+.section__copy-text {
+  margin: 0;
+  color: var(--ikea-blue);
+  font-family: "Noto IKEA Latin", Inter, sans-serif;
+  font-size: var(--type-body-size);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.14;
+  text-align: right;
+  user-select: text;
+}
+
+.section__about-content {
+  display: grid;
+  gap: 5rem;
+  width: 100%;
+  padding: 56px 64px 0;
+}
+
+.section__about-title {
+  margin: 0;
+  color: #000;
+  font-family: "Ac437 IBM BIOS Regular", monospace;
+  font-size: var(--type-body-size);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.section__about-copy {
+  display: grid;
+  gap: 1.25rem;
+  width: min(860px, 100%);
+  color: #000;
+}
+
+.section__about-text {
+  margin: 0;
+  color: #000;
+  font-family: "Ac437 IBM BIOS Regular", monospace;
+  font-size: var(--type-copy-size);
+  font-weight: 400;
+  line-height: 1.35;
+  text-align: left;
+}
+
+.section__about-link {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+  color: #000;
+  font-family: "Ac437 IBM BIOS Regular", monospace;
+  font-size: var(--type-copy-size);
+  font-weight: 400;
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+.section__about-link::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -2px;
+  left: 0;
+  height: 3px;
+  background: currentColor;
+}
+
+.section__about-link:hover,
+.section__about-link:focus-visible {
+  color: #fff;
+  outline: none;
+}
+
+.section__about-backdrop {
+  display: block;
+  width: 100%;
+  pointer-events: none;
+}
+
+.section__about-backdrop-image {
+  margin-top: 3rem;
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+.section__embed {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  min-height: inherit;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.section__iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: transparent;
+  pointer-events: none;
+}

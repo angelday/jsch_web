@@ -1,0 +1,136 @@
+.hero {
+  --hero-inline-padding: 40px;
+  --hero-block-start: 112px;
+  --hero-block-end: 72px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: var(--section-height);
+  padding: var(--hero-block-start) var(--hero-inline-padding)
+    var(--hero-block-end);
+  overflow: hidden;
+  border-radius: var(--hero-radius);
+  background: var(--hero-bg);
+  isolation: isolate;
+}
+
+@supports (corner-shape: squircle) {
+  .hero {
+    corner-shape: superellipse(2.5);
+  }
+}
+
+.hero__shader {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hero__nav,
+.hero__content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero__nav {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0;
+  width: min(100%, 1120px);
+  transform: translateX(-50%);
+  padding: clamp(18px, 2.6vw, 32px) clamp(20px, 3vw, 40px) 0;
+}
+
+.hero__nav-item {
+  display: flex;
+  min-width: 0;
+  align-items: flex-start;
+  gap: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-family: "Trial Arlen Light", sans-serif;
+  font-size: var(--type-body-size);
+  font-weight: 100;
+  letter-spacing: -0.04em;
+  padding: clamp(6px, 1vw, 10px) clamp(24px, 4vw, 64px)
+    clamp(14px, 1.8vw, 22px) 0;
+}
+
+.hero__nav-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: max-content;
+}
+
+.hero__nav-label {
+  display: block;
+}
+
+.hero__nav-arrow {
+  display: block;
+  font-family: "PP Neue Machina Inktrap Light", sans-serif;
+  line-height: 0.6;
+}
+
+.hero__nav-item:hover,
+.hero__nav-item:focus-visible {
+  background: #fff;
+  color: #000;
+  outline: none;
+}
+
+.hero__nav-item:hover .hero__nav-arrow,
+.hero__nav-item:focus-visible .hero__nav-arrow {
+  align-self: flex-end;
+}
+
+.hero__content {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 24px;
+  width: 100%;
+  padding-inline: var(--hero-inline-padding);
+  text-align: center;
+}
+
+.hero__title-group,
+.hero__subtitle-group {
+  width: 100%;
+}
+
+.hero__title-group {
+  max-width: none;
+}
+
+.hero h1 {
+  margin: 0;
+  font-family: "Trial Arlen Black", sans-serif;
+  font-size: var(--type-nameplate-size);
+  font-weight: 900;
+  line-height: 0.97;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.hero__subtitle {
+  margin: 0;
+  font-family: "Trial Arlen Light", sans-serif;
+  font-size: var(--type-body-size);
+  font-weight: 100;
+  letter-spacing: -0.03em;
+  line-height: 1.04;
+}

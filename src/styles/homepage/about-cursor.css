@@ -1,0 +1,31 @@
+.about-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  display: none;
+  width: 72px;
+  height: 72px;
+  pointer-events: none;
+  background-image: url("/CGA_pointer.png");
+  background-repeat: no-repeat;
+  background-position: top left;
+  background-size: contain;
+  image-rendering: pixelated;
+  will-change: transform;
+}
+
+.about-cursor.is-select {
+  background-image: url("/CGA_pointer_select.png");
+}
+
+.about-cursor.is-active {
+  background-image: url("/CGA_pointer_active.png");
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .section--about,
+  .section--about * {
+    cursor: none;
+  }
+}
