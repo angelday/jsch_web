@@ -65,7 +65,7 @@
     --section-height: calc(80svh - var(--shell-padding));
     --type-nameplate-size: min(56px, 14vw);
     --type-body-size: 24px;
-    --type-copy-size: 20px;
+    --type-copy-size: 16px;
   }
 
   .page-shell {
@@ -103,7 +103,7 @@
 
   .section__about-content {
     gap: 2.5rem;
-    padding: 24px 24px 0;
+    padding: 32px 24px 0;
   }
 
   .section__contact-grid {
