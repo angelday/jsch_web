@@ -1,0 +1,59 @@
+---
+interface Props {
+  base: string;
+}
+const { base } = Astro.props;
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <canvas
+    class="hero__shader"
+    data-shader-canvas
+    aria-hidden="true"
+  ></canvas>
+
+  <header class="hero__nav" aria-label="Hero navigation">
+    <button
+      class="hero__nav-item"
+      type="button"
+      data-scroll-target="#about-me"
+      aria-controls="about-me"
+    >
+      <span class="hero__nav-copy">
+        <span class="hero__nav-label">About me</span>
+        <span class="hero__nav-arrow" aria-hidden="true">→</span>
+      </span>
+    </button>
+    <button
+      class="hero__nav-item"
+      type="button"
+      data-scroll-target="#case-study"
+      aria-controls="case-study"
+    >
+      <span class="hero__nav-copy">
+        <span class="hero__nav-label">Currently</span>
+        <span class="hero__nav-arrow" aria-hidden="true">→</span>
+      </span>
+    </button>
+    <button
+      class="hero__nav-item"
+      type="button"
+      data-scroll-target="#contact"
+      aria-controls="contact"
+    >
+      <span class="hero__nav-copy">
+        <span class="hero__nav-label">Contact</span>
+        <span class="hero__nav-arrow" aria-hidden="true">→</span>
+      </span>
+    </button>
+  </header>
+
+  <div class="hero__content">
+    <div class="hero__title-group">
+      <h1 id="hero-title">Jozsef Schaffer</h1>
+    </div>
+    <div class="hero__subtitle-group">
+      <p class="hero__subtitle">Product designer</p>
+    </div>
+  </div>
+</section>

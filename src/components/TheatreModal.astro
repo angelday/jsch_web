@@ -1,0 +1,142 @@
+---
+interface Props {
+  base: string;
+}
+const { base } = Astro.props;
+---
+
+<div
+  class="theatre-modal"
+  id="about-modal"
+  data-theatre-modal
+  data-theatre-theme="about"
+  hidden
+>
+  <div class="theatre-modal__backdrop" data-theatre-modal-close></div>
+  <div class="theatre-modal__frame">
+    <button
+      class="theatre-modal__close"
+      type="button"
+      aria-label="Close about modal"
+      data-theatre-modal-close
+    >
+      <picture class="theatre-modal__close-picture" aria-hidden="true">
+        <source
+          media="(max-width: 540px)"
+          srcset={`${base}/close-mobile.svg`}
+        />
+        <img
+          class="theatre-modal__close-icon"
+          src={`${base}/close.svg`}
+          alt=""
+        />
+      </picture>
+    </button>
+    <div
+      class="theatre-modal__panel"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="about-modal-title"
+      tabindex="-1"
+    >
+      <div class="theatre-modal__content">
+        <div class="theatre-modal__media">
+          <img
+            class="theatre-modal__media-image"
+            src={`${base}/whatever_it_takes.png`}
+            alt=""
+            aria-hidden="true"
+          />
+        </div>
+        <header class="theatre-modal__header">
+          <h2 class="theatre-modal__title" id="about-modal-title">
+            Thanks for stopping by!
+          </h2>
+        </header>
+
+        <section class="theatre-modal__section">
+          <div class="theatre-modal__prose">
+            <p class="theatre-modal__text">
+              I've been designing and building software professionally for 15+ years. Whether it's evolving what already exists or creating something entirely new, I love figuring out what to build.
+            </p>
+            <p class="theatre-modal__text">
+              Originally from Hungary, I'm a dad of three, happily married, and living in southern Sweden.
+            </p>
+            <p class="theatre-modal__text">
+              In my free time, I play Nintendo games, enjoy retro platformers, and do sports. I'm also passionate about pixel art.
+            </p>
+            <p class="theatre-modal__text">
+              My first name, József, is the Hungarian version of Joseph. In Hungarian, it's often shortened to Józsi. When pronounced in English, it often sounds like Yoshi. The nickname stuck, and that's what most people call me.
+            </p>
+          </div>
+        </section>
+
+        <section class="theatre-modal__section">
+          <h3 class="theatre-modal__eyebrow">Design? How do I do it?</h3>
+          <div class="theatre-modal__prose">
+            <p class="theatre-modal__text">Not screens. Flows.</p>
+            <p class="theatre-modal__text">
+              Start with a design concept for where we're headed, ideally a video showing the expected user journey. Then break it down into buildable chunks. Production is always the reference.
+            </p>
+          </div>
+        </section>
+
+        <section class="theatre-modal__section">
+          <h3 class="theatre-modal__eyebrow">A quote I return to often</h3>
+          <blockquote class="theatre-modal__quote">
+            <p class="theatre-modal__text">
+              "Most of the things I am most proud of have come from just doing the thing<br />
+              Most people would rather ask questions, debate, etc<br />
+              Most decisions are two way doors and you are often times rewarded for taking the initiative"
+            </p>
+            <footer class="theatre-modal__quote-attribution">
+              — Logan Kilpatrick
+            </footer>
+          </blockquote>
+        </section>
+
+        <section class="theatre-modal__section">
+          <h3 class="theatre-modal__eyebrow">Q&amp;A</h3>
+          <dl class="theatre-modal__faq">
+            <dt class="theatre-modal__question">
+              Did you create this website?
+            </dt>
+            <dd class="theatre-modal__answer">
+              Yes. I originally designed it in Framer, then rebuilt it in vanilla JavaScript.
+            </dd>
+
+            <dt class="theatre-modal__question">
+              What are these weird colors and fonts?
+            </dt>
+            <dd class="theatre-modal__answer">
+              A nod to late-'80s CGA graphics.
+            </dd>
+
+            <dt class="theatre-modal__question">What tools did you use?</dt>
+            <dd class="theatre-modal__answer">
+              The usual web design stack: HTML, CSS, JavaScript. I also used Framer for the initial design and prototyping, and Figma for some of the graphics.
+            </dd>
+
+            <dt class="theatre-modal__question">
+              What video game system do you recommend buying?
+            </dt>
+            <dd class="theatre-modal__answer">
+              That would be the Nintendo Switch 2, thank you for asking.
+            </dd>
+          </dl>
+        </section>
+
+        <footer class="theatre-modal__footer">
+          <p class="theatre-modal__signoff">
+            You read it all the way through, yay!
+          </p>
+          <img
+            class="theatre-modal__signoff-gif"
+            src={`${base}/yoshi.gif`}
+            alt="Yoshi"
+          />
+        </footer>
+      </div>
+    </div>
+  </div>
+</div>

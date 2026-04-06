@@ -1,0 +1,36 @@
+---
+interface Props {
+  base: string;
+}
+const { base } = Astro.props;
+---
+
+<section
+  class="section section--ikea"
+  id="case-study"
+  aria-label="IKEA case study preview"
+>
+  <div class="section__touch-layer" aria-hidden="true"></div>
+  <div class="section__brand">
+    <img
+      class="section__brand-logo"
+      src={`${base}/IKEA_Logo_transparent.svg`}
+      alt="IKEA"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+  <div class="section__copy">
+    <p class="section__copy-text">
+      Currently at Inter IKEA working on 3D planning experiences.
+    </p>
+  </div>
+  <div class="section__embed">
+    <iframe
+      class="section__iframe"
+      src="https://angelday.github.io/jsch_static/visualization"
+      title="IKEA visualization"
+      loading="lazy"
+    ></iframe>
+  </div>
+</section>

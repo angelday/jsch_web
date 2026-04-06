@@ -1,0 +1,45 @@
+---
+interface Props {
+  base: string;
+}
+const { base } = Astro.props;
+---
+
+<section
+  class="section section--contact"
+  id="contact"
+  aria-label="Contact section"
+>
+  <div class="section__contact-grid">
+    <a
+      class="section__contact-card"
+      href="https://www.linkedin.com/in/jozsefschaffer/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <canvas
+        class="section__contact-shader"
+        data-shader-canvas
+        data-shader-preset="contact-linkedin"
+        data-shader-hover-preset="contact-linkedin-hover"
+        aria-hidden="true"
+      ></canvas>
+      <span class="section__contact-card-label">
+        Connect with me on LinkedIn
+      </span>
+    </a>
+    <a
+      class="section__contact-card"
+      href="mailto:contact_at_this_domain"
+    >
+      <canvas
+        class="section__contact-shader"
+        data-shader-canvas
+        data-shader-preset="contact-email"
+        data-shader-hover-preset="contact-email-hover"
+        aria-hidden="true"
+      ></canvas>
+      <span class="section__contact-card-label">Send an email</span>
+    </a>
+  </div>
+</section>
