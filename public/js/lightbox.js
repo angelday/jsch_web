@@ -55,6 +55,11 @@
     img.src = source.srcset
       ? source.srcset.split(",").pop().trim().split(" ")[0]
       : source.src;
+    // Display at 75% of intrinsic size
+    img.onload = function () {
+      img.style.maxWidth = (img.naturalWidth * 0.75) + "px";
+      img.style.maxHeight = (img.naturalHeight * 0.75) + "px";
+    };
     counter.textContent = images.length > 1 ? current + 1 + " / " + images.length : "";
     overlay.classList.add("lightbox-open");
     document.body.style.overflow = "hidden";
@@ -155,14 +160,27 @@
     if (e.key === "ArrowLeft") prev();
   });
 
-  // Touch support for mobile — drag to pan
+  // Touch support for mobile — drag to pan with inertia
+  let lastTouchX = 0;
+  let lastTouchY = 0;
+  let lastTouchTime = 0;
+  let velocityX = 0;
+  let velocityY = 0;
+  let inertiaFrame = 0;
+
   img.addEventListener("touchstart", function (e) {
     if (e.touches.length !== 1) return;
+    cancelAnimationFrame(inertiaFrame);
     var t = e.touches[0];
     startTranslateX = translateX;
     startTranslateY = translateY;
     dragStartX = t.clientX;
     dragStartY = t.clientY;
+    lastTouchX = t.clientX;
+    lastTouchY = t.clientY;
+    lastTouchTime = Date.now();
+    velocityX = 0;
+    velocityY = 0;
     isDragging = true;
     overlay.classList.add("lightbox-dragging");
   }, { passive: true });
@@ -170,6 +188,15 @@
   img.addEventListener("touchmove", function (e) {
     if (!isDragging || e.touches.length !== 1) return;
     var t = e.touches[0];
+    var now = Date.now();
+    var dt = now - lastTouchTime;
+    if (dt > 0) {
+      velocityX = (t.clientX - lastTouchX) / dt;
+      velocityY = (t.clientY - lastTouchY) / dt;
+    }
+    lastTouchX = t.clientX;
+    lastTouchY = t.clientY;
+    lastTouchTime = now;
     translateX = startTranslateX + (t.clientX - dragStartX);
     translateY = startTranslateY + (t.clientY - dragStartY);
     clampTranslate();
@@ -181,5 +208,22 @@
     if (!isDragging) return;
     isDragging = false;
     overlay.classList.remove("lightbox-dragging");
+
+    // Inertia — coast based on release velocity
+    var friction = 0.97;
+    var vx = velocityX * 24; // scale to per-frame
+    var vy = velocityY * 24;
+
+    function coast() {
+      if (Math.abs(vx) < 0.5 && Math.abs(vy) < 0.5) return;
+      vx *= friction;
+      vy *= friction;
+      translateX += vx;
+      translateY += vy;
+      clampTranslate();
+      applyTransform();
+      inertiaFrame = requestAnimationFrame(coast);
+    }
+    inertiaFrame = requestAnimationFrame(coast);
   }, { passive: true });
 })();
