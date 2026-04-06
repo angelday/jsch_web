@@ -24,8 +24,8 @@
 .lightbox-content {
   position: relative;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
   max-width: calc(100% - 96px);
   max-height: calc(100% - 96px);
   border-radius: 16px;
@@ -57,9 +57,9 @@
 }
 
 .lightbox-controls button {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(0, 0, 0, 0.85);
   border: none;
-  color: #2A1F23;
+  color: #fff;
   font-family: 'Bricolage Grotesque', system-ui, -apple-system, sans-serif;
   font-size: 1.4rem;
   font-weight: 500;
@@ -71,13 +71,14 @@
 }
 
 .lightbox-controls button:hover {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.25);
 }
 
 @media (max-width: 600px) {
   .lightbox-content {
-    max-width: calc(100% - 48px);
-    max-height: calc(100% - 48px);
+    max-width: calc(100% - 32px);
+    max-height: calc(100% - 32px - 48px);
+    margin-bottom: 48px;
     border-radius: 12px;
   }
 
