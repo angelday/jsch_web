@@ -102,7 +102,15 @@ if (import.meta.env.PROD) {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>{post.title}</title>
+    <title>{post.title} — József Schaffer</title>
+    <meta name="description" content="Staff-level product designer working in complex digital ecosystems. I clarify direction, align teams, and get things done: I design, prototype, code, and stay accountable to outcomes, not decks." />
+    <link rel="icon" href="/favicon.png" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content={post.title} />
+    <meta property="og:image" content="/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={post.title} />
+    <meta name="twitter:image" content="/og-image.png" />
     <style is:global>
       .gh-content {
         padding: 14rem 0;
