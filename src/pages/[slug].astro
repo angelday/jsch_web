@@ -24,6 +24,7 @@ export async function getStaticPaths() {
 }
 
 const GHOST_URL = import.meta.env.GHOST_URL;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const { post } = Astro.props;
 
 /**
@@ -94,7 +95,7 @@ post.html = post.html.replace(/\{(\w+)\}/g, (match: string, name: string) => {
 
 // Only rewrite Ghost URLs in production builds — in dev, Ghost serves them directly
 if (import.meta.env.PROD) {
-  post.html = post.html.replaceAll(GHOST_URL, import.meta.env.BASE_URL);
+  post.html = post.html.replaceAll(GHOST_URL, base);
 }
 ---
 
@@ -104,13 +105,13 @@ if (import.meta.env.PROD) {
     <meta name="viewport" content="width=device-width" />
     <title>{post.title} — József Schaffer</title>
     <meta name="description" content="Staff-level product designer working in complex digital ecosystems. I clarify direction, align teams, and get things done: I design, prototype, code, and stay accountable to outcomes, not decks." />
-    <link rel="icon" href={`${import.meta.env.BASE_URL}/favicon.png`} />
+    <link rel="icon" href={`${base}/favicon.png`} />
     <meta property="og:type" content="article" />
     <meta property="og:title" content={post.title} />
-    <meta property="og:image" content={`${import.meta.env.BASE_URL}/og-image.png`} />
+    <meta property="og:image" content={`${base}/og-image.png`} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={post.title} />
-    <meta name="twitter:image" content={`${import.meta.env.BASE_URL}/og-image.png`} />
+    <meta name="twitter:image" content={`${base}/og-image.png`} />
     <style is:global>
       .gh-content {
         padding: 14rem 0;
@@ -157,7 +158,7 @@ if (import.meta.env.PROD) {
         <Fragment set:html={post.html} />
       </div>
     </article>
-    <script is:inline src={`${import.meta.env.BASE_URL}/js/ghost-cards.js`}></script>
-    <script is:inline src={`${import.meta.env.BASE_URL}/js/lightbox.js`}></script>
+    <script is:inline src={`${base}/js/ghost-cards.js`}></script>
+    <script is:inline src={`${base}/js/lightbox.js`}></script>
   </body>
 </html>

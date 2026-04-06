@@ -1,5 +1,6 @@
 ---
 import '../styles/ghost-content.css';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <html lang="en">
@@ -8,17 +9,17 @@ import '../styles/ghost-content.css';
     <meta name="viewport" content="width=device-width" />
     <title>József Schaffer — Product Designer</title>
     <meta name="description" content="Staff-level product designer working in complex digital ecosystems. I clarify direction, align teams, and get things done: I design, prototype, code, and stay accountable to outcomes, not decks." />
-    <link rel="icon" href={`${import.meta.env.BASE_URL}/favicon.png`} />
+    <link rel="icon" href={`${base}/favicon.png`} />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="József Schaffer — Product Designer" />
     <meta property="og:description" content="Staff-level product designer working in complex digital ecosystems. I clarify direction, align teams, and get things done." />
-    <meta property="og:image" content={`${import.meta.env.BASE_URL}/og-image.png`} />
+    <meta property="og:image" content={`${base}/og-image.png`} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="József Schaffer — Product Designer" />
-    <meta name="twitter:image" content={`${import.meta.env.BASE_URL}/og-image.png`} />
+    <meta name="twitter:image" content={`${base}/og-image.png`} />
   </head>
   <body>
     <h1>József Schaffer</h1>
-    <a href={`${import.meta.env.BASE_URL}/design/`}>Design case study</a>
+    <a href={`${base}/design/`}>Design case study</a>
   </body>
 </html>

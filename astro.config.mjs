@@ -45,6 +45,5 @@ function ghostAssets() {
 
 export default defineConfig({
   site: 'https://angelday.github.io',
-  base: '/jsch_web',
   integrations: [ghostAssets()],
 });
