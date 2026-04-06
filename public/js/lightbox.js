@@ -6,15 +6,18 @@
   overlay.innerHTML =
     '<div class="lightbox-content">' +
     '<img class="lightbox-img" draggable="false" />' +
-    '<button class="lightbox-close" aria-label="Close">&times;</button>' +
-    '<button class="lightbox-prev" aria-label="Previous">&lsaquo;</button>' +
-    '<button class="lightbox-next" aria-label="Next">&rsaquo;</button>' +
-    '<div class="lightbox-counter"></div>' +
+    "</div>" +
+    '<div class="lightbox-controls">' +
+    '<button class="lightbox-prev" aria-label="Previous">Previous</button>' +
+    '<button class="lightbox-close" aria-label="Close">Close</button>' +
+    '<button class="lightbox-next" aria-label="Next">Next</button>' +
     "</div>";
   document.body.appendChild(overlay);
 
+  const content = overlay.querySelector(".lightbox-content");
   const img = overlay.querySelector(".lightbox-img");
-  const counter = overlay.querySelector(".lightbox-counter");
+  const prevBtn = overlay.querySelector(".lightbox-prev");
+  const nextBtn = overlay.querySelector(".lightbox-next");
   let images = [];
   let current = 0;
 
@@ -34,8 +37,10 @@
   function clampTranslate() {
     const imgWidth = img.offsetWidth;
     const imgHeight = img.offsetHeight;
-    const maxX = Math.max(0, (imgWidth - window.innerWidth) / 2);
-    const maxY = Math.max(0, (imgHeight - window.innerHeight) / 2);
+    const maskWidth = content.offsetWidth;
+    const maskHeight = content.offsetHeight;
+    const maxX = Math.max(0, (imgWidth - maskWidth) / 2);
+    const maxY = Math.max(0, (imgHeight - maskHeight) / 2);
     translateX = Math.max(-maxX, Math.min(maxX, translateX));
     translateY = Math.max(-maxY, Math.min(maxY, translateY));
   }
@@ -60,7 +65,10 @@
       img.style.maxWidth = (img.naturalWidth * 0.75) + "px";
       img.style.maxHeight = (img.naturalHeight * 0.75) + "px";
     };
-    counter.textContent = images.length > 1 ? current + 1 + " / " + images.length : "";
+    // Show prev/next only for galleries
+    var isGallery = images.length > 1;
+    prevBtn.style.display = isGallery ? "" : "none";
+    nextBtn.style.display = isGallery ? "" : "none";
     overlay.classList.add("lightbox-open");
     document.body.style.overflow = "hidden";
   }
