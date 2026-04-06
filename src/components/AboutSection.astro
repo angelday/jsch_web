@@ -35,15 +35,15 @@ const { base } = Astro.props;
   <picture class="section__about-backdrop" aria-hidden="true">
     <source
       media="(max-width: 540px)"
-      srcset={`${base}/about-cga-mobile.gif`}
+      srcset={`${base}/img/about-cga-mobile.gif`}
     />
     <source
       media="(max-width: 900px)"
-      srcset={`${base}/about-cga-tablet.gif`}
+      srcset={`${base}/img/about-cga-tablet.gif`}
     />
     <img
       class="section__about-backdrop-image"
-      src={`${base}/about-cga-desktop.gif`}
+      src={`${base}/img/about-cga-desktop.gif`}
       alt=""
       loading="lazy"
       decoding="async"

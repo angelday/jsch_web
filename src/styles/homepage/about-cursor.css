@@ -7,7 +7,7 @@
   width: 72px;
   height: 72px;
   pointer-events: none;
-  background-image: url("/CGA_pointer.png");
+  background-image: url("/img/CGA_pointer.png");
   background-repeat: no-repeat;
   background-position: top left;
   background-size: contain;
@@ -16,11 +16,11 @@
 }
 
 .about-cursor.is-select {
-  background-image: url("/CGA_pointer_select.png");
+  background-image: url("/img/CGA_pointer_select.png");
 }
 
 .about-cursor.is-active {
-  background-image: url("/CGA_pointer_active.png");
+  background-image: url("/img/CGA_pointer_active.png");
 }
 
 @media (hover: hover) and (pointer: fine) {
