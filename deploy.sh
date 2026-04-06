@@ -2,7 +2,7 @@
 set -e
 
 echo "Building site..."
-npx astro build --base /jsch_web
+npx astro build
 
 echo "Deploying to gh-pages..."
 cd dist
