@@ -13,7 +13,6 @@ body {
   line-height: 1.6;
   margin: 0;
   padding: 0;
-  background-color: #FCF4EE;
 }
 
 h1,
@@ -202,7 +201,7 @@ h3 {
 }
 
 .gh-content a {
-  color: #15171a;
+  color: #E55A1B;
   text-decoration: underline;
 }
 
@@ -237,25 +236,6 @@ h3 {
   margin-top: 8px;
 }
 
-/* Hero heading — "Hej Grafana!" */
-#hej-grafana {
-  font-size: 6rem;
-}
-
-/* Inline icons — SVGs dropped into prose via {{name}} tokens */
-.inline-icon {
-  display: inline-flex;
-  align-items: center;
-  height: 1.6em;
-  vertical-align: -0.45em;
-  margin: 0 0.15em;
-}
-
-.inline-icon svg {
-  height: 100%;
-  width: auto;
-}
-
 /* Video cards */
 .kg-video-card video {
   display: block;
@@ -272,6 +252,53 @@ h3 {
   width: 100%;
 }
 
+/* Inline code */
+.gh-content code {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 0.88em;
+  background: rgba(0, 0, 0, 0.06);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+}
+
+/* Code blocks */
+.gh-content pre {
+  overflow: auto;
+  padding: 16px 20px;
+  color: #e5eff5;
+  font-size: 1.4rem;
+  line-height: 1.5em;
+  background: #15171A;
+  border-radius: 5px;
+  box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.1), 0 0 1px rgba(0, 0, 0, 0.4);
+}
+
+.gh-content pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* Callout card */
+.kg-callout-card {
+  display: flex;
+  gap: 0.8em;
+  padding: 1.2em 1.5em;
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+}
+
+.kg-callout-emoji {
+  font-size: 1.3em;
+  line-height: 1.4;
+}
+
+.kg-callout-text {
+  margin: 0;
+}
+
 /* Blockquote */
 .gh-content blockquote {
   border-left: 3px solid rgba(0, 0, 0, 0.2);
@@ -281,36 +308,3 @@ h3 {
   color: rgba(0, 0, 0, 0.65);
 }
 
-/* Fact sheet card — horizontal, 70% of main column */
-.gh-content>.fact-sheet {
-  width: 70%;
-  justify-self: center;
-  margin-inline: 0;
-  padding: 1.5em 1.75em;
-  background: rgba(92, 42, 62, 0.06);
-  border: 1px solid rgba(92, 42, 62, 0.15);
-  border-radius: 12px;
-  font-style: normal;
-  font-size: 0.88em;
-  line-height: 1.55;
-  color: inherit;
-}
-
-.gh-content>.fact-sheet .fact-sheet__label {
-  margin: 1em 0 0.5em;
-  font-weight: 600;
-}
-
-.gh-content>.fact-sheet ul {
-  margin: 0;
-}
-
-/* Mobile — fact sheet full width (must come after base .fact-sheet rules) */
-@media (max-width: 600px) {
-  .gh-content>.fact-sheet {
-    width: 100%;
-    justify-self: stretch;
-    box-sizing: border-box;
-    padding: 1.2em 1.5em 1.2em 1.2em;
-  }
-}

@@ -24,15 +24,18 @@ npm run dev
 
 Opens at `http://localhost:4321/`. Ghost must be running for post pages to load. Content changes in Ghost require restarting the dev server.
 
-## Testing on mobile
+## Testing with a full build
 
-The dev server proxies images from Ghost on `localhost`, which your phone can't reach. Use a preview build instead:
+The dev server (`npm run dev`) is fine for most work, but some things require a full build:
+
+- **Images on mobile**: the dev server proxies Ghost images from `localhost`, which your phone can't reach.
+- **Changes to `public/`**: static assets (JS, fonts, images) are only copied into `dist/` at build time. The preview server serves from `dist/`, so changes to `public/` require a rebuild.
 
 ```
 npx astro build && npx astro preview --host 0.0.0.0
 ```
 
-Then open `http://<your-mac-ip>:4321/` on your phone (both devices must be on the same Wi-Fi). Find your Mac's IP with `ipconfig getifaddr en0`.
+Opens at `http://localhost:4321/`. To test on your phone, open `http://<your-mac-ip>:4321/` (both devices on the same Wi-Fi). Find your Mac's IP with `ipconfig getifaddr en0`.
 
 ## Deploy
 

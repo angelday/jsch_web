@@ -1,5 +1,7 @@
 ---
 import '../styles/ghost-content.css';
+import '../styles/case-study.css';
+import '../styles/post.css';
 import '../styles/lightbox.css';
 import grafanaLogo from '../assets/grafana_logo.svg?raw';
 
@@ -13,7 +15,7 @@ export async function getStaticPaths() {
   const GHOST_API_KEY = import.meta.env.GHOST_API_KEY;
 
   const res = await fetch(
-    `${GHOST_URL}/ghost/api/content/posts/?key=${GHOST_API_KEY}&include=tags`
+    `${GHOST_URL}/ghost/api/content/posts/?key=${GHOST_API_KEY}&include=tags,authors`
   );
   const { posts } = await res.json();
 
@@ -26,6 +28,15 @@ export async function getStaticPaths() {
 const GHOST_URL = import.meta.env.GHOST_URL;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const { post } = Astro.props;
+const isCaseStudy = post.tags?.some((t: any) => t.name.toLowerCase() === 'case study');
+const authorName = post.authors?.[0]?.name;
+const dateFmt = { day: 'numeric', month: 'long', year: 'numeric' } as const;
+const publishedDate = post.published_at
+  ? new Date(post.published_at).toLocaleDateString('en-GB', dateFmt)
+  : '';
+const updatedDate = post.updated_at && post.updated_at !== post.published_at
+  ? new Date(post.updated_at).toLocaleDateString('en-GB', dateFmt)
+  : '';
 
 /**
  * Ghost alt-text conventions (signals stripped from output, never visible to users):
@@ -93,6 +104,12 @@ post.html = post.html.replace(/\{(\w+)\}/g, (match: string, name: string) => {
   return svg ? `<span class="inline-icon">${svg}</span>` : match;
 });
 
+// Open all outgoing links in a new tab
+post.html = post.html.replace(/<a\s+href="(https?:\/\/[^"]*)"([^>]*)>/g,
+  (_m: string, href: string, rest: string) =>
+    `<a href="${href}" target="_blank" rel="noopener noreferrer"${rest}>`
+);
+
 // Only rewrite Ghost URLs in production builds — in dev, Ghost serves them directly
 if (import.meta.env.PROD) {
   post.html = post.html.replaceAll(GHOST_URL, base);
@@ -113,8 +130,11 @@ if (import.meta.env.PROD) {
     <meta name="twitter:title" content={post.title} />
     <meta name="twitter:image" content={`${base}/og-image.png`} />
     <style is:global>
-      .gh-content {
+      .case-study .gh-content {
         padding: 14rem 0;
+      }
+      .post .gh-content {
+        padding: 8rem 0;
       }
       .back-nav {
         position: fixed;
@@ -155,13 +175,30 @@ if (import.meta.env.PROD) {
       }
     </style>
   </head>
-  <body>
-    <a class="back-nav" href="https://jozsefschaffer.com">
-      <span class="back-nav-arrow">←</span>
-      <span>jozsefschaffer.com</span>
-    </a>
+  <body class={isCaseStudy ? 'case-study' : 'post'}>
+    {isCaseStudy ? (
+      <a class="back-nav" href={`${base}/`}>
+        <span class="back-nav-arrow">←</span>
+        <span>jozsefschaffer.com</span>
+      </a>
+    ) : (
+      <a class="back-nav" href={`${base}/projects/`} aria-label="Back">
+        <span class="back-nav-arrow">←</span>
+      </a>
+    )}
     <article>
       <div class="gh-content">
+        {!isCaseStudy && (
+          <header class="post-header">
+            <h1>{post.title}</h1>
+            <div class="post-byline">
+              {authorName && <span>{authorName}</span>}
+              {authorName && publishedDate && <span> · </span>}
+              {publishedDate && <span>{publishedDate}</span>}
+              {updatedDate && <span> · Updated {updatedDate}</span>}
+            </div>
+          </header>
+        )}
         <Fragment set:html={post.html} />
       </div>
     </article>

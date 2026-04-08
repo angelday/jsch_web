@@ -1,0 +1,33 @@
+/* Blog post — clean white background, title + byline header */
+
+body.post {
+  background-color: #fff;
+}
+
+body.post h1,
+body.post h2,
+body.post h3 {
+  color: #B84A12;
+}
+
+.post-header {
+  grid-column: main;
+  margin-bottom: 48px;
+}
+
+.post-header h1 {
+  font-size: 4.2rem;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.3em;
+}
+
+.post-byline {
+  font-size: 1.5rem;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 600px) {
+  .post-header h1 {
+    font-size: 3.2rem;
+  }
+}
