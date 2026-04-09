@@ -19,6 +19,29 @@ uniform vec3 uColor3;
 
 const int depth = 4;
 
+// CGA palette 1 low intensity — dim controls output brightness
+const float dim = 1.0;
+const vec3 CGA_BLACK   = vec3(0.0, 0.0, 0.0);
+const vec3 CGA_CYAN    = dim * vec3(0.0, 0.667, 0.667);
+const vec3 CGA_MAGENTA = dim * vec3(0.667, 0.0, 0.667);
+const vec3 CGA_WHITE   = dim * vec3(0.667, 0.667, 0.667);
+
+vec3 nearestCGA(vec3 col) {
+  vec3 best = CGA_BLACK;
+  float bestDist = distance(col, CGA_BLACK);
+
+  float d = distance(col, CGA_MAGENTA);
+  if (d < bestDist) { bestDist = d; best = CGA_MAGENTA; }
+
+  d = distance(col, CGA_CYAN);
+  if (d < bestDist) { bestDist = d; best = CGA_CYAN; }
+
+  d = distance(col, CGA_WHITE);
+  if (d < bestDist) { bestDist = d; best = CGA_WHITE; }
+
+  return best;
+}
+
 vec2 effect(vec2 p, float i, float time) {
   return vec2(
     cos(i * sin(p.x * p.y) + time),
@@ -27,7 +50,12 @@ vec2 effect(vec2 p, float i, float time) {
 }
 
 void mainImage(out vec4 fragColor, in vec2 fragCoord) {
-  vec2 p = (2.0 * fragCoord - iResolution.xy) / max(iResolution.x, iResolution.y);
+  // Quantize to low-res grid
+  float pixelSize = 8.0;
+  vec2 cell = floor(fragCoord / pixelSize);
+  vec2 snapped = (cell + 0.5) * pixelSize;
+
+  vec2 p = (2.0 * snapped - iResolution.xy) / max(iResolution.x, iResolution.y);
   p *= uResolution;
 
   for (int i = 1; i < depth; i++) {
@@ -41,7 +69,12 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
     cos(p.y + p.x)
   );
 
-  fragColor = vec4(col, 1.0);
+  col *= 0.75;
+
+  // Checkerboard dither to CGA palette
+  float checker = mod(cell.x + cell.y, 2.0);
+  col += (checker - 0.5) * 0.35;
+  fragColor = vec4(nearestCGA(col), 1.0);
 }
 
 void main() {
@@ -53,12 +86,12 @@ void main() {
 
 const PRESETS = {
   hero: {
-    resolution: 3.2,
+    resolution: 2.0,
     speed: 0.1,
     colors: [
+      [0x00 / 255, 0xAA / 255, 0xAA / 255],
+      [0xAA / 255, 0x00 / 255, 0xAA / 255],
       [0, 0, 0],
-      [46 / 255, 46 / 255, 46 / 255],
-      [61 / 255, 61 / 255, 61 / 255],
     ],
   },
   contact: {

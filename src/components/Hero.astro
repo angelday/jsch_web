@@ -6,11 +6,7 @@ const { base } = Astro.props;
 ---
 
 <section class="hero" aria-labelledby="hero-title">
-  <canvas
-    class="hero__shader"
-    data-shader-canvas
-    aria-hidden="true"
-  ></canvas>
+  <canvas class="hero__shader" data-shader-canvas aria-hidden="true"></canvas>
 
   <header class="hero__nav" aria-label="Hero navigation">
     <button
@@ -35,10 +31,7 @@ const { base } = Astro.props;
         <span class="hero__nav-arrow" aria-hidden="true">→</span>
       </span>
     </button>
-    <a
-      class="hero__nav-item"
-      href={`${base}/projects/`}
-    >
+    <a class="hero__nav-item" href={`${base}/projects/`}>
       <span class="hero__nav-copy">
         <span class="hero__nav-label">Projects</span>
         <span class="hero__nav-arrow" aria-hidden="true">→</span>
@@ -62,7 +55,7 @@ const { base } = Astro.props;
       <h1 id="hero-title">Jozsef Schaffer</h1>
     </div>
     <div class="hero__subtitle-group">
-      <p class="hero__subtitle">Product designer</p>
+      <p class="hero__subtitle">Product designer on a CGA monitor</p>
     </div>
   </div>
 </section>
