@@ -2,7 +2,7 @@
 
 ## Stack
 
-- **Ghost** — local headless CMS on Mac Mini. Editor only, not hosted.
+- **Ghost** — headless CMS on Mac Mini, accessed via Tailscale. Editor only, not hosted publicly.
 - **Astro** — static site generator. Fetches posts from Ghost Content API. Outputs `dist/`.
 - **GitHub Pages** — deployment target. Repo: `angelday/jsch_web`.
 - Ghost install: `/Users/jozsi/Sites/jsch_web_ghost` (Astro project is at `/Users/jozsi/Sites/jsch_web`).
@@ -10,7 +10,7 @@
 
 ## Deployment
 
-- **Local build + push to `gh-pages` branch** — Ghost runs locally, so GitHub Actions can't build.
+- **Local build + push to `gh-pages` branch** — Ghost is on a private Tailscale network, so GitHub Actions can't build.
 - `./deploy.sh` runs `astro build --base /jsch_web`, then force-pushes `dist/` to `gh-pages`.
 - `--base` is only passed at deploy time; dev runs at `/` (localhost:4321).
 - `.nojekyll` in `public/` prevents GitHub Pages from ignoring `_astro/` directory.
@@ -80,7 +80,7 @@ public/
 - **Embed card styling:** YouTube's hardcoded 200×150 iframe is overridden to 100% width + 16:9 aspect-ratio. On mobile it goes full-bleed like image cards.
 - **Video cards:** Ghost's player markup → native `<video>` tag (preserves loop/autoplay/poster/caption)
 - **Outgoing links:** `http(s)://...` hrefs rewritten to `target="_blank" rel="noopener noreferrer"`
-- **Ghost ref tracking:** `?ref=localhost` stripped from all link URLs (Ghost hardcodes this, no setting to disable)
+- **Ghost ref tracking:** `?ref=<host>` stripped from all link URLs via `/\?ref=[^"&\s]*/g` — host-agnostic so it works regardless of which machine builds (localhost, Tailscale, etc.)
 - **Blockquote conventions:** "Fact sheet" first line → `class="fact-sheet"` card (50% width, centered, plum tint)
 - **"My contribution" list:** `<br>`-separated lines → `<ul>` inside fact sheet
 - **Inline icons:** `{name}` tokens in Ghost prose → inline SVG (e.g. Grafana logo). Ghost strips one layer of braces.

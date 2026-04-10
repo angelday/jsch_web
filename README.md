@@ -4,15 +4,15 @@ Personal portfolio site. Ghost (local CMS) → Astro (static build) → GitHub P
 
 ## How it works
 
-Ghost runs locally as a headless CMS. Astro fetches posts from Ghost's Content API at build time, downloads all images and media, and outputs a fully static site. The built files are pushed to a `gh-pages` branch which GitHub Pages serves.
+Ghost runs as a headless CMS on a Mac Mini, accessible via Tailscale. Astro fetches posts from Ghost's Content API at build time, downloads all images and media, and outputs a fully static site. The built files are pushed to a `gh-pages` branch which GitHub Pages serves.
 
 ## Prerequisites
 
 - Node 22 (via nvm: `nvm use 22`)
-- Ghost running locally (`cd ../jsch_web_ghost && ghost start`)
+- Ghost running on the Mac Mini, reachable via Tailscale
 - `.env` file in this directory with:
   ```
-  GHOST_URL=http://localhost:2368
+  GHOST_URL=http://<tailscale-host>:2368
   GHOST_API_KEY=<your content api key>
   ```
 
@@ -22,7 +22,7 @@ Ghost runs locally as a headless CMS. Astro fetches posts from Ghost's Content A
 npm run dev
 ```
 
-Opens at `http://localhost:4321/`. Ghost must be running for post pages to load. Content changes in Ghost require restarting the dev server.
+Opens at `http://localhost:4321/`. Ghost must be reachable via Tailscale for post pages to load. Content changes in Ghost require restarting the dev server.
 
 ## Testing with a full build
 
@@ -45,7 +45,7 @@ If a build ever genuinely seems stuck, force a clean rebuild with `rm -rf node_m
 ./deploy.sh
 ```
 
-Builds the site, then pushes the output to the `gh-pages` branch. Ghost must be running.
+Builds the site, then pushes the output to the `gh-pages` branch. Ghost must be reachable via Tailscale.
 
 ## Project structure
 
