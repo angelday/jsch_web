@@ -144,9 +144,12 @@ post.html = post.html.replace(/<a\s+href="(https?:\/\/[^"]*)"([^>]*)>/g,
     `<a href="${href}" target="_blank" rel="noopener noreferrer"${rest}>`
 );
 
-// Only rewrite Ghost URLs in production builds — in dev, Ghost serves them directly
+// Only rewrite Ghost URLs in production builds — in dev, Ghost serves them directly.
+// Derive the origin from post.url so we catch whatever host Ghost is configured with
+// (localhost, Tailscale, etc.), not just whatever GHOST_URL points at.
 if (import.meta.env.PROD) {
-  post.html = post.html.replaceAll(GHOST_URL, base);
+  const ghostOrigin = post.url ? new URL(post.url).origin : GHOST_URL;
+  post.html = post.html.replaceAll(ghostOrigin, base);
 }
 ---
 
