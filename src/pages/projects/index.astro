@@ -118,8 +118,8 @@ const dateFmt = { day: "numeric", month: "long", year: "numeric" } as const;
     <div class="projects">
       <h1>Projects & Posts</h1>
       <p class="projects-intro">
-        A mix of side projects, hobby builds, and tech interests I'm tinkering
-        with. I hope you find some of these useful.
+        A mix of side projects, hobby builds, and various tech interests of
+        mine. I hope you find some of these useful.
       </p>
       <ul>
         {
@@ -131,7 +131,7 @@ const dateFmt = { day: "numeric", month: "long", year: "numeric" } as const;
             return (
               <li>
                 <a href={`${base}/${post.slug}/`}>{post.title}</a>
-                <span class="date">Updated {updated}</span>
+                <span class="date">{updated}</span>
               </li>
             );
           })

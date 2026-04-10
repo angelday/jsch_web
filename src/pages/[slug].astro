@@ -31,11 +31,9 @@ const { post } = Astro.props;
 const isCaseStudy = post.tags?.some((t: any) => t.name.toLowerCase() === 'case study');
 const authorName = post.authors?.[0]?.name;
 const dateFmt = { day: 'numeric', month: 'long', year: 'numeric' } as const;
-const publishedDate = post.published_at
-  ? new Date(post.published_at).toLocaleDateString('en-GB', dateFmt)
-  : '';
-const updatedDate = post.updated_at && post.updated_at !== post.published_at
-  ? new Date(post.updated_at).toLocaleDateString('en-GB', dateFmt)
+const displayDateSource = post.updated_at || post.published_at;
+const displayDate = displayDateSource
+  ? new Date(displayDateSource).toLocaleDateString('en-GB', dateFmt)
   : '';
 
 /**
@@ -229,9 +227,8 @@ if (import.meta.env.PROD) {
             <h1>{post.title}</h1>
             <div class="post-byline">
               {authorName && <span>{authorName}</span>}
-              {authorName && publishedDate && <span> · </span>}
-              {publishedDate && <span>{publishedDate}</span>}
-              {updatedDate && <span> · Updated {updatedDate}</span>}
+              {authorName && displayDate && <span> · </span>}
+              {displayDate && <span>{displayDate}</span>}
             </div>
           </header>
         )}
