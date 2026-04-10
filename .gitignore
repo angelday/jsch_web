@@ -31,8 +31,5 @@ Icon?
 *.swo
 *~
 
-# Project memory (contains API keys)
-PROJECT_MEMORY.md
-
 # Ghost downloaded assets (re-fetched at build time)
 public/content/
