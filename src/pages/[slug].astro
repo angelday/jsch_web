@@ -135,8 +135,10 @@ post.html = post.html.replace(/\{(\w+)\}/g, (match: string, name: string) => {
   return svg ? `<span class="inline-icon">${svg}</span>` : match;
 });
 
-// Strip Ghost's ?ref=localhost from outgoing links
-post.html = post.html.replace(/\?ref=localhost/g, '');
+// Strip Ghost's ?ref=<host> from outgoing links
+const ghostHostname = new URL(GHOST_URL).hostname;
+const refPattern = new RegExp(`\\?ref=${ghostHostname.replace(/\./g, '\\.')}`, 'g');
+post.html = post.html.replace(refPattern, '');
 
 // Open all outgoing links in a new tab
 post.html = post.html.replace(/<a\s+href="(https?:\/\/[^"]*)"([^>]*)>/g,
