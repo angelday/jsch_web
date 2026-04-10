@@ -259,11 +259,14 @@ h3 {
   background: rgba(0, 0, 0, 0.06);
   padding: 0.15em 0.4em;
   border-radius: 4px;
+  overflow-wrap: anywhere;
 }
 
 /* Code blocks */
 .gh-content pre {
   overflow: auto;
+  min-width: 0;
+  max-width: 100%;
   padding: 16px 20px;
   color: #e5eff5;
   font-size: 1.4rem;
