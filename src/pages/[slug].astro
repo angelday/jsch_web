@@ -41,7 +41,16 @@ const updatedDate = post.updated_at && post.updated_at !== post.published_at
 /**
  * Ghost alt-text conventions (signals stripped from output, never visible to users):
  *
- *   no-zoom    — disables lightbox on this image (adds data-no-lightbox)
+ *   no-zoom      — disables lightbox on this image (adds data-no-lightbox)
+ *   wide-width   — makes the image card span the wide grid column (adds kg-width-wide
+ *                  to parent figure). Use this for animated GIFs/images where Ghost's
+ *                  editor doesn't offer a width toggle.
+ *
+ * Ghost embed caption conventions (signals stripped from output):
+ *
+ *   wide-width   — makes the embed card span the wide grid column. Put it in the
+ *                  embed card's caption field (Ghost doesn't expose alt for embeds).
+ *                  If the caption only contains the signal, the figcaption is dropped.
  *
  * Ghost blockquote conventions (detected by content, styled via CSS):
  *
@@ -57,6 +66,30 @@ post.html = post.html.replace(
   (match: string, before: string, alt: string, after: string) => {
     const cleanAlt = alt.replace(/\s*no-zoom\s*/g, '').trim();
     return `${before}alt="${cleanAlt}" data-no-lightbox${after}`;
+  }
+);
+
+// wide-width signal — add kg-width-wide to the parent figure, strip from alt
+post.html = post.html.replace(
+  /<figure\s+class="([^"]*kg-image-card[^"]*)"([^>]*)>(\s*<img\s[^>]*?alt=")([^"]*wide-width[^"]*)("[^>]*>)/g,
+  (_m: string, figClass: string, figRest: string, imgBefore: string, alt: string, imgAfter: string) => {
+    const nextFigClass = figClass.includes('kg-width-wide') ? figClass : `${figClass} kg-width-wide`;
+    const cleanAlt = alt.replace(/\s*wide-width\s*/g, '').trim();
+    return `<figure class="${nextFigClass}"${figRest}>${imgBefore}${cleanAlt}${imgAfter}`;
+  }
+);
+
+// wide-width signal in embed card caption — add kg-width-wide, strip signal,
+// drop figcaption if it was the only content
+post.html = post.html.replace(
+  /<figure\s+class="([^"]*kg-embed-card[^"]*)"([^>]*)>([\s\S]*?)<figcaption[^>]*>([\s\S]*?)<\/figcaption>(\s*<\/figure>)/g,
+  (match: string, figClass: string, figRest: string, figInner: string, captionInner: string, figEnd: string) => {
+    if (!/wide-width/.test(captionInner)) return match;
+    const nextFigClass = figClass.includes('kg-width-wide') ? figClass : `${figClass} kg-width-wide`;
+    const cleanCaption = captionInner.replace(/\s*wide-width\s*/g, '').trim();
+    const captionTextOnly = cleanCaption.replace(/<[^>]*>/g, '').trim();
+    const captionHtml = captionTextOnly ? `<figcaption>${cleanCaption}</figcaption>` : '';
+    return `<figure class="${nextFigClass}"${figRest}>${figInner}${captionHtml}${figEnd}`;
   }
 );
 

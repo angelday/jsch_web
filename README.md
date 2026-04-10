@@ -37,6 +37,8 @@ npx astro build && npx astro preview --host 0.0.0.0
 
 Opens at `http://localhost:4321/`. To test on your phone, open `http://<your-mac-ip>:4321/` (both devices on the same Wi-Fi). Find your Mac's IP with `ipconfig getifaddr en0`.
 
+If a build ever genuinely seems stuck, force a clean rebuild with `rm -rf node_modules/.astro dist`.
+
 ## Deploy
 
 ```

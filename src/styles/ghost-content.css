@@ -38,7 +38,7 @@ h3 {
 /* All content sits in the main column by default */
 .gh-content>* {
   grid-column: main;
-  margin-block: 0;
+  margin: 0;
 }
 
 /* Width variants */
@@ -129,7 +129,8 @@ h3 {
 
   .kg-image-card,
   .kg-gallery-card,
-  .kg-video-card {
+  .kg-video-card,
+  .kg-embed-card {
     grid-column: full !important;
     margin-inline: 8px;
     --gap: 0.6rem;
@@ -163,6 +164,20 @@ h3 {
   display: block;
   max-width: 100%;
   height: auto;
+}
+
+/* SVGs are vector — unlike raster images, `max-width: 100%` only scales them
+   *down*, so with a small declared width they never fill the card. Force
+   width: 100% so they stretch to the container. */
+.kg-image-card img[src$=".svg"],
+.kg-gallery-card img[src$=".svg"] {
+  width: 100%;
+}
+
+/* Cap wide SVGs at Ghost's wide-image natural width so they visually match
+   raster wide cards instead of filling the full 1200px wide column. */
+.kg-width-wide img[src$=".svg"] {
+  max-width: 1000px;
 }
 
 /* Image caption */
@@ -242,6 +257,30 @@ h3 {
   width: 100%;
   height: auto;
   border-radius: 4px;
+}
+
+/* Embed cards (YouTube, etc.) — fill column width, enforce 16:9 */
+.kg-embed-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.kg-embed-card iframe {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border: 0;
+  border-radius: 4px;
+}
+
+/* Wide embeds: cap at Ghost's wide-image natural width (1000px) so YouTube
+   iframes visually align with wide image cards rather than filling the full
+   1200px wide column. */
+.kg-embed-card.kg-width-wide iframe {
+  max-width: 1000px;
 }
 
 /* Horizontal rule */
