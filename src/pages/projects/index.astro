@@ -6,7 +6,7 @@ const GHOST_API_KEY = import.meta.env.GHOST_API_KEY;
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 const res = await fetch(
-  `${GHOST_URL}/ghost/api/content/posts/?key=${GHOST_API_KEY}&include=tags&fields=slug,title,published_at,updated_at&order=updated_at%20desc`,
+  `${GHOST_URL}/ghost/api/content/posts/?key=${GHOST_API_KEY}&include=tags&fields=slug,title,published_at,updated_at,custom_excerpt&order=updated_at%20desc`,
 );
 const { posts: allPosts } = await res.json();
 const posts = allPosts.filter(
@@ -40,7 +40,14 @@ const dateFmt = { day: "numeric", month: "long", year: "numeric" } as const;
         margin: 0;
       }
       .projects li + li {
-        margin-top: 1.2rem;
+        margin-top: 2.4rem;
+      }
+      .projects .excerpt {
+        display: block;
+        font-size: 1.5rem;
+        line-height: 1.5;
+        color: rgba(0, 0, 0, 0.6);
+        margin-top: 0.5rem;
       }
       .projects-intro {
         font-size: 1.7rem;
@@ -132,6 +139,7 @@ const dateFmt = { day: "numeric", month: "long", year: "numeric" } as const;
               <li>
                 <a href={`${base}/${post.slug}/`}>{post.title}</a>
                 <span class="date">{updated}</span>
+                {post.custom_excerpt && <span class="excerpt">{post.custom_excerpt}</span>}
               </li>
             );
           })

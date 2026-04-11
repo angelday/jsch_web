@@ -11,8 +11,8 @@
 ## Deployment
 
 - **Local build + push to `gh-pages` branch** — Ghost is on a private Tailscale network, so GitHub Actions can't build.
-- `./deploy.sh` runs `astro build --base /jsch_web`, then force-pushes `dist/` to `gh-pages`.
-- `--base` is only passed at deploy time; dev runs at `/` (localhost:4321).
+- `./deploy.sh` runs `npx astro build`, then force-pushes `dist/` to `gh-pages`.
+- Site is served at the custom domain `jozsefschaffer.com` root, so no `--base` prefix is needed — links are root-relative in both dev (`localhost:4321`) and prod.
 - `.nojekyll` in `public/` prevents GitHub Pages from ignoring `_astro/` directory.
 - Source code on `main`, built output on `gh-pages` — independent workflows.
 
@@ -98,7 +98,7 @@ public/
 - Uses `<style is:global>` to avoid scoped-style race condition
 
 ### Asset paths
-- All paths use `const base = import.meta.env.BASE_URL.replace(/\/$/, '')` to handle both dev (`/`) and deploy (`/jsch_web`) without double slashes
+- All paths use `const base = import.meta.env.BASE_URL.replace(/\/$/, '')` — resolves to `''` in both dev and prod (no `--base` used), so assets work without double slashes
 
 ## Ghost Content API
 
@@ -129,4 +129,4 @@ Jekyll ignores `_` prefixed directories. Astro outputs CSS to `_astro/`. Must in
 Ghost requires Node 20, 22, or 24. Using nvm (`nvm use 22`). Ghost install path must not contain spaces.
 
 ### Dev vs production asset URLs
-In dev, Ghost URLs are left as `localhost:2368` (Ghost serves directly). In production, rewritten to `BASE_URL`.
+In dev, Ghost URLs are left as-is (Ghost serves directly). In production, the origin is derived from `post.url` (whatever host Ghost is configured with — localhost, Tailscale, etc.) and rewritten to `base`. Deriving from `post.url` instead of `GHOST_URL` keeps builds correct even when Ghost's configured `url` doesn't match the `.env` value.
