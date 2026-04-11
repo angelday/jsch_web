@@ -276,13 +276,6 @@ h3 {
   border-radius: 4px;
 }
 
-/* Wide embeds: cap at Ghost's wide-image natural width (1000px) so YouTube
-   iframes visually align with wide image cards rather than filling the full
-   1200px wide column. */
-.kg-embed-card.kg-width-wide iframe {
-  max-width: 1000px;
-}
-
 /* Horizontal rule */
 .gh-content hr {
   background-color: rgba(0, 0, 0, 0.15);
