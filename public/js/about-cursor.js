@@ -51,7 +51,14 @@ export function initAboutCursor() {
   };
 
   aboutSection.addEventListener("pointerenter", showCursor);
-  aboutSection.addEventListener("pointermove", updatePosition);
+  aboutSection.addEventListener("pointermove", (event) => {
+    if (!isVisible) {
+      showCursor(event);
+      return;
+    }
+
+    updatePosition(event);
+  });
   aboutSection.addEventListener("pointerleave", hideCursor);
   window.addEventListener("blur", hideCursor);
 
