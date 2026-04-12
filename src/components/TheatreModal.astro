@@ -19,6 +19,7 @@ const { base } = Astro.props;
       type="button"
       aria-label="Close about modal"
       data-theatre-modal-close
+      data-about-cursor-active
     >
       <picture class="theatre-modal__close-picture" aria-hidden="true">
         <source
@@ -48,14 +49,14 @@ const { base } = Astro.props;
             aria-hidden="true"
           />
         </div>
-        <header class="theatre-modal__header">
+        <header class="theatre-modal__header" data-about-cursor-select>
           <h2 class="theatre-modal__title" id="about-modal-title">
             Thanks for stopping by!
           </h2>
         </header>
 
         <section class="theatre-modal__section">
-          <div class="theatre-modal__prose">
+          <div class="theatre-modal__prose" data-about-cursor-select>
             <p class="theatre-modal__text">
               I've been designing and building software professionally for 15+
               years. Whether it's evolving what already exists or creating
@@ -79,8 +80,8 @@ const { base } = Astro.props;
         </section>
 
         <section class="theatre-modal__section">
-          <h3 class="theatre-modal__eyebrow">Design? How do I do it?</h3>
-          <div class="theatre-modal__prose">
+          <h3 class="theatre-modal__eyebrow" data-about-cursor-select>Design? How do I do it?</h3>
+          <div class="theatre-modal__prose" data-about-cursor-select>
             <p class="theatre-modal__text">Not screens. Flows.</p>
             <p class="theatre-modal__text">
               Start with a design concept for where we're headed, ideally a
@@ -91,8 +92,8 @@ const { base } = Astro.props;
         </section>
 
         <section class="theatre-modal__section">
-          <h3 class="theatre-modal__eyebrow">A quote I return to often</h3>
-          <blockquote class="theatre-modal__quote">
+          <h3 class="theatre-modal__eyebrow" data-about-cursor-select>A quote I return to often</h3>
+          <blockquote class="theatre-modal__quote" data-about-cursor-select>
             <p class="theatre-modal__text">
               "Most of the things I am most proud of have come from just doing
               the thing
@@ -111,8 +112,8 @@ const { base } = Astro.props;
         </section>
 
         <section class="theatre-modal__section">
-          <h3 class="theatre-modal__title">Questions and Answers</h3>
-          <dl class="theatre-modal__faq">
+          <h3 class="theatre-modal__title" data-about-cursor-select>Questions and Answers</h3>
+          <dl class="theatre-modal__faq" data-about-cursor-select>
             <dt class="theatre-modal__question">
               Did you create this website?
             </dt>
@@ -145,7 +146,7 @@ const { base } = Astro.props;
         </section>
 
         <footer class="theatre-modal__footer">
-          <p class="theatre-modal__signoff">
+          <p class="theatre-modal__signoff" data-about-cursor-select>
             You read it all the way through, yay!
           </p>
           <img
