@@ -27,6 +27,7 @@ export async function getStaticPaths() {
 
 const GHOST_URL = import.meta.env.GHOST_URL;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const assetVersion = '20260413';
 const { post } = Astro.props;
 const isCaseStudy = post.tags?.some((t: any) => t.name === '#case-study');
 const isBlogPost = post.tags?.some((t: any) => t.name.toLowerCase() === 'post');
@@ -163,13 +164,13 @@ if (import.meta.env.PROD) {
     <meta name="viewport" content="width=device-width" />
     <title>{post.title} — József Schaffer</title>
     <meta name="description" content="Staff-level product designer working in complex digital ecosystems. I clarify direction, align teams, and get things done: I design, prototype, code, and stay accountable to outcomes, not decks." />
-    <link rel="icon" href={`${base}/favicon.png`} />
+    <link rel="icon" href={`${base}/favicon.png?v=${assetVersion}`} />
     <meta property="og:type" content="article" />
     <meta property="og:title" content={post.title} />
-    <meta property="og:image" content={`${base}/og-image.png`} />
+    <meta property="og:image" content={`${base}/og-image.png?v=${assetVersion}`} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={post.title} />
-    <meta name="twitter:image" content={`${base}/og-image.png`} />
+    <meta name="twitter:image" content={`${base}/og-image.png?v=${assetVersion}`} />
     <style is:global>
       .case-study .gh-content {
         padding: 14rem 0;
