@@ -46,12 +46,12 @@
   padding: 32px;
   border-radius: var(--hero-radius);
   overflow: hidden;
-  border: 2px solid #d0d0d0;
+  border: 0;
   background: var(--page-bg);
-  color: #000;
-  font-family: "Trial Arlen Light", sans-serif;
+  color: #fff;
+  font-family: "Geist Pixel Square", monospace;
   font-size: var(--type-body-size);
-  font-weight: 100;
+  font-weight: 400;
   line-height: 1.2;
   text-decoration: none;
   text-align: center;
@@ -60,7 +60,6 @@
 
 .section__contact-card:hover,
 .section__contact-card:focus-visible {
-  border: 6px solid #fff;
   outline: none;
 }
 
