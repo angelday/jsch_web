@@ -4,9 +4,14 @@ const GHOST_API_KEY = import.meta.env.GHOST_API_KEY;
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 const res = await fetch(
-  `${GHOST_URL}/ghost/api/content/posts/?key=${GHOST_API_KEY}&include=tags&fields=slug,title,published_at,updated_at,custom_excerpt,feature_image&order=updated_at%20desc`,
+  `${GHOST_URL}/ghost/api/content/posts/?key=${GHOST_API_KEY}&include=tags&fields=slug,title,published_at,updated_at,custom_excerpt,feature_image,url&order=updated_at%20desc`,
 );
 const { posts: allPosts } = await res.json();
+const ghostOrigin = allPosts[0]?.url ? new URL(allPosts[0].url).origin : GHOST_URL;
+const rewriteUrl = (url: string | null) => {
+  if (!url || !import.meta.env.PROD) return url;
+  return url.replace(ghostOrigin, base);
+};
 const dateFmt = { day: "numeric", month: "long", year: "numeric" } as const;
 const visible = allPosts
   .filter((p: any) => !p.tags?.some((t: any) => t.name === "#hidden"))
@@ -14,7 +19,7 @@ const visible = allPosts
     slug: p.slug,
     title: p.title,
     custom_excerpt: p.custom_excerpt ?? null,
-    feature_image: p.feature_image ?? null,
+    feature_image: rewriteUrl(p.feature_image),
     tags: (p.tags ?? []).filter((t: any) => !t.name.startsWith('#')).map((t: any) => t.name),
     published_at: p.published_at,
     updatedLabel: `Updated ${new Date(p.updated_at).toLocaleDateString("en-GB", dateFmt)}`,
@@ -35,7 +40,7 @@ const blogPosts = visible
     <link rel="icon" href={`${base}/favicon.png`} />
     <style is:global>
       body {
-        background-color: #fcf4ee;
+        background-color: #e5e5e5;
         color: #2a1f23;
         font-family: "Bricolage Grotesque", system-ui, -apple-system, sans-serif;
         margin: 0;
