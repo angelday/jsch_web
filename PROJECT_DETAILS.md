@@ -102,7 +102,8 @@ public/
 - **Blockquote conventions:** "Fact sheet" first line → `class="fact-sheet"` card (50% width, centered, plum tint)
 - **"My contribution" list:** `<br>`-separated lines → `<ul>` inside fact sheet
 - **Inline icons:** `{name}` tokens in Ghost prose → inline SVG (e.g. Grafana logo). Ghost strips one layer of braces.
-- **URL rewriting:** `GHOST_URL` → `BASE_URL` in production builds only
+- **URL rewriting (post HTML):** Ghost origin (derived from `post.url`) → `base` in production builds only
+- **URL rewriting (projects index):** Same approach for `feature_image` URLs — Ghost origin derived from the first post's `url` field, rewritten to `base` in production. Without this, feature images 404 on the live site because they point to the Tailscale hostname.
 
 ### Lightbox
 - Always shows image at 100% (natural size) with pan support
@@ -147,4 +148,8 @@ Jekyll ignores `_` prefixed directories. Astro outputs CSS to `_astro/`. Must in
 Ghost requires Node 20, 22, or 24. Using nvm (`nvm use 22`). Ghost install path must not contain spaces.
 
 ### Dev vs production asset URLs
-In dev, Ghost URLs are left as-is (Ghost serves directly). In production, the origin is derived from `post.url` (whatever host Ghost is configured with — localhost, Tailscale, etc.) and rewritten to `base`. Deriving from `post.url` instead of `GHOST_URL` keeps builds correct even when Ghost's configured `url` doesn't match the `.env` value.
+In dev, Ghost URLs are left as-is (Ghost serves directly). In production, the Ghost origin is derived from `post.url` (whatever host Ghost is configured with — localhost, Tailscale, etc.) and rewritten to `base`. This applies in two places:
+- `[slug].astro` — rewrites URLs inside `post.html` (images, links, media)
+- `projects/index.astro` — rewrites `feature_image` URLs on cards
+
+Deriving from `post.url` instead of `GHOST_URL` keeps builds correct even when Ghost's configured `url` doesn't match the `.env` value.
