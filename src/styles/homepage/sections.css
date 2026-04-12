@@ -132,8 +132,8 @@
 
 .section__about-title {
   margin: 0;
-  color: #000;
-  font-family: "Ac437 IBM BIOS Regular", monospace;
+  color: #fff;
+  font-family: "Geist Pixel Square", monospace;
   font-size: var(--type-body-size);
   font-weight: 400;
   line-height: 1;
@@ -143,13 +143,13 @@
   display: grid;
   gap: 1.25rem;
   width: min(860px, 100%);
-  color: #000;
+  color: #fff;
 }
 
 .section__about-text {
   margin: 0;
-  color: #000;
-  font-family: "Ac437 IBM BIOS Regular", monospace;
+  color: #fff;
+  font-family: "Geist Pixel Square", monospace;
   font-size: var(--type-copy-size);
   font-weight: 400;
   line-height: 1.35;
@@ -160,8 +160,8 @@
   position: relative;
   display: inline-block;
   width: fit-content;
-  color: #000;
-  font-family: "Ac437 IBM BIOS Regular", monospace;
+  color: #fff;
+  font-family: "Geist Pixel Square", monospace;
   font-size: var(--type-copy-size);
   font-weight: 400;
   line-height: 1.35;
@@ -180,7 +180,7 @@
 
 .section__about-link:hover,
 .section__about-link:focus-visible {
-  color: #fff;
+  color: #000;
   outline: none;
 }
 

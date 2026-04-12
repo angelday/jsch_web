@@ -223,10 +223,26 @@
 }
 
 .theatre-modal[data-theatre-theme="about"] {
-  --theatre-modal-bg: var(--cga-pink);
-  --theatre-modal-fg: #000;
+  --theatre-modal-bg: var(--cga-cyan);
+  --theatre-modal-fg: #fff;
 }
 
-.theatre-modal[data-theatre-theme="about"] .theatre-modal__title {
-  color: #fff;
+.theatre-modal[data-theatre-theme="about"] .theatre-modal__title,
+.theatre-modal[data-theatre-theme="about"] .theatre-modal__eyebrow,
+.theatre-modal[data-theatre-theme="about"] .theatre-modal__question {
+  color: #000;
+}
+
+.theatre-modal[data-theatre-theme="about"] :where(
+  .theatre-modal__title,
+  .theatre-modal__eyebrow,
+  .theatre-modal__text,
+  .theatre-modal__answer,
+  .theatre-modal__signoff,
+  .theatre-modal__signoff-name,
+  .theatre-modal__quote-attribution,
+  .theatre-modal__question
+) {
+  font-family: "Geist Pixel Square", monospace;
+  font-weight: 400;
 }
