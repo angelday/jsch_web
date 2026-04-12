@@ -7,7 +7,7 @@ import ContactSection from "../components/ContactSection.astro";
 import TheatreModal from "../components/TheatreModal.astro";
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
-const assetVersion = "20260413";
+const assetVersion = "20260413-2";
 ---
 
 <html lang="en">
@@ -17,7 +17,7 @@ const assetVersion = "20260413";
     <title>József Schaffer — Product Designer</title>
     <meta
       name="description"
-      content="Product designer on a CGA monitor by day. By night aspiring writer and pixel artist"
+      content="Product designer on a CGA monitor by day. By night aspiring writer and pixel artist."
     />
     <link rel="icon" href={`${base}/favicon.png?v=${assetVersion}`} />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -25,12 +25,18 @@ const assetVersion = "20260413";
     <meta property="og:title" content="József Schaffer — Product Designer" />
     <meta
       property="og:description"
-      content="Product designer on a CGA monitor by day. By night aspiring writer and pixel artist"
+      content="Product designer on a CGA monitor by day. By night aspiring writer and pixel artist."
     />
-    <meta property="og:image" content={`${base}/og-image.png?v=${assetVersion}`} />
+    <meta
+      property="og:image"
+      content={`${base}/og-image.png?v=${assetVersion}`}
+    />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="József Schaffer — Product Designer" />
-    <meta name="twitter:image" content={`${base}/og-image.png?v=${assetVersion}`} />
+    <meta
+      name="twitter:image"
+      content={`${base}/og-image.png?v=${assetVersion}`}
+    />
   </head>
   <body data-about-cursor-root>
     <main class="page-shell">

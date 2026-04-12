@@ -27,7 +27,7 @@ export async function getStaticPaths() {
 
 const GHOST_URL = import.meta.env.GHOST_URL;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const assetVersion = '20260413';
+const assetVersion = '20260413-2';
 const { post } = Astro.props;
 const isCaseStudy = post.tags?.some((t: any) => t.name === '#case-study');
 const isBlogPost = post.tags?.some((t: any) => t.name.toLowerCase() === 'post');

@@ -2,7 +2,7 @@
 const GHOST_URL = import.meta.env.GHOST_URL;
 const GHOST_API_KEY = import.meta.env.GHOST_API_KEY;
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
-const assetVersion = "20260413";
+const assetVersion = "20260413-2";
 
 const res = await fetch(
   `${GHOST_URL}/ghost/api/content/posts/?key=${GHOST_API_KEY}&include=tags&fields=slug,title,published_at,updated_at,custom_excerpt,feature_image,url&order=updated_at%20desc`,
