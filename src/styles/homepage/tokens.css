@@ -1,6 +1,5 @@
 :root {
-  --page-bg: #000;
-  /* e5e5e5 */
+  --page-bg: #aaaaaa;
   --layout-max: 1200px;
   --shell-padding: 32px;
   --section-height: calc(90svh - var(--shell-padding));
