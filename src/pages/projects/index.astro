@@ -7,7 +7,9 @@ const res = await fetch(
   `${GHOST_URL}/ghost/api/content/posts/?key=${GHOST_API_KEY}&include=tags&fields=slug,title,published_at,updated_at,custom_excerpt,feature_image,url&order=updated_at%20desc`,
 );
 const { posts: allPosts } = await res.json();
-const ghostOrigin = allPosts[0]?.url ? new URL(allPosts[0].url).origin : GHOST_URL;
+const ghostOrigin = allPosts[0]?.url
+  ? new URL(allPosts[0].url).origin
+  : GHOST_URL;
 const rewriteUrl = (url: string | null) => {
   if (!url || !import.meta.env.PROD) return url;
   return url.replace(ghostOrigin, base);
@@ -20,16 +22,26 @@ const visible = allPosts
     title: p.title,
     custom_excerpt: p.custom_excerpt ?? null,
     feature_image: rewriteUrl(p.feature_image),
-    tags: (p.tags ?? []).filter((t: any) => !t.name.startsWith('#')).map((t: any) => t.name),
+    tags: (p.tags ?? [])
+      .filter((t: any) => !t.name.startsWith("#"))
+      .map((t: any) => t.name),
     published_at: p.published_at,
     updatedLabel: `Updated ${new Date(p.updated_at).toLocaleDateString("en-GB", dateFmt)}`,
-    publishedLabel: new Date(p.published_at).toLocaleDateString("en-GB", dateFmt),
+    publishedLabel: new Date(p.published_at).toLocaleDateString(
+      "en-GB",
+      dateFmt,
+    ),
   }));
 
-const cards = visible.filter((p: any) => !p.tags.some((t: string) => t.toLowerCase() === 'post'));
+const cards = visible.filter(
+  (p: any) => !p.tags.some((t: string) => t.toLowerCase() === "post"),
+);
 const blogPosts = visible
-  .filter((p: any) => p.tags.some((t: string) => t.toLowerCase() === 'post'))
-  .sort((a: any, b: any) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime());
+  .filter((p: any) => p.tags.some((t: string) => t.toLowerCase() === "post"))
+  .sort(
+    (a: any, b: any) =>
+      new Date(b.published_at).getTime() - new Date(a.published_at).getTime(),
+  );
 ---
 
 <html lang="en">
@@ -38,12 +50,50 @@ const blogPosts = visible
     <meta name="viewport" content="width=device-width" />
     <title>Projects & Blog — József Schaffer</title>
     <link rel="icon" href={`${base}/favicon.png`} />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&display=swap" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&display=swap"
+    />
     <style is:global>
+      @font-face {
+        font-family: "Geist Pixel Square";
+        src: url("/fonts/GeistPixel-Square.woff2") format("woff2");
+        font-weight: 400;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Geist Pixel Circle";
+        src: url("/fonts/GeistPixel-Circle.woff2") format("woff2");
+        font-weight: 400;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Geist Pixel Grid";
+        src: url("/fonts/GeistPixel-Grid.woff2") format("woff2");
+        font-weight: 400;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Geist Pixel Line";
+        src: url("/fonts/GeistPixel-Line.woff2") format("woff2");
+        font-weight: 400;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Geist Pixel Triangle";
+        src: url("/fonts/GeistPixel-Triangle.woff2") format("woff2");
+        font-weight: 400;
+        font-display: swap;
+      }
+
       body {
         background-color: #e5e5e5;
         color: #2a1f23;
-        font-family: "Bricolage Grotesque", system-ui, -apple-system, sans-serif;
+        font-family:
+          "Bricolage Grotesque",
+          system-ui,
+          -apple-system,
+          sans-serif;
         margin: 0;
       }
 
@@ -56,12 +106,12 @@ const blogPosts = visible
       }
 
       .projects-shell h1 {
-        font-family: "Bricolage Grotesque", system-ui, sans-serif;
+        font-family: "Geist Pixel Line", system-ui, sans-serif;
         font-size: 5.4rem;
-        font-weight: 600;
+        font-weight: 400;
         letter-spacing: -0.02em;
         margin: 0 0 1.4rem;
-        color: #5c2a3e;
+        color: #aa00aa;
       }
 
       .projects-intro {
@@ -93,15 +143,15 @@ const blogPosts = visible
         text-decoration: none;
         color: inherit;
         background: rgba(255, 255, 255, 0.55);
-        border: 1px solid rgba(92, 42, 62, 0.12);
+        border: 1px solid rgba(0, 0, 0, 0.12);
         border-radius: 18px;
         overflow: hidden;
         backdrop-filter: blur(12px) saturate(1.2);
         -webkit-backdrop-filter: blur(12px) saturate(1.2);
         box-shadow:
           0 1px 0 rgba(255, 255, 255, 0.7) inset,
-          0 18px 40px -24px rgba(92, 42, 62, 0.28),
-          0 4px 12px -6px rgba(92, 42, 62, 0.12);
+          0 18px 40px -24px rgba(0, 0, 0, 0.22),
+          0 4px 12px -6px rgba(0, 0, 0, 0.12);
         transition:
           transform 0.35s ease,
           box-shadow 0.35s ease,
@@ -110,11 +160,11 @@ const blogPosts = visible
 
       .project-card__link:hover {
         transform: translateY(-4px);
-        border-color: rgba(92, 42, 62, 0.28);
+        border-color: rgba(0, 0, 0, 0.22);
         box-shadow:
           0 1px 0 rgba(255, 255, 255, 0.8) inset,
-          0 26px 48px -24px rgba(92, 42, 62, 0.38),
-          0 6px 18px -8px rgba(92, 42, 62, 0.2);
+          0 26px 48px -24px rgba(0, 0, 0, 0.3),
+          0 6px 18px -8px rgba(0, 0, 0, 0.16);
       }
 
       .project-card__canvas {
@@ -141,18 +191,18 @@ const blogPosts = visible
       }
 
       .project-card__title {
-        font-family: "Bricolage Grotesque", system-ui, sans-serif;
-        font-size: 2.1rem;
-        font-weight: 600;
+        font-family: "Geist Pixel Line", system-ui, sans-serif;
+        font-size: 1.9rem;
+        font-weight: 400;
         line-height: 1.25;
         letter-spacing: -0.01em;
-        color: #2a1f23;
+        color: #2a0a2a;
         margin: 0 0 0.8rem;
       }
 
       .project-card__excerpt {
         font-family: "Literata", Georgia, serif;
-        font-size: 1.5rem;
+        font-size: 1.35rem;
         line-height: 1.5;
         color: rgba(42, 31, 35, 0.62);
         margin: 0 0 1.4rem;
@@ -173,7 +223,7 @@ const blogPosts = visible
       .tag-pill {
         display: inline-block;
         font-family: "Bricolage Grotesque", system-ui, sans-serif;
-        font-size: 1.1rem;
+        font-size: 0.85rem;
         font-weight: 500;
         letter-spacing: 0.04em;
         text-transform: uppercase;
@@ -185,7 +235,7 @@ const blogPosts = visible
 
       .project-card__date {
         font-family: "Bricolage Grotesque", system-ui, sans-serif;
-        font-size: 1.2rem;
+        font-size: 0.92rem;
         letter-spacing: 0.06em;
         text-transform: uppercase;
         color: rgba(42, 31, 35, 0.42);
@@ -197,11 +247,11 @@ const blogPosts = visible
       }
 
       .blog-section__title {
-        font-family: "Bricolage Grotesque", system-ui, sans-serif;
+        font-family: "Geist Pixel Line", system-ui, sans-serif;
         font-size: 3.2rem;
-        font-weight: 600;
+        font-weight: 400;
         letter-spacing: -0.02em;
-        color: #5c2a3e;
+        color: #aa00aa;
         margin: 0 0 2.4rem;
       }
 
@@ -220,15 +270,15 @@ const blogPosts = visible
         text-decoration: none;
         color: inherit;
         background: rgba(255, 255, 255, 0.55);
-        border: 1px solid rgba(92, 42, 62, 0.12);
+        border: 1px solid rgba(0, 0, 0, 0.12);
         border-radius: 18px;
         overflow: hidden;
         backdrop-filter: blur(12px) saturate(1.2);
         -webkit-backdrop-filter: blur(12px) saturate(1.2);
         box-shadow:
           0 1px 0 rgba(255, 255, 255, 0.7) inset,
-          0 18px 40px -24px rgba(92, 42, 62, 0.28),
-          0 4px 12px -6px rgba(92, 42, 62, 0.12);
+          0 18px 40px -24px rgba(0, 0, 0, 0.22),
+          0 4px 12px -6px rgba(0, 0, 0, 0.12);
         transition:
           transform 0.35s ease,
           box-shadow 0.35s ease,
@@ -237,11 +287,11 @@ const blogPosts = visible
 
       .blog-card__link:hover {
         transform: translateY(-2px);
-        border-color: rgba(92, 42, 62, 0.28);
+        border-color: rgba(0, 0, 0, 0.22);
         box-shadow:
           0 1px 0 rgba(255, 255, 255, 0.8) inset,
-          0 26px 48px -24px rgba(92, 42, 62, 0.38),
-          0 6px 18px -8px rgba(92, 42, 62, 0.2);
+          0 26px 48px -24px rgba(0, 0, 0, 0.3),
+          0 6px 18px -8px rgba(0, 0, 0, 0.16);
       }
 
       .blog-card__thumb {
@@ -266,12 +316,12 @@ const blogPosts = visible
       }
 
       .blog-card__title {
-        font-family: "Bricolage Grotesque", system-ui, sans-serif;
+        font-family: "Geist Pixel Line", system-ui, sans-serif;
         font-size: 2rem;
-        font-weight: 600;
+        font-weight: 400;
         line-height: 1.25;
         letter-spacing: -0.01em;
-        color: #2a1f23;
+        color: #2a0a2a;
         margin: 0 0 0.5rem;
       }
 
@@ -285,7 +335,7 @@ const blogPosts = visible
 
       .blog-card__date {
         font-family: "Bricolage Grotesque", system-ui, sans-serif;
-        font-size: 1.2rem;
+        font-size: 0.92rem;
         letter-spacing: 0.06em;
         text-transform: uppercase;
         color: rgba(42, 31, 35, 0.42);
@@ -310,7 +360,7 @@ const blogPosts = visible
         align-items: center;
         gap: 0.5em;
         padding: 0.6em 1.1em;
-        background: rgba(92, 42, 62, 0.12);
+        background: rgba(0, 0, 0, 0.12);
         backdrop-filter: blur(12px) saturate(1.4);
         -webkit-backdrop-filter: blur(12px) saturate(1.4);
         border: 2px solid rgba(42, 31, 35, 0.8);
@@ -373,7 +423,7 @@ const blogPosts = visible
       <span>jozsefschaffer.com</span>
     </a>
     <main class="projects-shell">
-      <h1>Projects & Blog</h1>
+      <h1>Projects</h1>
       <p class="projects-intro">
         A mix of side projects, hobby builds, and various tech interests of
         mine. I hope you find some of these useful.
@@ -385,16 +435,29 @@ const blogPosts = visible
               <a class="project-card__link" href={`${base}/${post.slug}/`}>
                 <div class="project-card__canvas">
                   {post.feature_image && (
-                    <img class="project-card__img" src={post.feature_image} alt="" loading="lazy" />
+                    <img
+                      class="project-card__img"
+                      src={post.feature_image}
+                      alt=""
+                      loading="lazy"
+                    />
                   )}
                 </div>
                 <div class="project-card__content">
                   <h2 class="project-card__title">{post.title}</h2>
-                  {post.tags.filter((t: string) => t.toLowerCase() !== 'post').length > 0 && (
+                  {post.tags.filter((t: string) => t.toLowerCase() !== "post")
+                    .length > 0 && (
                     <div class="project-card__tags">
-                      {post.tags.filter((t: string) => t.toLowerCase() !== 'post').map((tag: string) => (
-                        <span class="tag-pill" data-tag={tag.toLowerCase().replace(/\s+/g, '-')}>{tag}</span>
-                      ))}
+                      {post.tags
+                        .filter((t: string) => t.toLowerCase() !== "post")
+                        .map((tag: string) => (
+                          <span
+                            class="tag-pill"
+                            data-tag={tag.toLowerCase().replace(/\s+/g, "-")}
+                          >
+                            {tag}
+                          </span>
+                        ))}
                     </div>
                   )}
                   {post.custom_excerpt && (
@@ -408,31 +471,33 @@ const blogPosts = visible
         }
       </ul>
 
-      {blogPosts.length > 0 && (
-        <section class="blog-section">
-          <h2 class="blog-section__title">Blog</h2>
-          <ul class="blog-list">
-            {blogPosts.map((post: any) => (
-              <li class="blog-card">
-                <a class="blog-card__link" href={`${base}/${post.slug}/`}>
-                  {post.feature_image && (
-                    <div class="blog-card__thumb">
-                      <img src={post.feature_image} alt="" loading="lazy" />
-                    </div>
-                  )}
-                  <div class="blog-card__body">
-                    <h3 class="blog-card__title">{post.title}</h3>
-                    {post.custom_excerpt && (
-                      <p class="blog-card__excerpt">{post.custom_excerpt}</p>
+      {
+        blogPosts.length > 0 && (
+          <section class="blog-section">
+            <h2 class="blog-section__title">Blog</h2>
+            <ul class="blog-list">
+              {blogPosts.map((post: any) => (
+                <li class="blog-card">
+                  <a class="blog-card__link" href={`${base}/${post.slug}/`}>
+                    {post.feature_image && (
+                      <div class="blog-card__thumb">
+                        <img src={post.feature_image} alt="" loading="lazy" />
+                      </div>
                     )}
-                    <span class="blog-card__date">{post.publishedLabel}</span>
-                  </div>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
+                    <div class="blog-card__body">
+                      <h3 class="blog-card__title">{post.title}</h3>
+                      {post.custom_excerpt && (
+                        <p class="blog-card__excerpt">{post.custom_excerpt}</p>
+                      )}
+                      <span class="blog-card__date">{post.publishedLabel}</span>
+                    </div>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
     </main>
   </body>
 </html>

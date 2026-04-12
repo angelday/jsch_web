@@ -1,5 +1,12 @@
-/* Blog post — blush peach background, plum plain headings, matches
+/* Blog post — gray background, Geist Pixel Line headings, matches
    the /projects index so the whole reading flow feels of a piece. */
+
+@font-face {
+  font-family: "Geist Pixel Line";
+  src: url("/fonts/GeistPixel-Line.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
 
 body.post {
   background-color: #e5e5e5;
@@ -11,12 +18,12 @@ body.post {
 }
 
 .post-header h1 {
-  font-family: 'Bricolage Grotesque', system-ui, -apple-system, sans-serif;
+  font-family: "Geist Pixel Line", system-ui, -apple-system, sans-serif;
   font-size: 5.4rem;
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: -0.02em;
   line-height: 1.05;
-  color: #5C2A3E;
+  color: #aa00aa;
   margin: 0 0 1.2rem;
 }
 
@@ -26,6 +33,10 @@ body.post {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: rgba(42, 31, 35, 0.42);
+}
+
+body.post .gh-content a {
+  color: #00aaaa;
 }
 
 @media (max-width: 600px) {
