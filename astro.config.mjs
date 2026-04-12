@@ -24,6 +24,12 @@ function ghostAssets() {
           const escapedUrl = GHOST_URL.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
           const imageUrls = [...post.html.matchAll(new RegExp(escapedUrl + '(\\/content\\/(?:images|media)\\/[^"\'\\s]+)', 'g'))];
 
+          // Also grab the feature image if it points to Ghost
+          if (post.feature_image) {
+            const fiMatch = post.feature_image.match(new RegExp(escapedUrl + '(\\/content\\/(?:images|media)\\/[^"\'\\s]+)'));
+            if (fiMatch) imageUrls.push(fiMatch);
+          }
+
           for (const match of imageUrls) {
             const localPath = match[1];
             const destPath = path.join(process.cwd(), 'public', localPath);
