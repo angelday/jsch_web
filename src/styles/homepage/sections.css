@@ -79,8 +79,8 @@
 
 .page-byline {
   margin: 0;
-  color: #aaa;
-  font-family: Inter, system-ui, sans-serif;
+  color: #000;
+  font-family: "Geist Pixel Square", monospace;
   font-size: var(--type-copy-size);
   font-weight: 400;
   line-height: 1.4;
@@ -112,8 +112,8 @@
 
 .section__copy-text {
   margin: 0;
-  color: var(--ikea-blue);
-  font-family: "Noto IKEA Latin", Inter, sans-serif;
+  color: #fff;
+  font-family: "Geist Pixel Square", sans-serif;
   font-size: var(--type-body-size);
   font-weight: 400;
   letter-spacing: -0.03em;

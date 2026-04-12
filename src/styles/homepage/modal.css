@@ -187,7 +187,7 @@
 
 .theatre-modal__signoff-gif {
   display: block;
-  width: 504px;
+  width: 210px;
   max-width: 100%;
   height: auto;
   image-rendering: pixelated;
@@ -233,16 +233,14 @@
   color: #000;
 }
 
-.theatre-modal[data-theatre-theme="about"] :where(
-  .theatre-modal__title,
+.theatre-modal[data-theatre-theme="about"] :where(.theatre-modal__title,
   .theatre-modal__eyebrow,
   .theatre-modal__text,
   .theatre-modal__answer,
   .theatre-modal__signoff,
   .theatre-modal__signoff-name,
   .theatre-modal__quote-attribution,
-  .theatre-modal__question
-) {
+  .theatre-modal__question) {
   font-family: "Geist Pixel Square", monospace;
   font-weight: 400;
 }
