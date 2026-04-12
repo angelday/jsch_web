@@ -29,7 +29,8 @@
 src/
   pages/
     index.astro          — homepage (imports components)
-    [slug].astro         — Ghost post pages (case studies)
+    projects/index.astro — projects grid + blog list (split by "Post" tag)
+    [slug].astro         — Ghost post pages (blog posts, projects, case studies)
   components/
     Hero.astro           — hero section with WebGL shader
     IkeaSection.astro    — IKEA case study preview + iframe
@@ -64,7 +65,24 @@ public/
 - Fonts: Trial Arlen Black/Light, Ac437 IBM BIOS, PP Neue Machina Inktrap, Noto IKEA Latin
 - All JS is framework-agnostic ES modules, loaded via `<script is:inline type="module">`
 
-## Case Study Pages (Ghost content)
+## Content Types & Ghost Tags
+
+### Control tags (internal, `#`-prefixed)
+- `#case-study` — renders the post as a case study (no header, wider padding, fact-sheet card support). Applied via `body.case-study` class.
+- `#hidden` — excludes the post from the `/projects/` index entirely.
+
+### Content type tags (user-facing)
+- **Post** — blog entry. Displayed in the "Blog" section of `/projects/` as a horizontal card. Sorted by **published date**. The published date is canonical — no "updated" label.
+- **App** — a project/tool. Displayed as a vertical card in the "Projects" grid. Sorted by **updated date**. Card shows "Updated [date]". Post page shows "Originally published [date] · Updated [date]" when dates differ.
+- **Knowledge Base** — reference/guide content. Same display rules as App (project card + updated date convention).
+
+### Date convention
+- **Blog posts** (tagged "Post"): published date only, everywhere (card + post page).
+- **Projects** (everything else): living documents, updated over time.
+  - Card: "Updated [date]"
+  - Post page byline: "Originally published [date] · Updated [date]" (collapses to just the published date if never updated)
+
+## Post & Case Study Pages (Ghost content)
 
 ### Design language
 - Fonts: Bricolage Grotesque (headings) + Literata (body) via Google Fonts

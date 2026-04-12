@@ -1,76 +1,300 @@
 ---
-import "../../styles/ghost-content.css";
-
 const GHOST_URL = import.meta.env.GHOST_URL;
 const GHOST_API_KEY = import.meta.env.GHOST_API_KEY;
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 const res = await fetch(
-  `${GHOST_URL}/ghost/api/content/posts/?key=${GHOST_API_KEY}&include=tags&fields=slug,title,published_at,updated_at,custom_excerpt&order=updated_at%20desc`,
+  `${GHOST_URL}/ghost/api/content/posts/?key=${GHOST_API_KEY}&include=tags&fields=slug,title,published_at,updated_at,custom_excerpt,feature_image&order=updated_at%20desc`,
 );
 const { posts: allPosts } = await res.json();
-const posts = allPosts.filter(
-  (p: any) => !p.tags?.some((t: any) => t.name.toLowerCase() === "hidden"),
-);
 const dateFmt = { day: "numeric", month: "long", year: "numeric" } as const;
+const visible = allPosts
+  .filter((p: any) => !p.tags?.some((t: any) => t.name === "#hidden"))
+  .map((p: any) => ({
+    slug: p.slug,
+    title: p.title,
+    custom_excerpt: p.custom_excerpt ?? null,
+    feature_image: p.feature_image ?? null,
+    tags: (p.tags ?? []).filter((t: any) => !t.name.startsWith('#')).map((t: any) => t.name),
+    published_at: p.published_at,
+    updatedLabel: `Updated ${new Date(p.updated_at).toLocaleDateString("en-GB", dateFmt)}`,
+    publishedLabel: new Date(p.published_at).toLocaleDateString("en-GB", dateFmt),
+  }));
+
+const cards = visible.filter((p: any) => !p.tags.some((t: string) => t.toLowerCase() === 'post'));
+const blogPosts = visible
+  .filter((p: any) => p.tags.some((t: string) => t.toLowerCase() === 'post'))
+  .sort((a: any, b: any) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime());
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>Projects — József Schaffer</title>
+    <title>Projects & Blog — József Schaffer</title>
     <link rel="icon" href={`${base}/favicon.png`} />
     <style is:global>
       body {
-        background-color: #fff;
+        background-color: #fcf4ee;
+        color: #2a1f23;
+        font-family: "Bricolage Grotesque", system-ui, -apple-system, sans-serif;
+        margin: 0;
       }
-      .projects {
-        max-width: 720px;
+
+      .projects-shell {
+        max-width: 1120px;
         margin: 0 auto;
-        padding: 8rem 24px;
+        padding: 12rem 32px 10rem;
+        position: relative;
+        z-index: 2;
       }
-      .projects h1 {
-        font-size: 3.6rem;
-        margin: 0 0 2rem;
+
+      .projects-shell h1 {
+        font-family: "Bricolage Grotesque", system-ui, sans-serif;
+        font-size: 5.4rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        margin: 0 0 1.4rem;
+        color: #5c2a3e;
       }
-      .projects ul {
+
+      .projects-intro {
+        font-family: "Literata", Georgia, serif;
+        font-size: 1.9rem;
+        line-height: 1.55;
+        color: rgba(42, 31, 35, 0.65);
+        margin: 0 0 6rem;
+        max-width: 62ch;
+      }
+
+      .projects-grid {
         list-style: none;
         padding: 0;
         margin: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2.4rem;
       }
-      .projects li + li {
-        margin-top: 2.4rem;
+
+      .project-card {
+        position: relative;
       }
-      .projects .excerpt {
+
+      .project-card__link {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        text-decoration: none;
+        color: inherit;
+        background: rgba(255, 255, 255, 0.55);
+        border: 1px solid rgba(92, 42, 62, 0.12);
+        border-radius: 18px;
+        overflow: hidden;
+        backdrop-filter: blur(12px) saturate(1.2);
+        -webkit-backdrop-filter: blur(12px) saturate(1.2);
+        box-shadow:
+          0 1px 0 rgba(255, 255, 255, 0.7) inset,
+          0 18px 40px -24px rgba(92, 42, 62, 0.28),
+          0 4px 12px -6px rgba(92, 42, 62, 0.12);
+        transition:
+          transform 0.35s ease,
+          box-shadow 0.35s ease,
+          border-color 0.35s ease;
+      }
+
+      .project-card__link:hover {
+        transform: translateY(-4px);
+        border-color: rgba(92, 42, 62, 0.28);
+        box-shadow:
+          0 1px 0 rgba(255, 255, 255, 0.8) inset,
+          0 26px 48px -24px rgba(92, 42, 62, 0.38),
+          0 6px 18px -8px rgba(92, 42, 62, 0.2);
+      }
+
+      .project-card__canvas {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 5 / 3;
+        overflow: hidden;
+        background: linear-gradient(
+          180deg,
+          rgba(252, 220, 203, 0.55),
+          rgba(252, 244, 238, 0) 80%
+        );
+      }
+
+      .project-card__img {
         display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .project-card__content {
+        padding: 2rem 2.2rem 2.4rem;
+      }
+
+      .project-card__title {
+        font-family: "Bricolage Grotesque", system-ui, sans-serif;
+        font-size: 2.1rem;
+        font-weight: 600;
+        line-height: 1.25;
+        letter-spacing: -0.01em;
+        color: #2a1f23;
+        margin: 0 0 0.8rem;
+      }
+
+      .project-card__excerpt {
+        font-family: "Literata", Georgia, serif;
         font-size: 1.5rem;
         line-height: 1.5;
-        color: rgba(0, 0, 0, 0.6);
-        margin-top: 0.5rem;
+        color: rgba(42, 31, 35, 0.62);
+        margin: 0 0 1.4rem;
       }
-      .projects-intro {
-        font-size: 1.7rem;
-        color: rgba(0, 0, 0, 0.55);
-        margin: 0 0 3rem;
-        line-height: 1.5;
+
+      /* Tag pill token */
+      :root {
+        --tag-color: rgba(42, 31, 35, 0.42);
       }
-      .projects a {
-        font-size: 1.8rem;
-        color: #2a1f23;
+
+      .project-card__tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 0.6rem;
+      }
+
+      .tag-pill {
+        display: inline-block;
+        font-family: "Bricolage Grotesque", system-ui, sans-serif;
+        font-size: 1.1rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        padding: 0.25em 0.7em;
+        border-radius: 999px;
+        border: 1px solid var(--tag-color);
+        color: var(--tag-color);
+      }
+
+      .project-card__date {
+        font-family: "Bricolage Grotesque", system-ui, sans-serif;
+        font-size: 1.2rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: rgba(42, 31, 35, 0.42);
+      }
+
+      /* Blog section */
+      .blog-section {
+        margin-top: 8rem;
+      }
+
+      .blog-section__title {
+        font-family: "Bricolage Grotesque", system-ui, sans-serif;
+        font-size: 3.2rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        color: #5c2a3e;
+        margin: 0 0 2.4rem;
+      }
+
+      .blog-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .blog-card__link {
+        display: flex;
+        gap: 0;
         text-decoration: none;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-        padding-bottom: 0.1em;
-        transition: border-color 0.15s;
+        color: inherit;
+        background: rgba(255, 255, 255, 0.55);
+        border: 1px solid rgba(92, 42, 62, 0.12);
+        border-radius: 18px;
+        overflow: hidden;
+        backdrop-filter: blur(12px) saturate(1.2);
+        -webkit-backdrop-filter: blur(12px) saturate(1.2);
+        box-shadow:
+          0 1px 0 rgba(255, 255, 255, 0.7) inset,
+          0 18px 40px -24px rgba(92, 42, 62, 0.28),
+          0 4px 12px -6px rgba(92, 42, 62, 0.12);
+        transition:
+          transform 0.35s ease,
+          box-shadow 0.35s ease,
+          border-color 0.35s ease;
       }
-      .projects a:hover {
-        border-color: #5c2a3e;
+
+      .blog-card__link:hover {
+        transform: translateY(-2px);
+        border-color: rgba(92, 42, 62, 0.28);
+        box-shadow:
+          0 1px 0 rgba(255, 255, 255, 0.8) inset,
+          0 26px 48px -24px rgba(92, 42, 62, 0.38),
+          0 6px 18px -8px rgba(92, 42, 62, 0.2);
       }
-      .projects .date {
-        font-size: 1.4rem;
-        color: rgba(0, 0, 0, 0.4);
-        margin-left: 0.75em;
+
+      .blog-card__thumb {
+        flex-shrink: 0;
+        width: 220px;
+        overflow: hidden;
       }
+
+      .blog-card__thumb img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .blog-card__body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 1.8rem 2.2rem;
+        min-width: 0;
+      }
+
+      .blog-card__title {
+        font-family: "Bricolage Grotesque", system-ui, sans-serif;
+        font-size: 2rem;
+        font-weight: 600;
+        line-height: 1.25;
+        letter-spacing: -0.01em;
+        color: #2a1f23;
+        margin: 0 0 0.5rem;
+      }
+
+      .blog-card__excerpt {
+        font-family: "Literata", Georgia, serif;
+        font-size: 1.45rem;
+        line-height: 1.5;
+        color: rgba(42, 31, 35, 0.62);
+        margin: 0 0 1rem;
+      }
+
+      .blog-card__date {
+        font-family: "Bricolage Grotesque", system-ui, sans-serif;
+        font-size: 1.2rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: rgba(42, 31, 35, 0.42);
+      }
+
+      @media (max-width: 600px) {
+        .blog-card__link {
+          flex-direction: column;
+        }
+        .blog-card__thumb {
+          width: 100%;
+          aspect-ratio: 5 / 3;
+        }
+      }
+
       .back-nav {
         position: fixed;
         top: 24px;
@@ -114,6 +338,26 @@ const dateFmt = { day: "numeric", month: "long", year: "numeric" } as const;
           top: 16px;
           left: 16px;
         }
+        .projects-shell {
+          padding: 10rem 20px 8rem;
+        }
+        .projects-shell h1 {
+          font-size: 3.8rem;
+        }
+        .projects-intro {
+          font-size: 1.6rem;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .project-card__link,
+        .blog-card__link {
+          transition: none;
+        }
+        .project-card__link:hover,
+        .blog-card__link:hover {
+          transform: none;
+        }
       }
     </style>
   </head>
@@ -122,29 +366,67 @@ const dateFmt = { day: "numeric", month: "long", year: "numeric" } as const;
       <span class="back-nav-arrow">←</span>
       <span>jozsefschaffer.com</span>
     </a>
-    <div class="projects">
-      <h1>Projects & Posts</h1>
+    <main class="projects-shell">
+      <h1>Projects & Blog</h1>
       <p class="projects-intro">
         A mix of side projects, hobby builds, and various tech interests of
         mine. I hope you find some of these useful.
       </p>
-      <ul>
+      <ul class="projects-grid">
         {
-          posts.map((post: any) => {
-            const updated = new Date(post.updated_at).toLocaleDateString(
-              "en-GB",
-              dateFmt,
-            );
-            return (
-              <li>
-                <a href={`${base}/${post.slug}/`}>{post.title}</a>
-                <span class="date">{updated}</span>
-                {post.custom_excerpt && <span class="excerpt">{post.custom_excerpt}</span>}
-              </li>
-            );
-          })
+          cards.map((post: any) => (
+            <li class="project-card">
+              <a class="project-card__link" href={`${base}/${post.slug}/`}>
+                <div class="project-card__canvas">
+                  {post.feature_image && (
+                    <img class="project-card__img" src={post.feature_image} alt="" loading="lazy" />
+                  )}
+                </div>
+                <div class="project-card__content">
+                  <h2 class="project-card__title">{post.title}</h2>
+                  {post.tags.filter((t: string) => t.toLowerCase() !== 'post').length > 0 && (
+                    <div class="project-card__tags">
+                      {post.tags.filter((t: string) => t.toLowerCase() !== 'post').map((tag: string) => (
+                        <span class="tag-pill" data-tag={tag.toLowerCase().replace(/\s+/g, '-')}>{tag}</span>
+                      ))}
+                    </div>
+                  )}
+                  {post.custom_excerpt && (
+                    <p class="project-card__excerpt">{post.custom_excerpt}</p>
+                  )}
+                  <span class="project-card__date">{post.updatedLabel}</span>
+                </div>
+              </a>
+            </li>
+          ))
         }
       </ul>
-    </div>
+
+      {blogPosts.length > 0 && (
+        <section class="blog-section">
+          <h2 class="blog-section__title">Blog</h2>
+          <ul class="blog-list">
+            {blogPosts.map((post: any) => (
+              <li class="blog-card">
+                <a class="blog-card__link" href={`${base}/${post.slug}/`}>
+                  {post.feature_image && (
+                    <div class="blog-card__thumb">
+                      <img src={post.feature_image} alt="" loading="lazy" />
+                    </div>
+                  )}
+                  <div class="blog-card__body">
+                    <h3 class="blog-card__title">{post.title}</h3>
+                    {post.custom_excerpt && (
+                      <p class="blog-card__excerpt">{post.custom_excerpt}</p>
+                    )}
+                    <span class="blog-card__date">{post.publishedLabel}</span>
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+    </main>
   </body>
 </html>

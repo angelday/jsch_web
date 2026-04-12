@@ -28,13 +28,17 @@ export async function getStaticPaths() {
 const GHOST_URL = import.meta.env.GHOST_URL;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const { post } = Astro.props;
-const isCaseStudy = post.tags?.some((t: any) => t.name.toLowerCase() === 'case study');
+const isCaseStudy = post.tags?.some((t: any) => t.name === '#case-study');
+const isBlogPost = post.tags?.some((t: any) => t.name.toLowerCase() === 'post');
 const authorName = post.authors?.[0]?.name;
 const dateFmt = { day: 'numeric', month: 'long', year: 'numeric' } as const;
-const displayDateSource = post.updated_at || post.published_at;
-const displayDate = displayDateSource
-  ? new Date(displayDateSource).toLocaleDateString('en-GB', dateFmt)
+const publishedDate = post.published_at
+  ? new Date(post.published_at).toLocaleDateString('en-GB', dateFmt)
   : '';
+const updatedDate = post.updated_at
+  ? new Date(post.updated_at).toLocaleDateString('en-GB', dateFmt)
+  : '';
+const hasBeenUpdated = !isBlogPost && publishedDate && updatedDate && publishedDate !== updatedDate;
 
 /**
  * Ghost alt-text conventions (signals stripped from output, never visible to users):
@@ -230,8 +234,16 @@ if (import.meta.env.PROD) {
             <h1>{post.title}</h1>
             <div class="post-byline">
               {authorName && <span>{authorName}</span>}
-              {authorName && displayDate && <span> · </span>}
-              {displayDate && <span>{displayDate}</span>}
+              {authorName && publishedDate && <span> · </span>}
+              {isBlogPost ? (
+                publishedDate && <span>{publishedDate}</span>
+              ) : (
+                <>
+                  {hasBeenUpdated && publishedDate && <span>Originally published {publishedDate}</span>}
+                  {hasBeenUpdated && <span> · </span>}
+                  {updatedDate && <span>{hasBeenUpdated ? `Updated ${updatedDate}` : publishedDate}</span>}
+                </>
+              )}
             </div>
           </header>
         )}
