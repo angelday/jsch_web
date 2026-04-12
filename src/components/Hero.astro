@@ -14,6 +14,7 @@ const { base } = Astro.props;
       type="button"
       data-scroll-target="#about-me"
       aria-controls="about-me"
+      data-about-cursor-active
     >
       <span class="hero__nav-copy">
         <span class="hero__nav-label">About me</span>
@@ -25,13 +26,14 @@ const { base } = Astro.props;
       type="button"
       data-scroll-target="#case-study"
       aria-controls="case-study"
+      data-about-cursor-active
     >
       <span class="hero__nav-copy">
         <span class="hero__nav-label">Currently</span>
         <span class="hero__nav-arrow" aria-hidden="true">→</span>
       </span>
     </button>
-    <a class="hero__nav-item" href={`${base}/projects/`}>
+    <a class="hero__nav-item" href={`${base}/projects/`} data-about-cursor-active>
       <span class="hero__nav-copy">
         <span class="hero__nav-label">Projects</span>
         <span class="hero__nav-arrow" aria-hidden="true">→</span>
@@ -42,6 +44,7 @@ const { base } = Astro.props;
       type="button"
       data-scroll-target="#contact"
       aria-controls="contact"
+      data-about-cursor-active
     >
       <span class="hero__nav-copy">
         <span class="hero__nav-label">Contact</span>
