@@ -1,6 +1,13 @@
 /* Ghost content styles — renders kg- card markup from Ghost's Content API */
 @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&display=swap');
 
+@font-face {
+  font-family: "Geist";
+  src: url("/fonts/Geist-Variable.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
 /* Make rem-based sizing work (Ghost uses 62.5% trick) */
 html {
   font-size: 62.5%;
@@ -206,6 +213,7 @@ h3 {
 }
 
 .gh-content h2 {
+  font-family: "Geist", system-ui, -apple-system, sans-serif;
   font-size: 3.2rem;
   letter-spacing: -0.02em;
 }
@@ -342,4 +350,3 @@ h3 {
   font-style: italic;
   color: rgba(0, 0, 0, 0.65);
 }
-
