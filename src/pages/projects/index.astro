@@ -145,28 +145,22 @@ const blogPosts = visible
         text-decoration: none;
         color: inherit;
         background: #fff;
-        border: 1px solid rgba(0, 0, 0, 0.12);
-        border-radius: 18px;
+        border: 0;
+        border-radius: 0;
         overflow: hidden;
-        backdrop-filter: blur(12px) saturate(1.2);
-        -webkit-backdrop-filter: blur(12px) saturate(1.2);
         box-shadow:
-          0 1px 0 rgba(255, 255, 255, 0.7) inset,
-          0 18px 40px -24px rgba(0, 0, 0, 0.22),
-          0 4px 12px -6px rgba(0, 0, 0, 0.12);
+          8px 0 0 #00aaaa,
+          0 8px 0 #aa00aa;
         transition:
-          transform 0.35s ease,
-          box-shadow 0.35s ease,
-          border-color 0.35s ease;
+          transform 0.18s steps(2, end),
+          box-shadow 0.18s steps(2, end);
       }
 
       .project-card__link:hover {
-        transform: translateY(-4px);
-        border-color: rgba(0, 0, 0, 0.22);
+        transform: translate(3px, 3px);
         box-shadow:
-          0 1px 0 rgba(255, 255, 255, 0.8) inset,
-          0 26px 48px -24px rgba(0, 0, 0, 0.3),
-          0 6px 18px -8px rgba(0, 0, 0, 0.16);
+          5px 0 0 #00aaaa,
+          0 5px 0 #aa00aa;
       }
 
       .project-card__canvas {
@@ -263,28 +257,22 @@ const blogPosts = visible
         text-decoration: none;
         color: inherit;
         background: #fff;
-        border: 1px solid rgba(0, 0, 0, 0.12);
-        border-radius: 18px;
+        border: 0;
+        border-radius: 0;
         overflow: hidden;
-        backdrop-filter: blur(12px) saturate(1.2);
-        -webkit-backdrop-filter: blur(12px) saturate(1.2);
         box-shadow:
-          0 1px 0 rgba(255, 255, 255, 0.7) inset,
-          0 18px 40px -24px rgba(0, 0, 0, 0.22),
-          0 4px 12px -6px rgba(0, 0, 0, 0.12);
+          8px 0 0 #00aaaa,
+          0 8px 0 #aa00aa;
         transition:
-          transform 0.35s ease,
-          box-shadow 0.35s ease,
-          border-color 0.35s ease;
+          transform 0.18s steps(2, end),
+          box-shadow 0.18s steps(2, end);
       }
 
       .blog-card__link:hover {
-        transform: translateY(-2px);
-        border-color: rgba(0, 0, 0, 0.22);
+        transform: translate(3px, 3px);
         box-shadow:
-          0 1px 0 rgba(255, 255, 255, 0.8) inset,
-          0 26px 48px -24px rgba(0, 0, 0, 0.3),
-          0 6px 18px -8px rgba(0, 0, 0, 0.16);
+          5px 0 0 #00aaaa,
+          0 5px 0 #aa00aa;
       }
 
       .blog-card__thumb {
