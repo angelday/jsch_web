@@ -5,9 +5,11 @@ import IkeaSection from "../components/IkeaSection.astro";
 import AboutSection from "../components/AboutSection.astro";
 import ContactSection from "../components/ContactSection.astro";
 import TheatreModal from "../components/TheatreModal.astro";
+import { formatCopyright } from "../lib/site-footer";
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const assetVersion = "20260413-2";
+const siteFooter = formatCopyright();
 ---
 
 <html lang="en">
@@ -44,9 +46,7 @@ const assetVersion = "20260413-2";
       <IkeaSection base={base} />
       <AboutSection base={base} />
       <ContactSection base={base} />
-      <p class="page-byline" data-about-cursor-select>
-        Last updated: Apr 2026 · © 2026 József Schaffer
-      </p>
+      <p class="page-byline" data-about-cursor-select>{siteFooter}</p>
     </main>
 
     <TheatreModal base={base} />

@@ -1,4 +1,7 @@
 ---
+import { formatCopyright } from "../../lib/site-footer";
+import "../../styles/homepage/about-cursor.css";
+
 const GHOST_URL = import.meta.env.GHOST_URL;
 const GHOST_API_KEY = import.meta.env.GHOST_API_KEY;
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -43,6 +46,7 @@ const blogPosts = visible
     (a: any, b: any) =>
       new Date(b.published_at).getTime() - new Date(a.published_at).getTime(),
   );
+const siteFooter = formatCopyright();
 ---
 
 <html lang="en">
@@ -548,7 +552,11 @@ const blogPosts = visible
     </style>
   </head>
   <body>
-    <section class="mini-hero" aria-labelledby="projects-heading">
+    <section
+      class="mini-hero"
+      aria-labelledby="projects-heading"
+      data-about-cursor-root
+    >
       <canvas
         class="mini-hero__shader"
         data-shader-canvas
@@ -556,7 +564,11 @@ const blogPosts = visible
         aria-hidden="true"
       ></canvas>
       <header class="mini-hero__nav" aria-label="Site navigation">
-        <a class="mini-hero__nav-item" href={`${base}/`}>
+        <a
+          class="mini-hero__nav-item"
+          href={`${base}/`}
+          data-about-cursor-active
+        >
           <span class="mini-hero__nav-copy">
             <span class="mini-hero__nav-label">Home</span>
             <span class="mini-hero__nav-arrow" aria-hidden="true">←</span>
@@ -564,8 +576,10 @@ const blogPosts = visible
         </a>
       </header>
       <div class="mini-hero__content">
-        <h1 id="projects-heading">Projects &amp; Blog</h1>
-        <p class="mini-hero__intro">
+        <h1 id="projects-heading" data-about-cursor-select>
+          Projects &amp; Blog
+        </h1>
+        <p class="mini-hero__intro" data-about-cursor-select>
           A mix of side projects, hobby builds, and various tech interests of
           mine. I hope you find some of these useful.
         </p>
@@ -642,11 +656,11 @@ const blogPosts = visible
         )
       }
     </main>
-    <footer class="site-footer">
-      Last updated: Apr 2026 · © 2026 József Schaffer
-    </footer>
+    <footer class="site-footer">{siteFooter}</footer>
+    <div class="about-cursor" data-about-cursor aria-hidden="true"></div>
     <script is:inline type="module" define:vars={{ base }}>
       import(`${base}/js/hero-shader.js`).then((m) => m.initHeroShader());
+      import(`${base}/js/about-cursor.js`).then((m) => m.initAboutCursor());
     </script>
   </body>
 </html>
