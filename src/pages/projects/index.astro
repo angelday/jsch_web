@@ -86,6 +86,12 @@ const blogPosts = visible
         font-weight: 400;
         font-display: swap;
       }
+      @font-face {
+        font-family: "Geist";
+        src: url("/fonts/Geist-Variable.woff2") format("woff2-variations");
+        font-weight: 100 900;
+        font-display: swap;
+      }
       :root {
         --page-bg: #aaaaaa;
         --layout-max: 1200px;
@@ -197,10 +203,10 @@ const blogPosts = visible
       }
 
       .project-card__excerpt {
-        font-family: "Literata", Georgia, serif;
+        font-family: "Geist", system-ui, -apple-system, sans-serif;
         font-size: 1.35rem;
         line-height: 1.5;
-        color: rgba(42, 31, 35, 0.62);
+        color: #000;
         margin: 0 0 1.4rem;
       }
 
@@ -310,7 +316,7 @@ const blogPosts = visible
         font-family: "Literata", Georgia, serif;
         font-size: 1.45rem;
         line-height: 1.5;
-        color: rgba(42, 31, 35, 0.62);
+        color: #000;
         margin: 0 0 1rem;
       }
 
@@ -320,6 +326,19 @@ const blogPosts = visible
         letter-spacing: 0.06em;
         text-transform: uppercase;
         color: rgba(42, 31, 35, 0.42);
+      }
+
+      .site-footer {
+        max-width: calc(var(--layout-max) - var(--shell-padding));
+        width: calc(100% - (var(--shell-padding) * 2));
+        margin: 0 auto;
+        padding: 0 0 4rem;
+        color: #000;
+        font-family: "Geist Pixel Square", system-ui, sans-serif;
+        font-size: var(--type-copy-size, 22px);
+        font-weight: 400;
+        line-height: 1.4;
+        text-align: center;
       }
 
       @media (max-width: 600px) {
@@ -623,6 +642,9 @@ const blogPosts = visible
         )
       }
     </main>
+    <footer class="site-footer">
+      Last updated: Apr 2026 · © 2026 József Schaffer
+    </footer>
     <script is:inline type="module" define:vars={{ base }}>
       import(`${base}/js/hero-shader.js`).then((m) => m.initHeroShader());
     </script>
