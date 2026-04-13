@@ -98,7 +98,7 @@ const PRESETS = {
     ],
   },
   projects: {
-    resolution: 1.45,
+    resolution: 1.1,
     speed: 0.1,
     useWhite: false,
     colors: [
