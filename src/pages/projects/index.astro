@@ -86,9 +86,27 @@ const blogPosts = visible
         font-weight: 400;
         font-display: swap;
       }
+      :root {
+        --page-bg: #aaaaaa;
+        --layout-max: 1200px;
+        --shell-padding: 32px;
+        --section-height: calc(90svh - var(--shell-padding));
+        --type-nameplate-size: min(130px, 10.4vw);
+        --type-body-size: 48px;
+        --hero-radius: 40px;
+        --subhero-section-height: clamp(360px, 52svh, 560px);
+        --subhero-title-size: clamp(56px, 7.4vw, 92px);
+        --subhero-intro-size: clamp(28px, 3.6vw, 40px);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
 
       body {
-        background-color: #e5e5e5;
+        background-color: var(--page-bg);
         color: #2a1f23;
         font-family:
           "Bricolage Grotesque",
@@ -101,27 +119,9 @@ const blogPosts = visible
       .projects-shell {
         max-width: 1120px;
         margin: 0 auto;
-        padding: 12rem 32px 10rem;
+        padding: 6rem 32px 10rem;
         position: relative;
         z-index: 2;
-      }
-
-      .projects-shell h1 {
-        font-family: "Geist Pixel Line", system-ui, sans-serif;
-        font-size: 5.4rem;
-        font-weight: 400;
-        letter-spacing: -0.02em;
-        margin: 0 0 1.4rem;
-        color: #aa00aa;
-      }
-
-      .projects-intro {
-        font-family: "Literata", Georgia, serif;
-        font-size: 1.9rem;
-        line-height: 1.55;
-        color: rgba(42, 31, 35, 0.65);
-        margin: 0 0 6rem;
-        max-width: 62ch;
       }
 
       .projects-grid {
@@ -247,15 +247,6 @@ const blogPosts = visible
         margin-top: 8rem;
       }
 
-      .blog-section__title {
-        font-family: "Geist Pixel Line", system-ui, sans-serif;
-        font-size: 3.2rem;
-        font-weight: 400;
-        letter-spacing: -0.02em;
-        color: #aa00aa;
-        margin: 0 0 2.4rem;
-      }
-
       .blog-list {
         list-style: none;
         padding: 0;
@@ -352,57 +343,187 @@ const blogPosts = visible
         }
       }
 
-      .back-nav {
-        position: fixed;
-        top: 24px;
-        left: 24px;
-        z-index: 100;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5em;
-        padding: 0.6em 1.1em;
-        background: rgba(0, 0, 0, 0.12);
-        backdrop-filter: blur(12px) saturate(1.4);
-        -webkit-backdrop-filter: blur(12px) saturate(1.4);
-        border: 2px solid rgba(42, 31, 35, 0.8);
-        border-radius: 999px;
-        color: #2a1f23;
-        font-family:
-          "Bricolage Grotesque",
-          system-ui,
-          -apple-system,
-          sans-serif;
-        font-size: 2.1rem;
-        font-weight: 500;
+      .mini-hero {
+        --hero-inline-padding: 40px;
+        --hero-block-start: 112px;
+        --hero-block-end: 72px;
+        position: relative;
+        display: grid;
+        place-items: center;
+        min-height: var(--subhero-section-height);
+        max-width: calc(var(--layout-max) - var(--shell-padding));
+        width: calc(100% - (var(--shell-padding) * 2));
+        margin: var(--shell-padding) auto 0;
+        padding: var(--hero-block-start) var(--hero-inline-padding)
+          var(--hero-block-end);
+        overflow: hidden;
+        border-radius: var(--hero-radius);
+        background: #000;
+        color: #fff;
+        isolation: isolate;
+      }
+      @supports (corner-shape: squircle) {
+        .mini-hero {
+          corner-shape: superellipse(2.5);
+        }
+      }
+      .mini-hero__shader {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      .mini-hero__nav,
+      .mini-hero__content {
+        position: relative;
+        z-index: 1;
+      }
+      .mini-hero__nav {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        z-index: 2;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 0;
+        width: min(100%, 1120px);
+        transform: translateX(-50%);
+        padding: clamp(18px, 2.6vw, 32px) clamp(20px, 3vw, 40px) 0;
+      }
+      .mini-hero__nav-item {
+        display: flex;
+        min-width: 0;
+        align-items: flex-start;
+        gap: 0;
+        border: 0;
+        background: transparent;
+        color: inherit;
         text-decoration: none;
-        transition:
-          background 0.2s ease,
-          color 0.2s ease,
-          border-color 0.2s ease;
+        cursor: pointer;
+        font-family: "Geist Pixel Square", sans-serif;
+        font-size: var(--type-body-size);
+        font-weight: 400;
+        letter-spacing: -0.04em;
+        padding: clamp(6px, 1vw, 10px) clamp(24px, 4vw, 64px)
+          clamp(14px, 1.8vw, 22px) 0;
       }
-      .back-nav:hover {
-        background: #5c2a3e;
-        color: #fcf4ee;
-        border-color: #5c2a3e;
+      .mini-hero__nav-copy {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: max-content;
       }
-      .back-nav-arrow {
-        font-size: 1.1em;
-        line-height: 1;
+      .mini-hero__nav-label {
+        display: block;
       }
-      @media (max-width: 600px) {
-        .back-nav {
-          font-size: 1.47rem;
-          top: 16px;
-          left: 16px;
+      .mini-hero__nav-arrow {
+        display: block;
+        font-family: "Geist Pixel Square", sans-serif;
+        line-height: 0.6;
+      }
+      .mini-hero__nav-item:hover,
+      .mini-hero__nav-item:focus-visible {
+        background: #fff;
+        color: #000;
+        outline: none;
+      }
+      .mini-hero__nav-item:hover .mini-hero__nav-arrow,
+      .mini-hero__nav-item:focus-visible .mini-hero__nav-arrow {
+        align-self: flex-end;
+      }
+      .mini-hero__content {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        display: grid;
+        align-content: center;
+        justify-items: flex-start;
+        gap: 18px;
+        width: min(100%, 1120px);
+        transform: translateX(-50%);
+        padding: var(--hero-block-start) clamp(20px, 3vw, 40px)
+          var(--hero-block-end);
+        text-align: left;
+      }
+      .mini-hero h1 {
+        margin: 0;
+        font-family: "Geist Pixel Square", sans-serif;
+        font-size: var(--subhero-title-size);
+        font-weight: 400;
+        line-height: 0.98;
+        letter-spacing: -0.01em;
+        white-space: normal;
+        text-wrap: balance;
+        color: #fff;
+      }
+      .mini-hero__intro {
+        margin: 0;
+        font-family: "Geist Pixel Square", sans-serif;
+        font-size: var(--subhero-intro-size);
+        font-weight: 400;
+        letter-spacing: -0.03em;
+        line-height: 1.04;
+        color: #fff;
+        max-width: 18ch;
+      }
+      @media (max-width: 900px) {
+        :root {
+          --hero-radius: 28px;
+          --section-height: calc(80svh - var(--shell-padding));
+          --type-nameplate-size: min(84px, 11vw);
+          --type-body-size: 32px;
+          --subhero-section-height: clamp(320px, 48svh, 460px);
+          --subhero-title-size: clamp(46px, 8vw, 72px);
+          --subhero-intro-size: 28px;
+        }
+        .mini-hero {
+          --hero-inline-padding: 28px;
+          --hero-block-start: 96px;
+          --hero-block-end: 56px;
+        }
+        .mini-hero__nav {
+          padding-top: 16px;
+        }
+        .mini-hero__nav-item {
+          padding-right: 32px;
+        }
+        .mini-hero__content {
+          gap: 16px;
+          padding: var(--hero-block-start) clamp(20px, 3vw, 40px)
+            var(--hero-block-end);
+        }
+      }
+      @media (max-width: 540px) {
+        :root {
+          --shell-padding: 12px;
+          --section-height: calc(80svh - var(--shell-padding));
+          --type-nameplate-size: min(56px, 14vw);
+          --type-body-size: 24px;
+          --subhero-section-height: clamp(300px, 48svh, 400px);
+          --subhero-title-size: clamp(38px, 13vw, 54px);
+          --subhero-intro-size: 22px;
+        }
+        .mini-hero {
+          --hero-inline-padding: 18px;
+          --hero-block-start: 104px;
+          --hero-block-end: 40px;
+        }
+        .mini-hero__content {
+          gap: 16px;
+          padding: var(--hero-block-start) 20px var(--hero-block-end);
         }
         .projects-shell {
-          padding: 10rem 20px 8rem;
+          padding: 6rem 20px 8rem;
         }
-        .projects-shell h1 {
-          font-size: 3.8rem;
-        }
-        .projects-intro {
-          font-size: 1.6rem;
+      }
+      @media (max-width: 440px) {
+        .mini-hero h1 {
+          white-space: normal;
+          text-wrap: balance;
         }
       }
 
@@ -419,16 +540,29 @@ const blogPosts = visible
     </style>
   </head>
   <body>
-    <a class="back-nav" href={`${base}/`}>
-      <span class="back-nav-arrow">←</span>
-      <span>jozsefschaffer.com</span>
-    </a>
+    <section class="mini-hero" aria-labelledby="projects-heading">
+      <canvas
+        class="mini-hero__shader"
+        data-shader-canvas
+        data-shader-preset="hero"
+        aria-hidden="true"
+      ></canvas>
+      <header class="mini-hero__nav" aria-label="Site navigation">
+        <a class="mini-hero__nav-item" href={`${base}/`}>
+          <span class="mini-hero__nav-copy">
+            <span class="mini-hero__nav-label">Home</span>
+            <span class="mini-hero__nav-arrow" aria-hidden="true">←</span>
+          </span>
+        </a>
+      </header>
+      <div class="mini-hero__content">
+        <h1 id="projects-heading">Projects &amp; Blog</h1>
+        <p class="mini-hero__intro">
+          Side projects, hobby builds, and notes.
+        </p>
+      </div>
+    </section>
     <main class="projects-shell">
-      <h1>Projects</h1>
-      <p class="projects-intro">
-        A mix of side projects, hobby builds, and various tech interests of
-        mine. I hope you find some of these useful.
-      </p>
       <ul class="projects-grid">
         {
           cards.map((post: any) => (
@@ -475,7 +609,6 @@ const blogPosts = visible
       {
         blogPosts.length > 0 && (
           <section class="blog-section">
-            <h2 class="blog-section__title">Blog</h2>
             <ul class="blog-list">
               {blogPosts.map((post: any) => (
                 <li class="blog-card">
@@ -500,5 +633,8 @@ const blogPosts = visible
         )
       }
     </main>
+    <script is:inline type="module" define:vars={{ base }}>
+      import(`${base}/js/hero-shader.js`).then((m) => m.initHeroShader());
+    </script>
   </body>
 </html>
