@@ -55,10 +55,6 @@ const siteFooter = formatCopyright();
     <meta name="viewport" content="width=device-width" />
     <title>Projects & Blog — József Schaffer</title>
     <link rel="icon" href={`${base}/favicon.png?v=${assetVersion}`} />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&display=swap"
-    />
     <style is:global>
       @font-face {
         font-family: "Geist Pixel Square";
@@ -118,11 +114,7 @@ const siteFooter = formatCopyright();
       body {
         background-color: var(--page-bg);
         color: #2a1f23;
-        font-family:
-          "Bricolage Grotesque",
-          system-ui,
-          -apple-system,
-          sans-serif;
+        font-family: "Geist", system-ui, -apple-system, sans-serif;
         margin: 0;
       }
 
@@ -317,7 +309,7 @@ const siteFooter = formatCopyright();
       }
 
       .blog-card__excerpt {
-        font-family: "Literata", Georgia, serif;
+        font-family: "Geist", system-ui, -apple-system, sans-serif;
         font-size: 1.45rem;
         line-height: 1.5;
         color: #000;

@@ -188,22 +188,21 @@ if (import.meta.env.PROD) {
       <div class="post-nav__inner">
         <a
           class="post-nav__item"
-          href={`${base}/`}
-          data-about-cursor-active
-        >
-          <span class="post-nav__copy">
-            <span class="post-nav__label">Home</span>
-            <span class="post-nav__arrow" aria-hidden="true">←</span>
-          </span>
-        </a>
-        <a
-          class="post-nav__item"
           href={`${base}/projects/`}
           data-about-cursor-active
         >
           <span class="post-nav__copy">
             <span class="post-nav__label">Projects</span>
             <span class="post-nav__arrow" aria-hidden="true">←</span>
+          </span>
+        </a>
+        <a
+          class="post-nav__item post-nav__item--end"
+          href={`${base}/`}
+          data-about-cursor-active
+        >
+          <span class="post-nav__copy">
+            <span class="post-nav__label">jozsefschaffer.com</span>
           </span>
         </a>
       </div>

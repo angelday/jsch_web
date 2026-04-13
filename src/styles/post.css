@@ -55,6 +55,15 @@ body.post {
   padding: clamp(6px, 1vw, 10px) clamp(12px, 2vw, 24px) clamp(10px, 1.4vw, 16px) 0;
 }
 
+.post-nav__item--end {
+  margin-left: auto;
+  align-self: center;
+  padding-right: 0;
+  padding-left: clamp(12px, 2vw, 24px);
+  font-size: 16px;
+  letter-spacing: 0;
+}
+
 .post-nav__item:hover,
 .post-nav__item:focus-visible {
   background: #fff;
