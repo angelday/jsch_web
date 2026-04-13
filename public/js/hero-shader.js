@@ -16,6 +16,7 @@ uniform float uSpeed;
 uniform vec3 uColor1;
 uniform vec3 uColor2;
 uniform vec3 uColor3;
+uniform float uUseWhite;
 
 const int depth = 4;
 
@@ -36,8 +37,10 @@ vec3 nearestCGA(vec3 col) {
   d = distance(col, CGA_CYAN);
   if (d < bestDist) { bestDist = d; best = CGA_CYAN; }
 
-  d = distance(col, CGA_WHITE);
-  if (d < bestDist) { bestDist = d; best = CGA_WHITE; }
+  if (uUseWhite > 0.5) {
+    d = distance(col, CGA_WHITE);
+    if (d < bestDist) { bestDist = d; best = CGA_WHITE; }
+  }
 
   return best;
 }
@@ -88,6 +91,16 @@ const PRESETS = {
   hero: {
     resolution: 2.0,
     speed: 0.1,
+    colors: [
+      [0x00 / 255, 0xAA / 255, 0xAA / 255],
+      [0xAA / 255, 0x00 / 255, 0xAA / 255],
+      [0, 0, 0],
+    ],
+  },
+  projects: {
+    resolution: 1.45,
+    speed: 0.1,
+    useWhite: false,
     colors: [
       [0x00 / 255, 0xAA / 255, 0xAA / 255],
       [0xAA / 255, 0x00 / 255, 0xAA / 255],
@@ -299,6 +312,7 @@ function mountShader(canvas) {
     const colorOneUniform = gl.getUniformLocation(program, "uColor1");
     const colorTwoUniform = gl.getUniformLocation(program, "uColor2");
     const colorThreeUniform = gl.getUniformLocation(program, "uColor3");
+    const useWhiteUniform = gl.getUniformLocation(program, "uUseWhite");
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
@@ -352,6 +366,7 @@ function mountShader(canvas) {
       gl.uniform3f(colorOneUniform, ...currentColors[0]);
       gl.uniform3f(colorTwoUniform, ...currentColors[1]);
       gl.uniform3f(colorThreeUniform, ...currentColors[2]);
+      gl.uniform1f(useWhiteUniform, preset.useWhite === false ? 0 : 1);
 
       gl.drawArrays(gl.TRIANGLES, 0, 3);
       animationFrame = window.requestAnimationFrame(render);

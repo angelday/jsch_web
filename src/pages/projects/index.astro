@@ -117,9 +117,10 @@ const blogPosts = visible
       }
 
       .projects-shell {
-        max-width: 1120px;
+        max-width: calc(var(--layout-max) - var(--shell-padding));
+        width: calc(100% - (var(--shell-padding) * 2));
         margin: 0 auto;
-        padding: 6rem 32px 10rem;
+        padding: 6rem 0 10rem;
         position: relative;
         z-index: 2;
       }
@@ -468,7 +469,7 @@ const blogPosts = visible
         letter-spacing: -0.03em;
         line-height: 1.04;
         color: #fff;
-        max-width: 18ch;
+        max-width: min(760px, 100%);
       }
       @media (max-width: 900px) {
         :root {
@@ -517,7 +518,7 @@ const blogPosts = visible
           padding: var(--hero-block-start) 20px var(--hero-block-end);
         }
         .projects-shell {
-          padding: 6rem 20px 8rem;
+          padding: 6rem 0 8rem;
         }
       }
       @media (max-width: 440px) {
@@ -544,7 +545,7 @@ const blogPosts = visible
       <canvas
         class="mini-hero__shader"
         data-shader-canvas
-        data-shader-preset="hero"
+        data-shader-preset="projects"
         aria-hidden="true"
       ></canvas>
       <header class="mini-hero__nav" aria-label="Site navigation">
@@ -558,7 +559,8 @@ const blogPosts = visible
       <div class="mini-hero__content">
         <h1 id="projects-heading">Projects &amp; Blog</h1>
         <p class="mini-hero__intro">
-          Side projects, hobby builds, and notes.
+          A mix of side projects, hobby builds, and various tech interests of
+          mine. I hope you find some of these useful.
         </p>
       </div>
     </section>
