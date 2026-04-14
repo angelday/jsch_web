@@ -224,13 +224,13 @@
 
 .theatre-modal[data-theatre-theme="about"] {
   --theatre-modal-bg: var(--cga-cyan);
-  --theatre-modal-fg: #fff;
+  --theatre-modal-fg: #000;
 }
 
 .theatre-modal[data-theatre-theme="about"] .theatre-modal__title,
 .theatre-modal[data-theatre-theme="about"] .theatre-modal__eyebrow,
 .theatre-modal[data-theatre-theme="about"] .theatre-modal__question {
-  color: #000;
+  color: #fff;
 }
 
 .theatre-modal[data-theatre-theme="about"] :where(.theatre-modal__title,
