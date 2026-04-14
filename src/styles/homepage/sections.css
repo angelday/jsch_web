@@ -4,10 +4,9 @@
   border-radius: var(--hero-radius);
 }
 
-.section--ikea {
+.section--work {
   display: flex;
-  min-height: var(--section-height);
-  background: var(--ikea-yellow);
+  min-height: calc(var(--section-height) * 0.7);
   padding: 0;
 }
 
@@ -22,14 +21,14 @@
 
 .section--about {
   display: grid;
-  background: var(--cga-pink);
-  padding: 0;
+  background: #000;
+  padding: 0 0 56px;
 }
 
 .section--projects {
   display: grid;
-  background: #000;
-  padding: 0 0 56px;
+  background: var(--cga-pink);
+  padding: 0;
 }
 
 .section--contact {
@@ -118,40 +117,21 @@
   user-select: text;
 }
 
-.section__about-content {
+.section__content {
   display: grid;
   gap: 5rem;
   width: 100%;
   padding: 56px 64px 0;
 }
 
-.section__about-title {
-  margin: 0;
-  color: #fff;
-  font-family: "Geist Pixel Square", monospace;
-  font-size: var(--type-body-size);
-  font-weight: 400;
-  line-height: 1;
-}
-
-.section__about-copy {
+.section__body {
   display: grid;
   gap: 1.25rem;
   width: min(860px, 100%);
   color: #fff;
 }
 
-.section__about-text {
-  margin: 0;
-  color: #fff;
-  font-family: "Geist Pixel Square", monospace;
-  font-size: var(--type-copy-size);
-  font-weight: 400;
-  line-height: 1.35;
-  text-align: left;
-}
-
-.section__about-link {
+.section__link {
   position: relative;
   display: inline-block;
   width: fit-content;
@@ -163,7 +143,7 @@
   text-decoration: none;
 }
 
-.section__about-link::after {
+.section__link::after {
   content: "";
   position: absolute;
   right: 0;
@@ -173,19 +153,19 @@
   background: currentColor;
 }
 
-.section__about-link:hover,
-.section__about-link:focus-visible {
+.section__link:hover,
+.section__link:focus-visible {
   color: #000;
   outline: none;
 }
 
-.section__about-backdrop {
+.section__backdrop {
   display: block;
   width: 100%;
   pointer-events: none;
 }
 
-.section__about-backdrop-image {
+.section__backdrop-image {
   margin-top: 3rem;
   display: block;
   width: 100%;

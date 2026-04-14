@@ -6,19 +6,19 @@ const { base } = Astro.props;
 ---
 
 <section
-  class="section section--about"
+  class="section section--projects"
   id="projects"
   aria-label="Projects section"
 >
-  <div class="section__about-content">
-    <div class="section__about-copy">
+  <div class="section__content">
+    <div class="section__body">
       <p class="section__copy-text" data-about-cursor-select>
         Outside of work, I like to tinker with code, design, and pixel art.
       </p>
       <button>More about my projects (arrow)</button>
     </div>
   </div>
-  <picture class="section__about-backdrop" aria-hidden="true">
+  <picture class="section__backdrop" aria-hidden="true">
     <source
       media="(max-width: 540px)"
       srcset={`${base}/img/about-cga-mobile.gif`}
@@ -28,7 +28,7 @@ const { base } = Astro.props;
       srcset={`${base}/img/about-cga-tablet.gif`}
     />
     <img
-      class="section__about-backdrop-image"
+      class="section__backdrop-image"
       src={`${base}/img/about-cga-desktop.gif`}
       alt=""
       loading="lazy"
