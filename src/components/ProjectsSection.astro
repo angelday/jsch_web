@@ -15,7 +15,16 @@ const { base } = Astro.props;
       <p class="section__copy-text" data-about-cursor-select>
         Outside of work, I like to tinker with code, design, and pixel art.
       </p>
-      <button>More about my projects (arrow)</button>
+      <a
+        class="section__link"
+        href={`${base}/projects/`}
+        data-about-cursor-active
+      >
+        <span class="section__link-copy">
+          <span class="section__link-label">My projects</span>
+          <span class="section__link-arrow" aria-hidden="true">→</span>
+        </span>
+      </a>
     </div>
   </div>
   <picture class="section__backdrop" aria-hidden="true">

@@ -25,7 +25,8 @@
   padding: 0 0 56px;
 }
 
-.section--about .section__body {
+.section--about .section__body,
+.section--projects .section__body {
   width: 100%;
 }
 
@@ -37,6 +38,36 @@
   justify-self: end;
   padding-right: 0;
   color: var(--cga-cyan);
+}
+
+.section--projects .section__copy-text {
+  text-align: left;
+}
+
+.section--projects .section__link {
+  justify-self: end;
+  padding-right: 0;
+  color: #000;
+}
+
+.section--work .section__copy {
+  display: grid;
+  gap: 1.25rem;
+  top: 56px;
+  left: 64px;
+  right: 64px;
+  width: auto;
+  transform: none;
+}
+
+.section--work .section__copy-text {
+  text-align: left;
+}
+
+.section--work .section__link {
+  justify-self: end;
+  padding-right: 0;
+  color: #000;
 }
 
 .section--projects {
@@ -98,8 +129,8 @@
 
 .section__brand {
   position: absolute;
-  top: 42px;
-  left: 42px;
+  right: 42px;
+  bottom: 42px;
   z-index: 3;
   pointer-events: none;
 }
