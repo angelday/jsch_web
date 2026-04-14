@@ -251,6 +251,16 @@ const blogPosts = visible
         margin-top: 8rem;
       }
 
+      .blog-section__title {
+        margin: 0 0 2rem;
+        font-family: "Geist Pixel Square", sans-serif;
+        font-size: var(--subhero-intro-size);
+        font-weight: 400;
+        line-height: 0.98;
+        letter-spacing: -0.01em;
+        color: #2a1f23;
+      }
+
       .blog-list {
         list-style: none;
         padding: 0;
@@ -478,7 +488,7 @@ const blogPosts = visible
           --section-height: calc(80svh - var(--shell-padding));
           --type-nameplate-size: min(84px, 11vw);
           --type-body-size: 32px;
-          --subhero-section-height: clamp(320px, 48svh, 460px);
+          --subhero-section-height: clamp(400px, 60svh, 520px);
           --subhero-title-size: clamp(46px, 8vw, 72px);
           --subhero-intro-size: 28px;
         }
@@ -505,7 +515,7 @@ const blogPosts = visible
           --section-height: calc(80svh - var(--shell-padding));
           --type-nameplate-size: min(56px, 14vw);
           --type-body-size: 24px;
-          --subhero-section-height: clamp(300px, 48svh, 400px);
+          --subhero-section-height: clamp(380px, 60svh, 480px);
           --subhero-title-size: clamp(38px, 13vw, 54px);
           --subhero-intro-size: 22px;
         }
@@ -619,6 +629,9 @@ const blogPosts = visible
       {
         blogPosts.length > 0 && (
           <section class="blog-section">
+            <h2 class="blog-section__title" data-about-cursor-select>
+              Blog
+            </h2>
             <ul class="blog-list">
               {blogPosts.map((post: any) => (
                 <li class="blog-card">

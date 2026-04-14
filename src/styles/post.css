@@ -57,7 +57,8 @@ body.post {
 
 .post-nav__item--end {
   margin-left: auto;
-  align-self: center;
+  align-self: stretch;
+  align-items: center;
   padding-right: 0;
   padding-left: clamp(12px, 2vw, 24px);
   font-size: 16px;
@@ -99,7 +100,7 @@ body.post {
 
 .post-header h1 {
   font-family: "Geist Pixel Line", system-ui, -apple-system, sans-serif;
-  font-size: 5.4rem;
+  font-size: 7rem;
   font-weight: 400;
   letter-spacing: -0.02em;
   line-height: 1.05;
@@ -125,7 +126,7 @@ body.post .gh-content > :last-child {
 
 @media (max-width: 600px) {
   .post-header h1 {
-    font-size: 3.8rem;
+    font-size: 5.4rem;
   }
 }
 
@@ -136,6 +137,10 @@ body.post .gh-content > :last-child {
 
   .post-nav__item {
     font-size: 32px;
+  }
+
+  .post-nav__item--end {
+    font-size: 15px;
   }
 }
 
@@ -150,5 +155,9 @@ body.post .gh-content > :last-child {
 
   .post-nav__item {
     font-size: 24px;
+  }
+
+  .post-nav__item--end {
+    font-size: 14px;
   }
 }
