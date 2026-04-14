@@ -27,17 +27,18 @@
   }
 
   .section__brand {
-    top: 34px;
-    left: 40px;
+    bottom: 34px;
+    right: 40px;
   }
 
   .section__brand-logo {
     width: 110px;
   }
 
-  .section__copy {
+  .section--work .section__copy {
+    top: 34px;
+    left: 40px;
     right: 40px;
-    width: min(520px, calc(100% - 120px));
   }
 
   .section--projects {
@@ -84,17 +85,18 @@
   }
 
   .section__brand {
-    top: 24px;
-    left: 24px;
+    bottom: 24px;
+    right: 24px;
   }
 
   .section__brand-logo {
     width: 100px;
   }
 
-  .section__copy {
+  .section--work .section__copy {
+    top: 32px;
+    left: 24px;
     right: 24px;
-    width: min(320px, calc(100% - 72px));
   }
 
   .section--projects {

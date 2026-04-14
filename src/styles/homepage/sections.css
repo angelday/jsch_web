@@ -35,9 +35,9 @@
 }
 
 .section--about .section__link {
-  justify-self: end;
-  padding-right: 0;
-  color: var(--cga-cyan);
+  justify-self: start;
+  padding-left: 0;
+  color: #fff;
 }
 
 .section--projects .section__copy-text {
@@ -45,9 +45,9 @@
 }
 
 .section--projects .section__link {
-  justify-self: end;
-  padding-right: 0;
-  color: #000;
+  justify-self: start;
+  padding-left: 0;
+  color: #fff;
 }
 
 .section--work .section__copy {
