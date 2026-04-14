@@ -145,7 +145,7 @@
 
 .theatre-modal__title {
   margin: 0;
-  font-family: "Trial Arlen Light", sans-serif;
+  font-family: "Geist Pixel Square", sans-serif;
   font-size: var(--type-body-size);
   font-weight: 100;
   line-height: 1.05;
@@ -153,7 +153,7 @@
 
 .theatre-modal__eyebrow {
   margin: 0;
-  font-family: "Ac437 IBM BIOS Regular", monospace;
+  font-family: "Geist Pixel Square", monospace;
   font-size: var(--type-copy-size);
   font-weight: 400;
   line-height: 1.2;
@@ -167,7 +167,7 @@
 .theatre-modal__text,
 .theatre-modal__answer {
   margin: 0;
-  font-family: "Trial Arlen Light", sans-serif;
+  font-family: "Geist Pixel Square", sans-serif;
   font-size: var(--type-copy-size);
   line-height: 1.4;
 }
@@ -175,7 +175,7 @@
 .theatre-modal__signoff,
 .theatre-modal__signoff-name {
   margin: 0;
-  font-family: "Trial Arlen Light", sans-serif;
+  font-family: "Geist Pixel Square", sans-serif;
   line-height: 1.2;
   text-align: center;
 }
@@ -200,7 +200,7 @@
 }
 
 .theatre-modal__quote-attribution {
-  font-family: "Trial Arlen Light", sans-serif;
+  font-family: "Geist Pixel Square", sans-serif;
   font-size: var(--type-copy-size);
   line-height: 1.4;
 }
@@ -213,7 +213,7 @@
 
 .theatre-modal__question {
   margin-top: 1.5rem;
-  font-family: "Ac437 IBM BIOS Regular", monospace;
+  font-family: "Geist Pixel Square", monospace;
   font-size: var(--type-copy-size);
   line-height: 1.4;
 }
@@ -233,14 +233,3 @@
   color: #fff;
 }
 
-.theatre-modal[data-theatre-theme="about"] :where(.theatre-modal__title,
-  .theatre-modal__eyebrow,
-  .theatre-modal__text,
-  .theatre-modal__answer,
-  .theatre-modal__signoff,
-  .theatre-modal__signoff-name,
-  .theatre-modal__quote-attribution,
-  .theatre-modal__question) {
-  font-family: "Geist Pixel Square", monospace;
-  font-weight: 400;
-}

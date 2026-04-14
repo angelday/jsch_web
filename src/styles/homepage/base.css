@@ -11,7 +11,7 @@ body {
 body {
   background: var(--page-bg);
   color: var(--hero-fg);
-  font-family: Inter, system-ui, sans-serif;
+  font-family: "Geist Pixel Square", system-ui, sans-serif;
 }
 
 button,

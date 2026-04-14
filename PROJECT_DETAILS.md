@@ -50,7 +50,7 @@ public/
   .nojekyll
   favicon.png
   og-image.png
-  fonts/                 — Trial Arlen, IBM BIOS, Noto IKEA
+  fonts/                 — Geist (variable), Geist Pixel Square
   js/                    — main.js, hero-shader, hero-nav, about-cursor, theatre-modal, ghost-cards, lightbox
   img/                   — homepage images (CGA cursors, GIFs, IKEA logo, modal assets)
   content/               — gitignored, Ghost downloads (images + media)
@@ -62,7 +62,7 @@ public/
 - WebGL shader system (hero + contact cards) with presets and hover transitions
 - CGA retro aesthetic (magenta, pixel fonts, custom cursor)
 - Theatre modal system (data-attribute driven, focus trap, ESC to close)
-- Fonts: Trial Arlen Black/Light, Ac437 IBM BIOS, PP Neue Machina Inktrap, Noto IKEA Latin
+- Fonts: Geist Pixel Square (self-hosted)
 - All JS is framework-agnostic ES modules, loaded via `<script is:inline type="module">`
 
 ## Content Types & Ghost Tags
@@ -85,7 +85,7 @@ public/
 ## Post & Case Study Pages (Ghost content)
 
 ### Design language
-- Fonts: Bricolage Grotesque (headings) + Literata (body) via Google Fonts
+- Fonts: Geist (variable, body) + Geist Pixel Square (accents)
 - Colors: blush peach bg (#FCF4EE), plum headings (#5C2A3E), dark body (#2A1F23)
 - Vertical rhythm adapted from Ghost's Casper theme
 
