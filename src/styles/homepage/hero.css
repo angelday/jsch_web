@@ -137,12 +137,13 @@
 .hero__footnote {
   position: absolute;
   left: var(--hero-inline-padding);
+  right: var(--hero-inline-padding);
   bottom: clamp(20px, 2.4vw, 32px);
   z-index: 2;
   margin: 0;
   max-width: min(100%, 1120px);
   font-family: "Geist Pixel Square", sans-serif;
-  font-size: clamp(1.4rem, 2vw, 2.1rem);
+  font-size: clamp(1.4rem, 1.7vw, 1.8rem);
   font-weight: 400;
   letter-spacing: -0.02em;
   line-height: 1.1;
