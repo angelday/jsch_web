@@ -185,6 +185,13 @@ h3 {
   max-width: 1000px;
 }
 
+/* GIFs are typically pixel-art screenshots — stretch to fill their column
+   (max-width: 100% only scales raster *down*) and keep pixels crisp. */
+.kg-image-card img[src$=".gif"] {
+  width: 100%;
+  image-rendering: pixelated;
+}
+
 /* Image caption */
 .kg-card figcaption {
   color: rgba(0, 0, 0, 0.5);
