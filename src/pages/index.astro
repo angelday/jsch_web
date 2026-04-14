@@ -3,6 +3,7 @@ import "../styles/styles.css";
 import Hero from "../components/Hero.astro";
 import IkeaSection from "../components/IkeaSection.astro";
 import AboutSection from "../components/AboutSection.astro";
+import ProjectsSection from "../components/ProjectsSection.astro";
 import ContactSection from "../components/ContactSection.astro";
 import TheatreModal from "../components/TheatreModal.astro";
 import SiteFooter from "../components/SiteFooter.astro";
@@ -42,8 +43,10 @@ const assetVersion = "20260413-2";
   <body data-about-cursor-root>
     <main class="page-shell">
       <Hero base={base} />
-      <IkeaSection base={base} />
+
       <AboutSection base={base} />
+      <IkeaSection base={base} />
+      <ProjectsSection base={base} />
       <ContactSection base={base} />
     </main>
     <SiteFooter />

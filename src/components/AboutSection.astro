@@ -6,14 +6,13 @@ const { base } = Astro.props;
 ---
 
 <section
-  class="section section--about"
+  class="section section--projects"
   id="about-me"
   aria-label="About section"
 >
   <div class="section__about-content">
-    <p class="section__about-title" data-about-cursor-select>About me</p>
     <div class="section__about-copy">
-      <p class="section__about-text" data-about-cursor-select>
+      <p class="section__copy-text" data-about-cursor-select>
         I'm a software designer and systems thinker based in Malmö, Sweden,
         currently working at Inter IKEA.
       </p>
@@ -25,25 +24,8 @@ const { base } = Astro.props;
         data-about-cursor-active
         data-theatre-open="#about-modal"
       >
-        Learn more about me
+        More about me
       </a>
     </div>
   </div>
-  <picture class="section__about-backdrop" aria-hidden="true">
-    <source
-      media="(max-width: 540px)"
-      srcset={`${base}/img/about-cga-mobile.gif`}
-    />
-    <source
-      media="(max-width: 900px)"
-      srcset={`${base}/img/about-cga-tablet.gif`}
-    />
-    <img
-      class="section__about-backdrop-image"
-      src={`${base}/img/about-cga-desktop.gif`}
-      alt=""
-      loading="lazy"
-      decoding="async"
-    />
-  </picture>
 </section>

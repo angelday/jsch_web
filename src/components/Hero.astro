@@ -33,16 +33,18 @@ const { base } = Astro.props;
         <span class="hero__nav-arrow" aria-hidden="true">→</span>
       </span>
     </button>
-    <a
+    <button
       class="hero__nav-item"
-      href={`${base}/projects/`}
+      type="button"
+      data-scroll-target="#projects"
+      aria-controls="projects"
       data-about-cursor-active
     >
       <span class="hero__nav-copy">
         <span class="hero__nav-label">Projects</span>
         <span class="hero__nav-arrow" aria-hidden="true">→</span>
       </span>
-    </a>
+    </button>
     <button
       class="hero__nav-item"
       type="button"
@@ -63,14 +65,8 @@ const { base } = Astro.props;
     </div>
     <div class="hero__subtitle-group">
       <p class="hero__subtitle" data-about-cursor-select>
-        Product designer on a CGA monitor<sup class="hero__subtitle-mark">*</sup
-        >
+        Product designer on a CGA monitor
       </p>
     </div>
   </div>
-
-  <p class="hero__footnote" data-about-cursor-select>
-    <span class="hero__footnote-mark">*</span>by day. By night occasional writer
-    and pixel artist.
-  </p>
 </section>
