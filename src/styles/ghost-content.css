@@ -70,12 +70,12 @@ h3 {
   margin-top: 12px;
 }
 
-/* Around hr and blockquote */
-.gh-content>:is(hr, blockquote) {
+/* Around hr */
+.gh-content>hr {
   margin-top: 48px;
 }
 
-.gh-content>:is(hr, blockquote)+* {
+.gh-content>hr+* {
   margin-top: 48px;
 }
 
