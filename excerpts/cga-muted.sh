@@ -6,8 +6,10 @@ set -euo pipefail
 # From inside excerpts/:
 #   ./cga-muted.sh name.png
 #   ./cga-muted.sh *.png
-#   ./cga-muted.sh 2x name.png
-#   ./cga-muted.sh 1x *.png
+#   ./cga-muted.sh 2 name.png
+#   ./cga-muted.sh 4 *.png
+#   ./cga-muted.sh 8 *.png
+#   ./cga-muted.sh 16 *.png
 #
 # Default checker size is 4x.
 
@@ -15,19 +17,24 @@ magick_bin="/opt/homebrew/bin/magick"
 checker="4"
 
 if [[ "$#" -eq 0 ]]; then
-  echo "Usage: ./cga-muted.sh [1x|2x|4x] image.png [...]" >&2
+  echo "Usage: ./cga-muted.sh [checker-size] image.png [...]" >&2
+  echo "Example: ./cga-muted.sh 8 *.png" >&2
   exit 1
 fi
 
-case "$1" in
-  1x|2x|4x)
-    checker="${1%x}"
-    shift
-    ;;
-esac
+if [[ "$1" == <-> ]]; then
+  checker="$1"
+  shift
+fi
+
+if (( checker < 1 )); then
+  echo "Checker size must be 1 or larger" >&2
+  exit 1
+fi
 
 if [[ "$#" -eq 0 ]]; then
-  echo "Usage: ./cga-muted.sh [1x|2x|4x] image.png [...]" >&2
+  echo "Usage: ./cga-muted.sh [checker-size] image.png [...]" >&2
+  echo "Example: ./cga-muted.sh 8 *.png" >&2
   exit 1
 fi
 
@@ -60,9 +67,10 @@ for input in "$@"; do
       "$output"
   else
     output="${stem}-cga-checker-${checker}x.png"
+    scale_percent="$((100.0 / checker))%"
     "$magick_bin" "$input" \
       -background black -alpha remove -alpha off \
-      -resize "$((100 / checker))%" \
+      -resize "$scale_percent" \
       -ordered-dither checks,2,2,2 \
       -remap "$palette" \
       -filter point -resize "${width}x${height}!" \
