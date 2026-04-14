@@ -34,6 +34,7 @@ body.post {
   position: sticky;
   top: 0;
   z-index: 10;
+  transition: font-size 0.2s ease;
 }
 
 .post-nav__inner {
@@ -43,6 +44,13 @@ body.post {
   align-items: flex-start;
   gap: 0;
   padding: clamp(18px, 2.6vw, 32px) 0;
+  transition: padding 0.2s ease;
+}
+
+@media (min-width: 601px) {
+  .post-nav--compact .post-nav__inner {
+    padding: clamp(9px, 1.3vw, 16px) 0;
+  }
 }
 
 .post-nav__item {
@@ -56,6 +64,14 @@ body.post {
   line-height: 1;
   text-decoration: none;
   padding: clamp(6px, 1vw, 10px) clamp(12px, 2vw, 24px) clamp(10px, 1.4vw, 16px) 0;
+  transition: font-size 0.2s ease, padding 0.2s ease;
+}
+
+@media (min-width: 601px) {
+  .post-nav--compact .post-nav__item:not(.post-nav__item--end) {
+    font-size: 24px;
+    padding: clamp(3px, 0.5vw, 5px) clamp(6px, 1vw, 12px) clamp(5px, 0.7vw, 8px) 0;
+  }
 }
 
 .post-nav__item--end {

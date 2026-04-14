@@ -234,6 +234,17 @@ if (import.meta.env.PROD) {
     <script is:inline type="module" define:vars={{ base }}>
       import(`${base}/js/about-cursor.js`).then((m) => m.initAboutCursor());
     </script>
+    <script is:inline>
+      (() => {
+        const nav = document.querySelector('.post-nav');
+        if (!nav) return;
+        const onScroll = () => {
+          nav.classList.toggle('post-nav--compact', window.scrollY > 40);
+        };
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+      })();
+    </script>
     <script is:inline src={`${base}/js/ghost-cards.js`}></script>
     <script is:inline src={`${base}/js/lightbox.js`}></script>
   </body>
