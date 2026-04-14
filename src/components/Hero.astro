@@ -9,18 +9,19 @@ const { base } = Astro.props;
   <canvas class="hero__shader" data-shader-canvas aria-hidden="true"></canvas>
 
   <header class="hero__nav" aria-label="Hero navigation">
-    <button
+    <a
       class="hero__nav-item"
-      type="button"
-      data-scroll-target="#about-me"
-      aria-controls="about-me"
+      href="#about-modal"
+      aria-haspopup="dialog"
+      aria-controls="about-modal"
       data-about-cursor-active
+      data-theatre-open="#about-modal"
     >
       <span class="hero__nav-copy">
         <span class="hero__nav-label">About me</span>
         <span class="hero__nav-arrow" aria-hidden="true">→</span>
       </span>
-    </button>
+    </a>
     <button
       class="hero__nav-item"
       type="button"
@@ -33,18 +34,16 @@ const { base } = Astro.props;
         <span class="hero__nav-arrow" aria-hidden="true">→</span>
       </span>
     </button>
-    <button
+    <a
       class="hero__nav-item"
-      type="button"
-      data-scroll-target="#projects"
-      aria-controls="projects"
+      href={`${base}/projects/`}
       data-about-cursor-active
     >
       <span class="hero__nav-copy">
         <span class="hero__nav-label">Projects</span>
         <span class="hero__nav-arrow" aria-hidden="true">→</span>
       </span>
-    </button>
+    </a>
     <button
       class="hero__nav-item"
       type="button"
