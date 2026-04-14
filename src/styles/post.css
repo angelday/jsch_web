@@ -119,26 +119,8 @@ body.post .gh-content a {
   color: #00aaaa;
 }
 
-.post-footer {
-  --content-width: 720px;
-  --container-width: 1200px;
-  --container-gap: clamp(24px, 1.7rem + 1.94vw, 48px);
-
-  display: grid;
-  grid-template-columns:
-    [full-start] minmax(var(--container-gap), 1fr) [wide-start] minmax(0, calc((var(--container-width) - var(--content-width)) / 2)) [main-start] min(var(--content-width), 100% - var(--container-gap) * 2) [main-end] minmax(0, calc((var(--container-width) - var(--content-width)) / 2)) [wide-end] minmax(var(--container-gap), 1fr) [full-end];
-  padding: 0 0 4rem;
-}
-
-.post-footer__text {
-  grid-column: main;
-  margin: 0;
-  color: #000;
-  font-family: "Geist Pixel Square", system-ui, sans-serif;
-  font-size: 22px;
-  font-weight: 400;
-  line-height: 1.4;
-  text-align: center;
+body.post .gh-content > :last-child {
+  margin-bottom: 0;
 }
 
 @media (max-width: 600px) {
@@ -160,14 +142,6 @@ body.post .gh-content a {
 @media (max-width: 540px) {
   .post-nav {
     --container-gap: 18px;
-  }
-
-  .post-footer {
-    --container-gap: 18px;
-  }
-
-  .post-footer__text {
-    font-size: 16px;
   }
 
   .post-nav__inner {

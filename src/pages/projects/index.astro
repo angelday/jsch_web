@@ -1,5 +1,5 @@
 ---
-import { formatCopyright } from "../../lib/site-footer";
+import SiteFooter from "../../components/SiteFooter.astro";
 import "../../styles/homepage/about-cursor.css";
 
 const GHOST_URL = import.meta.env.GHOST_URL;
@@ -46,7 +46,6 @@ const blogPosts = visible
     (a: any, b: any) =>
       new Date(b.published_at).getTime() - new Date(a.published_at).getTime(),
   );
-const siteFooter = formatCopyright();
 ---
 
 <html lang="en">
@@ -126,7 +125,7 @@ const siteFooter = formatCopyright();
         max-width: calc(var(--layout-max) - var(--shell-padding));
         width: calc(100% - (var(--shell-padding) * 2));
         margin: 0 auto;
-        padding: 6rem 0 10rem;
+        padding: 6rem 0 0;
         position: relative;
         z-index: 2;
       }
@@ -336,19 +335,6 @@ const siteFooter = formatCopyright();
         color: rgba(42, 31, 35, 0.42);
       }
 
-      .site-footer {
-        max-width: calc(var(--layout-max) - var(--shell-padding));
-        width: calc(100% - (var(--shell-padding) * 2));
-        margin: 0 auto;
-        padding: 0 0 4rem;
-        color: #000;
-        font-family: "Geist Pixel Square", system-ui, sans-serif;
-        font-size: var(--type-copy-size, 22px);
-        font-weight: 400;
-        line-height: 1.4;
-        text-align: center;
-      }
-
       @media (max-width: 600px) {
         .blog-card__link {
           flex-direction: column;
@@ -533,7 +519,7 @@ const siteFooter = formatCopyright();
           padding: var(--hero-block-start) 20px var(--hero-block-end);
         }
         .projects-shell {
-          padding: 6rem 0 8rem;
+          padding: 6rem 0 0;
         }
       }
       @media (max-width: 440px) {
@@ -657,7 +643,7 @@ const siteFooter = formatCopyright();
         )
       }
     </main>
-    <footer class="site-footer">{siteFooter}</footer>
+    <SiteFooter />
     <div class="about-cursor" data-about-cursor aria-hidden="true"></div>
     <script is:inline type="module" define:vars={{ base }}>
       import(`${base}/js/hero-shader.js`).then((m) => m.initHeroShader());

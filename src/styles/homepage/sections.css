@@ -77,16 +77,6 @@
   z-index: 1;
 }
 
-.page-byline {
-  margin: 0;
-  color: #000;
-  font-family: "Geist Pixel Square", monospace;
-  font-size: var(--type-copy-size);
-  font-weight: 400;
-  line-height: 1.4;
-  text-align: center;
-}
-
 .section__brand {
   position: absolute;
   top: 42px;

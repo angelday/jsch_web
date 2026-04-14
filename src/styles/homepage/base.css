@@ -28,5 +28,5 @@ select {
   width: 100%;
   max-width: calc(var(--layout-max) + 32px);
   margin: 0 auto;
-  padding: var(--shell-padding);
+  padding: var(--shell-padding) var(--shell-padding) 0;
 }

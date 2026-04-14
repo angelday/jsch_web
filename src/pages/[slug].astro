@@ -5,7 +5,7 @@ import '../styles/post.css';
 import '../styles/lightbox.css';
 import '../styles/homepage/about-cursor.css';
 import grafanaLogo from '../assets/grafana_logo.svg?raw';
-import { formatCopyright } from '../lib/site-footer';
+import SiteFooter from '../components/SiteFooter.astro';
 
 // Inline icons — use {{name}} tokens in Ghost prose to drop these into the text flow
 const icons: Record<string, string> = {
@@ -30,7 +30,6 @@ export async function getStaticPaths() {
 const GHOST_URL = import.meta.env.GHOST_URL;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const assetVersion = '20260413-2';
-const siteFooter = formatCopyright();
 const { post } = Astro.props;
 const isCaseStudy = post.tags?.some((t: any) => t.name === '#case-study');
 const isBlogPost = post.tags?.some((t: any) => t.name.toLowerCase() === 'post');
@@ -230,9 +229,7 @@ if (import.meta.env.PROD) {
         <Fragment set:html={post.html} />
       </div>
     </article>
-    <footer class="post-footer">
-      <p class="post-footer__text">{siteFooter}</p>
-    </footer>
+    <SiteFooter />
     <div class="about-cursor" data-about-cursor aria-hidden="true"></div>
     <script is:inline type="module" define:vars={{ base }}>
       import(`${base}/js/about-cursor.js`).then((m) => m.initAboutCursor());
