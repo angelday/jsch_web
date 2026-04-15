@@ -15,6 +15,16 @@ if [ -n "$(git status --porcelain)" ]; then
   exit 1
 fi
 
+DEPLOY_REMOTE="${DEPLOY_REMOTE:-}"
+if [ -z "$DEPLOY_REMOTE" ]; then
+  DEPLOY_REMOTE=$(git config --get remote.origin.pushurl || git config --get remote.origin.url)
+fi
+
+if [ -z "$DEPLOY_REMOTE" ]; then
+  echo "Error: could not determine deploy remote. Set DEPLOY_REMOTE or configure origin."
+  exit 1
+fi
+
 echo "Building site from $DEPLOY_BRANCH..."
 
 npx astro build
@@ -25,7 +35,7 @@ git init
 git checkout -b gh-pages
 git add -A
 git commit -m "Deploy $(date '+%Y-%m-%d %H:%M')"
-git push -f git@github.com:angelday/jsch_web.git gh-pages
+git push -f "$DEPLOY_REMOTE" gh-pages
 rm -rf .git
 cd ..
 
