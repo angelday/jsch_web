@@ -57,6 +57,13 @@ const hasBeenUpdated = !isBlogPost && publishedDate && updatedDate && publishedD
  *                  embed card's caption field (Ghost doesn't expose alt for embeds).
  *                  If the caption only contains the signal, the figcaption is dropped.
  *
+ * Ghost gallery caption conventions (signals stripped from output):
+ *
+ *   no-zoom      — disables lightbox on every image in the gallery (adds
+ *                  data-no-lightbox to the figure). Put it in the gallery card's
+ *                  caption field. If the caption only contains the signal, the
+ *                  figcaption is dropped.
+ *
  * Ghost blockquote conventions (detected by content, styled via CSS):
  *
  *   "Fact sheet" as first line — styled as a bespoke fact-sheet card
@@ -95,6 +102,19 @@ post.html = post.html.replace(
     const captionTextOnly = cleanCaption.replace(/<[^>]*>/g, '').trim();
     const captionHtml = captionTextOnly ? `<figcaption>${cleanCaption}</figcaption>` : '';
     return `<figure class="${nextFigClass}"${figRest}>${figInner}${captionHtml}${figEnd}`;
+  }
+);
+
+// no-zoom signal in gallery card caption — add data-no-lightbox to the figure,
+// strip signal, drop figcaption if it was the only content
+post.html = post.html.replace(
+  /<figure\s+class="([^"]*kg-gallery-card[^"]*)"([^>]*)>([\s\S]*?)<figcaption[^>]*>([\s\S]*?)<\/figcaption>(\s*<\/figure>)/g,
+  (match: string, figClass: string, figRest: string, figInner: string, captionInner: string, figEnd: string) => {
+    if (!/no-zoom/.test(captionInner)) return match;
+    const cleanCaption = captionInner.replace(/\s*no-zoom\s*/g, '').trim();
+    const captionTextOnly = cleanCaption.replace(/<[^>]*>/g, '').trim();
+    const captionHtml = captionTextOnly ? `<figcaption>${cleanCaption}</figcaption>` : '';
+    return `<figure class="${figClass}"${figRest} data-no-lightbox>${figInner}${captionHtml}${figEnd}`;
   }
 );
 

@@ -95,6 +95,8 @@ public/
   - `wide-width` → adds `kg-width-wide` to parent figure. Use for animated GIFs where Ghost's editor hides the width toggle.
 - **Embed caption signals** (YouTube etc., stripped from output):
   - `wide-width` in the embed card's caption field → adds `kg-width-wide`. Drops the figcaption if the signal was the only content. Ghost doesn't expose alt for embeds, so caption is the only writable field.
+- **Gallery caption signals** (stripped from output):
+  - `no-zoom` in the gallery card's caption field → adds `data-no-lightbox` to the `kg-gallery-card` figure (disables lightbox for every image in the gallery). Drops the figcaption if the signal was the only content. Ghost galleries don't expose per-image alt conveniently, so caption is the writable field.
 - **Embed card styling:** YouTube's hardcoded 200×150 iframe is overridden to 100% width + 16:9 aspect-ratio. On mobile it goes full-bleed like image cards.
 - **Video cards:** Ghost's player markup → native `<video>` tag (preserves loop/autoplay/poster/caption)
 - **Outgoing links:** `http(s)://...` hrefs rewritten to `target="_blank" rel="noopener noreferrer"`

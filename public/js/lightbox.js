@@ -134,12 +134,15 @@
   // Click on gallery or standalone images
   document.querySelectorAll(".kg-gallery-image img, .kg-image-card img").forEach(function (el) {
     if (el.hasAttribute("data-no-lightbox")) return;
+    if (el.closest(".kg-gallery-card[data-no-lightbox]")) return;
     el.style.cursor = "pointer";
     el.addEventListener("click", function () {
       // Collect all images in the same gallery, or just this one
       const gallery = el.closest(".kg-gallery-card");
       if (gallery) {
-        images = Array.from(gallery.querySelectorAll("img"));
+        images = Array.from(gallery.querySelectorAll("img")).filter(function (im) {
+          return !im.hasAttribute("data-no-lightbox");
+        });
         current = images.indexOf(el);
       } else {
         images = [el];
