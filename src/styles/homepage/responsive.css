@@ -50,6 +50,10 @@
     padding: 34px 40px 0;
   }
 
+  .section--about .section__content {
+    padding-bottom: 34px;
+  }
+
   .theatre-modal {
     --theatre-panel-padding: 40px;
     padding: 20px;
@@ -106,6 +110,10 @@
   .section__content {
     gap: 2.5rem;
     padding: 32px 24px 0;
+  }
+
+  .section--about .section__content {
+    padding-bottom: 32px;
   }
 
   .section__contact-grid {
