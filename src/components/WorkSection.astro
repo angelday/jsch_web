@@ -32,10 +32,15 @@ const { base } = Astro.props;
     </button -->
   </div>
   <div class="section__embed">
-    <iframe
-      class="section__iframe"
-      src="https://angelday.github.io/jsch_static/visualization?v=20260412-2"
-      title="Work visualization"
-      loading="lazy"></iframe>
+    <canvas
+      class="section__canvas"
+      data-work-canvas
+      data-viz-base={base}
+      aria-hidden="true"></canvas>
   </div>
 </section>
+
+<script>
+  import { initWorkVisualization } from "../scripts/work-visualization.js";
+  initWorkVisualization();
+</script>
