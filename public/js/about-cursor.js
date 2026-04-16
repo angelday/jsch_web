@@ -1,5 +1,5 @@
 export function initAboutCursor() {
-  const aboutSection = document.querySelector("[data-about-cursor-root]");
+  const aboutSections = document.querySelectorAll("[data-about-cursor-root]");
   const cursor = document.querySelector("[data-about-cursor]");
   const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
   const CURSOR_SCALE = 3;
@@ -8,7 +8,7 @@ export function initAboutCursor() {
   const SELECT_HOTSPOT_X = 8 * CURSOR_SCALE;
   const SELECT_HOTSPOT_Y = 8 * CURSOR_SCALE;
 
-  if (!(aboutSection instanceof HTMLElement) || !(cursor instanceof HTMLElement)) {
+  if (aboutSections.length === 0 || !(cursor instanceof HTMLElement)) {
     return;
   }
 
@@ -50,16 +50,18 @@ export function initAboutCursor() {
     cursor.classList.remove("is-select");
   };
 
-  aboutSection.addEventListener("pointerenter", showCursor);
-  aboutSection.addEventListener("pointermove", (event) => {
-    if (!isVisible) {
-      showCursor(event);
-      return;
-    }
+  aboutSections.forEach((section) => {
+    section.addEventListener("pointerenter", showCursor);
+    section.addEventListener("pointermove", (event) => {
+      if (!isVisible) {
+        showCursor(event);
+        return;
+      }
 
-    updatePosition(event);
+      updatePosition(event);
+    });
+    section.addEventListener("pointerleave", hideCursor);
   });
-  aboutSection.addEventListener("pointerleave", hideCursor);
   window.addEventListener("blur", hideCursor);
 
   finePointerQuery.addEventListener("change", (event) => {
