@@ -1,0 +1,170 @@
+// Closing callout — 4×4 CGA hyperspace starfield that fires on link hover.
+// Stars zoom from a vanishing point outward; short trails give the
+// "jumping to lightspeed" feel. Idle = intensity 0, no drawing.
+
+export function initClosingStarfield() {
+  const callout = document.querySelector(".closing-callout");
+  if (!callout) return;
+  const canvas = callout.querySelector("[data-starfield]");
+  const link = callout.querySelector(".closing-callout__link");
+  if (!canvas || !link) return;
+
+  if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+
+  const ctx = canvas.getContext("2d");
+  const STAR_COUNT = 240;
+  const SPEED = 0.035;
+  const Z_NEAR = 0.15;
+  const Z_FAR = 1.5;
+
+  // Pixel block size scales with callout width so mobile doesn't look chunky.
+  let PIXEL = 4;
+
+  let w = 0;
+  let h = 0;
+  let cx = 0;
+  let cy = 0;
+  let focal = 0;
+  // Star (x, y) units match the "visible frustum at z=1" — i.e. x in
+  // [-ratioX, ratioX] fills the canvas width exactly at z=1. Seeding in that
+  // space keeps stars packed into the projected frustum instead of mostly
+  // flying off the top/bottom of a wide-but-short callout.
+  let ratioX = 0;
+  let ratioY = 0;
+  let stars = [];
+  let hovering = false;
+
+  function resize() {
+    const dpr = window.devicePixelRatio || 1;
+    const rect = callout.getBoundingClientRect();
+    w = rect.width;
+    h = rect.height;
+    cx = w / 2;
+    cy = h / 2;
+    focal = Math.max(w, h) * 0.9;
+    ratioX = w / (2 * focal);
+    ratioY = h / (2 * focal);
+    PIXEL = w >= 900 ? 4 : w >= 540 ? 3 : 2;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    canvas.style.width = w + "px";
+    canvas.style.height = h + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.imageSmoothingEnabled = false;
+    seedStars();
+  }
+
+  function randomStar() {
+    return {
+      x: (Math.random() - 0.5) * 2 * ratioX,
+      y: (Math.random() - 0.5) * 2 * ratioY,
+      z: Z_NEAR + Math.random() * (Z_FAR - Z_NEAR),
+      active: false,
+    };
+  }
+
+  function seedStars() {
+    stars = [];
+    for (let i = 0; i < STAR_COUNT; i++) stars.push(randomStar());
+  }
+
+  // Stars spawn beyond Z_FAR so they approach the visible band one by one,
+  // mirroring the exit drain. Staggered across [Z_FAR, 2*Z_FAR - Z_NEAR].
+  function spawnDepth() {
+    return Z_FAR + Math.random() * (Z_FAR - Z_NEAR);
+  }
+
+  function activateInactive() {
+    for (const s of stars) {
+      if (s.active) continue;
+      s.x = (Math.random() - 0.5) * 2 * ratioX;
+      s.y = (Math.random() - 0.5) * 2 * ratioY;
+      s.z = spawnDepth();
+      s.active = true;
+    }
+  }
+
+  function step() {
+    requestAnimationFrame(step);
+    ctx.clearRect(0, 0, w, h);
+
+    for (const s of stars) {
+      if (!s.active) continue;
+      const prevZ = s.z;
+      s.z -= SPEED;
+
+      if (s.z <= Z_NEAR) {
+        if (hovering) {
+          s.x = (Math.random() - 0.5) * 2 * ratioX;
+          s.y = (Math.random() - 0.5) * 2 * ratioY;
+          s.z = spawnDepth();
+          continue;
+        }
+        // No hover → let stars run out to the near plane and vanish.
+        s.active = false;
+        continue;
+      }
+
+      // Not yet in the visible band — travel on in silence.
+      if (s.z > Z_FAR) continue;
+
+      const sx1 = (s.x / prevZ) * focal + cx;
+      const sy1 = (s.y / prevZ) * focal + cy;
+      const sx2 = (s.x / s.z) * focal + cx;
+      const sy2 = (s.y / s.z) * focal + cy;
+
+      const minX = Math.min(sx1, sx2);
+      const maxX = Math.max(sx1, sx2);
+      const minY = Math.min(sy1, sy2);
+      const maxY = Math.max(sy1, sy2);
+      if (maxX < 0 || minX > w || maxY < 0 || minY > h) continue;
+
+      const brightness = (Z_FAR - s.z) / (Z_FAR - Z_NEAR);
+
+      const color =
+        brightness > 0.42
+          ? "#ffffff"
+          : brightness > 0.24
+            ? "#aaaaaa"
+            : brightness > 0.16
+              ? "#00aaaa"
+              : "#aa00aa";
+      ctx.fillStyle = color;
+
+      const dx = sx2 - sx1;
+      const dy = sy2 - sy1;
+      const len = Math.max(Math.abs(dx), Math.abs(dy));
+      const steps = Math.max(1, Math.ceil(len / PIXEL));
+
+      for (let i = 0; i <= steps; i++) {
+        const t = steps === 0 ? 0 : i / steps;
+        const x = sx1 + dx * t;
+        const y = sy1 + dy * t;
+        const px = Math.floor(x / PIXEL) * PIXEL;
+        const py = Math.floor(y / PIXEL) * PIXEL;
+        if (px < -PIXEL || py < -PIXEL || px >= w || py >= h) continue;
+        ctx.fillRect(px, py, PIXEL, PIXEL);
+      }
+    }
+  }
+
+  link.addEventListener("pointerenter", () => {
+    hovering = true;
+    activateInactive();
+  });
+  link.addEventListener("pointerleave", () => {
+    hovering = false;
+  });
+  link.addEventListener("focus", () => {
+    hovering = true;
+    activateInactive();
+  });
+  link.addEventListener("blur", () => {
+    hovering = false;
+  });
+
+  new ResizeObserver(resize).observe(callout);
+  resize();
+  seedStars();
+  step();
+}

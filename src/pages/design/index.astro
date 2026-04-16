@@ -104,6 +104,10 @@ const cards = allPosts
     </ul>
 
     <section class="closing-callout">
+      <canvas
+        class="closing-callout__starfield"
+        data-starfield
+        aria-hidden="true"></canvas>
       <a
         class="closing-callout__link"
         href={`${base}/`}
@@ -120,6 +124,9 @@ const cards = allPosts
     <script is:inline type="module" define:vars={{ base }}>
       import(`${base}/js/hero-shader.js`).then((m) => m.initHeroShader());
       import(`${base}/js/about-cursor.js`).then((m) => m.initAboutCursor());
+      import(`${base}/js/closing-starfield.js`).then((m) =>
+        m.initClosingStarfield(),
+      );
     </script>
   </body>
 </html>

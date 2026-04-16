@@ -417,6 +417,7 @@ body {
 }
 
 .closing-callout {
+  position: relative;
   display: grid;
   place-items: center;
   max-width: var(--shell-inner-max);
@@ -426,9 +427,23 @@ body {
   border-radius: var(--hero-radius);
   background: var(--cga-black);
   color: var(--cga-white);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.closing-callout__starfield {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
 .closing-callout__link {
+  position: relative;
+  z-index: 1;
   display: inline-flex;
   flex-direction: row;
   align-items: baseline;
