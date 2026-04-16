@@ -69,9 +69,9 @@
 }
 
 .section--work .section__link {
-  justify-self: end;
-  padding-right: 0;
-  color: #000;
+  justify-self: start;
+  padding-left: 0;
+  color: #fff;
 }
 
 .section--projects {

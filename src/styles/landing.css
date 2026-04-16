@@ -47,6 +47,19 @@ body {
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
 }
 
+.work-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: var(--shell-inner-max);
+  width: var(--shell-width);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.4rem;
+  padding-top: 3rem;
+  padding-bottom: 8px;
+}
+
 /* Project card */
 .project-card {
   position: relative;
@@ -68,6 +81,19 @@ body {
 .project-card__link:hover,
 .project-card__link:focus-visible {
   transform: translateY(-6px);
+}
+
+.project-card__link--static:hover,
+.project-card__link--static:focus-visible {
+  transform: none;
+}
+
+.project-card__link--static > .project-card__title {
+  margin: 0;
+  padding: 1.6rem 2.2rem;
+  font-size: var(--type-body-size);
+  color: var(--cga-black);
+  letter-spacing: -0.04em;
 }
 
 .project-card__canvas {
@@ -240,13 +266,19 @@ body {
   max-width: var(--shell-inner-max);
   width: var(--shell-width);
   margin: var(--shell-padding) auto 0;
-  padding: var(--hero-block-start) var(--hero-inline-padding)
-    var(--hero-block-end);
+  padding: var(--hero-block-start) var(--hero-inline-padding) var(--hero-block-end);
   overflow: hidden;
   border-radius: var(--hero-radius);
   background: var(--cga-black);
   color: var(--cga-white);
   isolation: isolate;
+}
+
+.mini-hero--compact {
+  --hero-block-start: 0;
+  --hero-block-end: 0;
+  min-height: 185px;
+  padding-block: 0;
 }
 
 .mini-hero__shader {
@@ -292,8 +324,7 @@ body {
   font-size: var(--type-body-size);
   font-weight: 400;
   letter-spacing: -0.04em;
-  padding: clamp(6px, 1vw, 10px) clamp(24px, 4vw, 64px)
-    clamp(14px, 1.8vw, 22px) 0;
+  padding: clamp(6px, 1vw, 10px) clamp(24px, 4vw, 64px) clamp(14px, 1.8vw, 22px) 0;
 }
 
 .mini-hero__nav-copy {
@@ -336,8 +367,7 @@ body {
   gap: 18px;
   width: min(100%, 1120px);
   transform: translateX(-50%);
-  padding: var(--hero-block-start) clamp(20px, 3vw, 40px)
-    var(--hero-block-end);
+  padding: var(--hero-block-start) clamp(20px, 3vw, 40px) var(--hero-block-end);
   text-align: left;
 }
 
@@ -371,7 +401,7 @@ body {
   margin: 3rem auto 0;
 }
 
-.design-intro + .design-intro {
+.design-intro+.design-intro {
   margin-top: 1.4rem;
 }
 
@@ -471,6 +501,7 @@ body {
 
 /* Squircle progressive enhancement — consolidated */
 @supports (corner-shape: squircle) {
+
   .project-card__link,
   .blog-card__link,
   .mini-hero,
@@ -491,21 +522,28 @@ body {
     --subhero-title-size: clamp(46px, 8vw, 72px);
     --subhero-intro-size: 28px;
   }
+
   .mini-hero {
     --hero-inline-padding: 28px;
     --hero-block-start: 96px;
     --hero-block-end: 56px;
   }
+
   .mini-hero__nav {
     padding-top: 16px;
   }
+
   .mini-hero__nav-item {
     padding-right: 32px;
   }
+
   .mini-hero__content {
     gap: 16px;
-    padding: var(--hero-block-start) clamp(20px, 3vw, 40px)
-      var(--hero-block-end);
+    padding: var(--hero-block-start) clamp(20px, 3vw, 40px) var(--hero-block-end);
+  }
+
+  .mini-hero--compact {
+    min-height: 140px;
   }
 }
 
@@ -513,6 +551,7 @@ body {
   .blog-card__link {
     flex-direction: column;
   }
+
   .blog-card__thumb {
     width: 100%;
     aspect-ratio: 5 / 3;
@@ -529,53 +568,70 @@ body {
     --subhero-title-size: clamp(38px, 13vw, 54px);
     --subhero-intro-size: 22px;
   }
+
   .mini-hero {
     --hero-inline-padding: 18px;
     --hero-block-start: 104px;
     --hero-block-end: 40px;
   }
+
   .mini-hero__content {
     gap: 16px;
     padding: var(--hero-block-start) 20px var(--hero-block-end);
   }
+
+  .mini-hero--compact {
+    min-height: 100px;
+  }
+
   .projects-shell {
     padding: 2.4rem 0 8px;
   }
+
   .case-study-callout {
     margin-top: 2.4rem;
     padding: 32px 24px;
   }
+
   .closing-callout {
     margin-top: 2.4rem;
     padding: 40px 24px;
   }
+
   .case-study-grid {
     grid-template-columns: 1fr;
   }
+
   .blog-section__title {
     font-size: 2rem;
     line-height: 1;
   }
+
   .design-intro {
     margin-top: 2.4rem;
   }
+
   .project-card__content,
   .blog-card__body {
     padding: 1.35rem 1.4rem 1.6rem;
   }
+
   .project-card__title,
   .blog-card__title {
     font-size: 1.45rem;
     line-height: 1.22;
   }
+
   .project-card__excerpt,
   .blog-card__excerpt {
     font-size: 1.08rem;
     line-height: 1.45;
   }
+
   .tag-pill {
     font-size: 0.72rem;
   }
+
   .project-card__date,
   .blog-card__date {
     font-size: 0.78rem;
@@ -590,10 +646,12 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .project-card__link,
   .blog-card__link {
     transition: none;
   }
+
   .project-card__link:hover,
   .project-card__link:focus-visible,
   .blog-card__link:hover,
