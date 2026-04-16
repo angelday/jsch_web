@@ -1,10 +1,4 @@
 /* Ghost content styles — renders kg- card markup from Ghost's Content API */
-@font-face {
-  font-family: "Geist";
-  src: url("/fonts/Geist-Variable.woff2") format("woff2-variations");
-  font-weight: 100 900;
-  font-display: swap;
-}
 
 /* Make rem-based sizing work (Ghost uses 62.5% trick) */
 html {
@@ -355,4 +349,37 @@ h3 {
   padding-left: 1.5rem;
   font-style: italic;
   color: rgba(0, 0, 0, 0.65);
+}
+
+/* Fact sheet card — Ghost blockquote convention */
+.gh-content>.fact-sheet {
+  width: 70%;
+  justify-self: center;
+  margin-inline: 0;
+  padding: 1.5em 1.75em;
+  background: rgba(92, 42, 62, 0.06);
+  border: 1px solid rgba(92, 42, 62, 0.15);
+  border-radius: 12px;
+  font-style: normal;
+  font-size: 0.88em;
+  line-height: 1.55;
+  color: inherit;
+}
+
+.gh-content>.fact-sheet .fact-sheet__label {
+  margin: 1em 0 0.5em;
+  font-weight: 600;
+}
+
+.gh-content>.fact-sheet ul {
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .gh-content>.fact-sheet {
+    width: 100%;
+    justify-self: stretch;
+    box-sizing: border-box;
+    padding: 1.2em 1.5em 1.2em 1.2em;
+  }
 }

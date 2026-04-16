@@ -1,6 +1,7 @@
 ---
-import SiteFooter from "../../components/SiteFooter.astro";
+import "../../styles/landing.css";
 import "../../styles/homepage/about-cursor.css";
+import SiteFooter from "../../components/SiteFooter.astro";
 
 const GHOST_URL = import.meta.env.GHOST_URL;
 const GHOST_API_KEY = import.meta.env.GHOST_API_KEY;
@@ -20,28 +21,31 @@ const rewriteUrl = (url: string | null) => {
 };
 const dateFmt = { day: "numeric", month: "long", year: "numeric" } as const;
 const visible = allPosts
-  .filter((p: any) => !p.tags?.some((t: any) => t.name === "#hidden"))
-  .map((p: any) => ({
-    slug: p.slug,
-    title: p.title,
-    custom_excerpt: p.custom_excerpt ?? null,
-    feature_image: rewriteUrl(p.feature_image),
-    tags: (p.tags ?? [])
+  .filter((p: any) => !p.tags?.some((t: any) => t.name === "#case-study"))
+  .map((p: any) => {
+    const tags = (p.tags ?? [])
       .filter((t: any) => !t.name.startsWith("#"))
-      .map((t: any) => t.name),
-    published_at: p.published_at,
-    updatedLabel: `Updated ${new Date(p.updated_at).toLocaleDateString("en-GB", dateFmt)}`,
-    publishedLabel: new Date(p.published_at).toLocaleDateString(
-      "en-GB",
-      dateFmt,
-    ),
-  }));
+      .map((t: any) => t.name);
+    return {
+      slug: p.slug,
+      title: p.title,
+      custom_excerpt: p.custom_excerpt ?? null,
+      feature_image: rewriteUrl(p.feature_image),
+      tags,
+      displayTags: tags.filter((t: string) => t.toLowerCase() !== "post"),
+      isBlogPost: tags.some((t: string) => t.toLowerCase() === "post"),
+      published_at: p.published_at,
+      updatedLabel: `Updated ${new Date(p.updated_at).toLocaleDateString("en-GB", dateFmt)}`,
+      publishedLabel: new Date(p.published_at).toLocaleDateString(
+        "en-GB",
+        dateFmt,
+      ),
+    };
+  });
 
-const cards = visible.filter(
-  (p: any) => !p.tags.some((t: string) => t.toLowerCase() === "post"),
-);
+const cards = visible.filter((p: any) => !p.isBlogPost);
 const blogPosts = visible
-  .filter((p: any) => p.tags.some((t: string) => t.toLowerCase() === "post"))
+  .filter((p: any) => p.isBlogPost)
   .sort(
     (a: any, b: any) =>
       new Date(b.published_at).getTime() - new Date(a.published_at).getTime(),
@@ -54,494 +58,9 @@ const blogPosts = visible
     <meta name="viewport" content="width=device-width" />
     <title>Projects & Blog — József Schaffer</title>
     <link rel="icon" href={`${base}/favicon.png?v=${assetVersion}`} />
-    <style is:global>
-      @font-face {
-        font-family: "Geist Pixel Square";
-        src: url("/fonts/GeistPixel-Square.woff2") format("woff2");
-        font-weight: 400;
-        font-display: swap;
-      }
-      :root {
-        --page-bg: #aaaaaa;
-        --layout-max: 1200px;
-        --shell-padding: 32px;
-        --section-height: calc(90svh - var(--shell-padding));
-        --type-nameplate-size: min(130px, 10.4vw);
-        --type-body-size: 48px;
-        --hero-radius: 40px;
-        --subhero-section-height: clamp(360px, 52svh, 560px);
-        --subhero-title-size: clamp(56px, 7.4vw, 92px);
-        --subhero-intro-size: clamp(28px, 3.6vw, 40px);
-      }
-
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-      }
-
-      body {
-        background-color: var(--page-bg);
-        color: #2a1f23;
-        font-family:
-          "Geist",
-          system-ui,
-          -apple-system,
-          sans-serif;
-        margin: 0;
-      }
-
-      .projects-shell {
-        max-width: calc(var(--layout-max) - var(--shell-padding));
-        width: calc(100% - (var(--shell-padding) * 2));
-        margin: 0 auto;
-        padding: 3rem 0 8px;
-        position: relative;
-        z-index: 2;
-      }
-
-      .projects-grid {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 2.4rem;
-      }
-
-      .project-card {
-        position: relative;
-      }
-
-      .project-card__link {
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-        text-decoration: none;
-        color: inherit;
-        background: #fff;
-        border: 0;
-        border-radius: var(--hero-radius);
-        overflow: hidden;
-        transition: transform 0.18s ease;
-      }
-
-      .project-card__link:hover,
-      .project-card__link:focus-visible {
-        transform: translateY(-6px);
-      }
-
-      @supports (corner-shape: squircle) {
-        .project-card__link,
-        .blog-card__link {
-          corner-shape: superellipse(2.5);
-        }
-      }
-
-      .project-card__canvas {
-        position: relative;
-        width: 100%;
-        aspect-ratio: 5 / 3;
-        overflow: hidden;
-      }
-
-      .project-card__img {
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      .project-card__content {
-        padding: 2rem 2.2rem 2.4rem;
-      }
-
-      .project-card__title {
-        font-family: "Geist Pixel Square", system-ui, sans-serif;
-        font-size: 1.9rem;
-        font-weight: 400;
-        line-height: 1.25;
-        letter-spacing: -0.01em;
-        color: #aa00aa;
-        margin: 0 0 0.8rem;
-      }
-
-      .project-card__excerpt {
-        font-family:
-          "Geist",
-          system-ui,
-          -apple-system,
-          sans-serif;
-        font-size: 1.35rem;
-        line-height: 1.5;
-        color: #000;
-        margin: 0 0 1.4rem;
-      }
-
-      /* Tag pill token */
-      :root {
-        --tag-color: #000;
-      }
-
-      .project-card__tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-bottom: 0.6rem;
-      }
-
-      .tag-pill {
-        display: inline-block;
-        font-family: "Geist Pixel Square", system-ui, sans-serif;
-        font-size: 0.85rem;
-        font-weight: 500;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-        padding: 0.25em 0.7em;
-        border-radius: 999px;
-        border: 1px solid var(--tag-color);
-        color: var(--tag-color);
-      }
-
-      .project-card__date {
-        font-family: "Geist Pixel Square", system-ui, sans-serif;
-        font-size: 0.92rem;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        color: rgba(42, 31, 35, 0.42);
-      }
-
-      /* Blog section */
-      .blog-section {
-        margin-top: 4rem;
-      }
-
-      .blog-section__title {
-        margin: 0 0 2rem;
-        font-family: "Geist Pixel Square", sans-serif;
-        font-size: var(--subhero-intro-size);
-        font-weight: 400;
-        line-height: 0.98;
-        letter-spacing: -0.01em;
-        color: #2a1f23;
-      }
-
-      .blog-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-      }
-
-      .blog-card__link {
-        display: flex;
-        gap: 0;
-        text-decoration: none;
-        color: inherit;
-        background: #fff;
-        border: 0;
-        border-radius: var(--hero-radius);
-        overflow: hidden;
-        transition: transform 0.18s ease;
-      }
-
-      .blog-card__link:hover,
-      .blog-card__link:focus-visible {
-        transform: translateY(-6px);
-      }
-
-      .blog-card__thumb {
-        flex-shrink: 0;
-        width: 220px;
-        overflow: hidden;
-      }
-
-      .blog-card__thumb img {
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      .blog-card__body {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 1.8rem 2.2rem;
-        min-width: 0;
-      }
-
-      .blog-card__title {
-        font-family: "Geist Pixel Square", system-ui, sans-serif;
-        font-size: 2rem;
-        font-weight: 400;
-        line-height: 1.25;
-        letter-spacing: -0.01em;
-        color: #aa00aa;
-        margin: 0 0 0.5rem;
-      }
-
-      .blog-card__excerpt {
-        font-family:
-          "Geist",
-          system-ui,
-          -apple-system,
-          sans-serif;
-        font-size: 1.45rem;
-        line-height: 1.5;
-        color: #000;
-        margin: 0 0 1rem;
-      }
-
-      .blog-card__date {
-        font-family: "Geist Pixel Square", system-ui, sans-serif;
-        font-size: 0.92rem;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        color: rgba(42, 31, 35, 0.42);
-      }
-
-      @media (max-width: 600px) {
-        .blog-card__link {
-          flex-direction: column;
-        }
-        .blog-card__thumb {
-          width: 100%;
-          aspect-ratio: 5 / 3;
-        }
-      }
-
-      .mini-hero {
-        --hero-inline-padding: 40px;
-        --hero-block-start: 112px;
-        --hero-block-end: 72px;
-        position: relative;
-        display: grid;
-        place-items: center;
-        min-height: var(--subhero-section-height);
-        max-width: calc(var(--layout-max) - var(--shell-padding));
-        width: calc(100% - (var(--shell-padding) * 2));
-        margin: var(--shell-padding) auto 0;
-        padding: var(--hero-block-start) var(--hero-inline-padding)
-          var(--hero-block-end);
-        overflow: hidden;
-        border-radius: var(--hero-radius);
-        background: #000;
-        color: #fff;
-        isolation: isolate;
-      }
-      @supports (corner-shape: squircle) {
-        .mini-hero {
-          corner-shape: superellipse(2.5);
-        }
-      }
-      .mini-hero__shader {
-        position: absolute;
-        inset: 0;
-        z-index: 0;
-        display: block;
-        width: 100%;
-        height: 100%;
-      }
-      .mini-hero__nav,
-      .mini-hero__content {
-        position: relative;
-        z-index: 1;
-      }
-      .mini-hero__nav {
-        position: absolute;
-        top: 0;
-        left: 50%;
-        z-index: 2;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: flex-start;
-        gap: 0;
-        width: min(100%, 1120px);
-        transform: translateX(-50%);
-        padding: clamp(18px, 2.6vw, 32px) clamp(20px, 3vw, 40px) 0;
-      }
-      .mini-hero__nav-item {
-        display: flex;
-        min-width: 0;
-        align-items: flex-start;
-        gap: 0;
-        border: 0;
-        background: transparent;
-        color: inherit;
-        text-decoration: none;
-        cursor: pointer;
-        font-family: "Geist Pixel Square", sans-serif;
-        font-size: var(--type-body-size);
-        font-weight: 400;
-        letter-spacing: -0.04em;
-        padding: clamp(6px, 1vw, 10px) clamp(24px, 4vw, 64px)
-          clamp(14px, 1.8vw, 22px) 0;
-      }
-      .mini-hero__nav-copy {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        width: max-content;
-      }
-      .mini-hero__nav-label {
-        display: block;
-      }
-      .mini-hero__nav-arrow {
-        display: block;
-        font-family: "Geist Pixel Square", sans-serif;
-        line-height: 0.6;
-      }
-      .mini-hero__nav-item:hover,
-      .mini-hero__nav-item:focus-visible {
-        background: #fff;
-        color: #000;
-        outline: none;
-      }
-      .mini-hero__nav-item:hover .mini-hero__nav-arrow,
-      .mini-hero__nav-item:focus-visible .mini-hero__nav-arrow {
-        align-self: flex-end;
-      }
-      .mini-hero__content {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 50%;
-        display: grid;
-        align-content: center;
-        justify-items: flex-start;
-        gap: 18px;
-        width: min(100%, 1120px);
-        transform: translateX(-50%);
-        padding: var(--hero-block-start) clamp(20px, 3vw, 40px)
-          var(--hero-block-end);
-        text-align: left;
-      }
-      .mini-hero h1 {
-        margin: 0;
-        font-family: "Geist Pixel Square", sans-serif;
-        font-size: var(--subhero-title-size);
-        font-weight: 400;
-        line-height: 0.98;
-        letter-spacing: -0.01em;
-        white-space: normal;
-        text-wrap: balance;
-        color: #fff;
-      }
-      .mini-hero__intro {
-        margin: 0;
-        font-family: "Geist Pixel Square", sans-serif;
-        font-size: var(--subhero-intro-size);
-        font-weight: 400;
-        letter-spacing: -0.03em;
-        line-height: 1.04;
-        color: #fff;
-        max-width: min(760px, 100%);
-      }
-      @media (max-width: 900px) {
-        :root {
-          --hero-radius: 28px;
-          --section-height: calc(80svh - var(--shell-padding));
-          --type-nameplate-size: min(84px, 11vw);
-          --type-body-size: 32px;
-          --subhero-section-height: clamp(400px, 60svh, 520px);
-          --subhero-title-size: clamp(46px, 8vw, 72px);
-          --subhero-intro-size: 28px;
-        }
-        .mini-hero {
-          --hero-inline-padding: 28px;
-          --hero-block-start: 96px;
-          --hero-block-end: 56px;
-        }
-        .mini-hero__nav {
-          padding-top: 16px;
-        }
-        .mini-hero__nav-item {
-          padding-right: 32px;
-        }
-        .mini-hero__content {
-          gap: 16px;
-          padding: var(--hero-block-start) clamp(20px, 3vw, 40px)
-            var(--hero-block-end);
-        }
-      }
-      @media (max-width: 540px) {
-        :root {
-          --shell-padding: 12px;
-          --section-height: calc(80svh - var(--shell-padding));
-          --type-nameplate-size: min(56px, 14vw);
-          --type-body-size: 24px;
-          --subhero-section-height: clamp(380px, 60svh, 480px);
-          --subhero-title-size: clamp(38px, 13vw, 54px);
-          --subhero-intro-size: 22px;
-        }
-        .mini-hero {
-          --hero-inline-padding: 18px;
-          --hero-block-start: 104px;
-          --hero-block-end: 40px;
-        }
-        .mini-hero__content {
-          gap: 16px;
-          padding: var(--hero-block-start) 20px var(--hero-block-end);
-        }
-        .projects-shell {
-          padding: 2.4rem 0 8px;
-        }
-        .blog-section__title {
-          font-size: 2rem;
-          line-height: 1;
-        }
-        .project-card__content,
-        .blog-card__body {
-          padding: 1.35rem 1.4rem 1.6rem;
-        }
-        .project-card__title,
-        .blog-card__title {
-          font-size: 1.45rem;
-          line-height: 1.22;
-        }
-        .project-card__excerpt,
-        .blog-card__excerpt {
-          font-size: 1.08rem;
-          line-height: 1.45;
-        }
-        .tag-pill {
-          font-size: 0.72rem;
-        }
-        .project-card__date,
-        .blog-card__date {
-          font-size: 0.78rem;
-        }
-      }
-      @media (max-width: 440px) {
-        .mini-hero h1 {
-          white-space: normal;
-          text-wrap: balance;
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .project-card__link,
-        .blog-card__link {
-          transition: none;
-        }
-        .project-card__link:hover,
-        .project-card__link:focus-visible,
-        .blog-card__link:hover,
-        .blog-card__link:focus-visible {
-          transform: none;
-        }
-      }
-    </style>
   </head>
   <body>
-    <section
-      class="mini-hero"
-      aria-labelledby="projects-heading"
-      data-about-cursor-root
-    >
+    <section class="mini-hero" data-about-cursor-root>
       <canvas
         class="mini-hero__shader"
         data-shader-canvas
@@ -560,7 +79,7 @@ const blogPosts = visible
         </a>
       </header>
       <div class="mini-hero__content">
-        <h1 id="projects-heading" data-about-cursor-select>Projects</h1>
+        <h1 data-about-cursor-select>Projects</h1>
         <p class="mini-hero__intro" data-about-cursor-select>
           A mix of side projects, apps, writing, and assorted tech nerdery.
         </p>
@@ -584,19 +103,16 @@ const blogPosts = visible
                 </div>
                 <div class="project-card__content">
                   <h2 class="project-card__title">{post.title}</h2>
-                  {post.tags.filter((t: string) => t.toLowerCase() !== "post")
-                    .length > 0 && (
+                  {post.displayTags.length > 0 && (
                     <div class="project-card__tags">
-                      {post.tags
-                        .filter((t: string) => t.toLowerCase() !== "post")
-                        .map((tag: string) => (
-                          <span
-                            class="tag-pill"
-                            data-tag={tag.toLowerCase().replace(/\s+/g, "-")}
-                          >
-                            {tag}
-                          </span>
-                        ))}
+                      {post.displayTags.map((tag: string) => (
+                        <span
+                          class="tag-pill"
+                          data-tag={tag.toLowerCase().replace(/\s+/g, "-")}
+                        >
+                          {tag}
+                        </span>
+                      ))}
                     </div>
                   )}
                   {post.custom_excerpt && (

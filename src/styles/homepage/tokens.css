@@ -2,15 +2,23 @@
   --page-bg: #aaaaaa;
   --layout-max: 1200px;
   --shell-padding: 32px;
+  --shell-width: calc(100% - (var(--shell-padding) * 2));
+  --shell-inner-max: calc(var(--layout-max) - var(--shell-padding));
   --section-height: calc(90svh - var(--shell-padding));
   --type-nameplate-size: min(130px, 10.4vw);
   --type-body-size: 48px;
   --type-copy-size: 22px;
+  --subhero-section-height: clamp(360px, 52svh, 560px);
+  --subhero-title-size: clamp(56px, 7.4vw, 92px);
+  --subhero-intro-size: clamp(28px, 3.6vw, 40px);
   --hero-bg: #000;
   --hero-fg: #fff;
   --cga-white: #fff;
+  --cga-black: #000;
+  --cga-gray: #aaaaaa;
   --cga-pink: #aa00aa;
   --cga-cyan: #00aaaa;
+  --text-dark: #2a1f23;
   --hero-radius: 40px;
   color-scheme: dark;
 }

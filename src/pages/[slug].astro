@@ -1,16 +1,9 @@
 ---
 import '../styles/ghost-content.css';
-import '../styles/case-study.css';
 import '../styles/post.css';
 import '../styles/lightbox.css';
 import '../styles/homepage/about-cursor.css';
-import grafanaLogo from '../assets/grafana_logo.svg?raw';
 import SiteFooter from '../components/SiteFooter.astro';
-
-// Inline icons — use {{name}} tokens in Ghost prose to drop these into the text flow
-const icons: Record<string, string> = {
-  grafana: grafanaLogo,
-};
 
 export async function getStaticPaths() {
   const GHOST_URL = import.meta.env.GHOST_URL;
@@ -156,12 +149,6 @@ post.html = post.html.replace(
   }
 );
 
-// Replace {{name}} tokens with inline SVG icons
-post.html = post.html.replace(/\{(\w+)\}/g, (match: string, name: string) => {
-  const svg = icons[name];
-  return svg ? `<span class="inline-icon">${svg}</span>` : match;
-});
-
 // Strip Ghost's ref= from outgoing links (handles both ?ref= and &ref= forms)
 post.html = post.html.replace(/([?&])ref=[^"&\s]*(&?)/g, (_m, sep, trailing) =>
   trailing ? sep : ''
@@ -196,24 +183,21 @@ if (import.meta.env.PROD) {
     <meta name="twitter:title" content={post.title} />
     <meta name="twitter:image" content={`${base}/og-image.png?v=${assetVersion}`} />
     <style is:global>
-      .case-study .gh-content {
-        padding: 14rem 0;
-      }
       .post .gh-content {
         padding: 8rem 0;
       }
     </style>
   </head>
-  <body class={isCaseStudy ? 'case-study' : 'post'}>
+  <body class="post">
     <nav class="post-nav" aria-label="Site navigation" data-about-cursor-root>
       <div class="post-nav__inner">
         <a
           class="post-nav__item"
-          href={`${base}/projects/`}
+          href={`${base}/${isCaseStudy ? 'design' : 'projects'}/`}
           data-about-cursor-active
         >
           <span class="post-nav__copy">
-            <span class="post-nav__label">Projects</span>
+            <span class="post-nav__label">{isCaseStudy ? 'Design' : 'Projects'}</span>
             <span class="post-nav__arrow" aria-hidden="true">←</span>
           </span>
         </a>
@@ -230,24 +214,22 @@ if (import.meta.env.PROD) {
     </nav>
     <article>
       <div class="gh-content">
-        {!isCaseStudy && (
-          <header class="post-header">
-            <h1>{post.title}</h1>
-            <div class="post-byline">
-              {authorName && <span>{authorName}</span>}
-              {authorName && publishedDate && <span> · </span>}
-              {isBlogPost ? (
-                publishedDate && <span>{publishedDate}</span>
-              ) : (
-                <>
-                  {hasBeenUpdated && publishedDate && <span>Originally published {publishedDate}</span>}
-                  {hasBeenUpdated && <span> · </span>}
-                  {updatedDate && <span>{hasBeenUpdated ? `Updated ${updatedDate}` : publishedDate}</span>}
-                </>
-              )}
-            </div>
-          </header>
-        )}
+        <header class="post-header">
+          <h1>{post.title}</h1>
+          <div class="post-byline">
+            {authorName && <span>{authorName}</span>}
+            {authorName && publishedDate && <span> · </span>}
+            {isBlogPost ? (
+              publishedDate && <span>{publishedDate}</span>
+            ) : (
+              <>
+                {hasBeenUpdated && publishedDate && <span>Originally published {publishedDate}</span>}
+                {hasBeenUpdated && <span> · </span>}
+                {updatedDate && <span>{hasBeenUpdated ? `Updated ${updatedDate}` : publishedDate}</span>}
+              </>
+            )}
+          </div>
+        </header>
         <Fragment set:html={post.html} />
       </div>
     </article>

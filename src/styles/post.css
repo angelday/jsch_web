@@ -1,9 +1,4 @@
-@font-face {
-  font-family: "Geist Pixel Square";
-  src: url("/fonts/GeistPixel-Square.woff2") format("woff2");
-  font-weight: 400;
-  font-display: swap;
-}
+@import "./homepage/fonts.css";
 
 body.post {
   background-color: #e5e5e5;

@@ -1,0 +1,125 @@
+---
+import "../../styles/landing.css";
+import "../../styles/homepage/about-cursor.css";
+import SiteFooter from "../../components/SiteFooter.astro";
+
+const GHOST_URL = import.meta.env.GHOST_URL;
+const GHOST_API_KEY = import.meta.env.GHOST_API_KEY;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const assetVersion = "20260413-2";
+
+const res = await fetch(
+  `${GHOST_URL}/ghost/api/content/posts/?key=${GHOST_API_KEY}&include=tags&fields=slug,title,updated_at,custom_excerpt,feature_image,url&order=updated_at%20desc`,
+);
+const { posts: allPosts } = await res.json();
+const ghostOrigin = allPosts[0]?.url
+  ? new URL(allPosts[0].url).origin
+  : GHOST_URL;
+const rewriteUrl = (url: string | null) => {
+  if (!url || !import.meta.env.PROD) return url;
+  return url.replace(ghostOrigin, base);
+};
+const dateFmt = { day: "numeric", month: "long", year: "numeric" } as const;
+const cards = allPosts
+  .filter((p: any) => p.tags?.some((t: any) => t.name === "#case-study"))
+  .map((p: any) => {
+    const displayTags = (p.tags ?? [])
+      .filter((t: any) => !t.name.startsWith("#"))
+      .map((t: any) => t.name);
+    return {
+      slug: p.slug,
+      title: p.title,
+      custom_excerpt: p.custom_excerpt ?? null,
+      feature_image: rewriteUrl(p.feature_image),
+      displayTags,
+      updatedLabel: `Updated ${new Date(p.updated_at).toLocaleDateString("en-GB", dateFmt)}`,
+    };
+  });
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Design — József Schaffer</title>
+    <link rel="icon" href={`${base}/favicon.png?v=${assetVersion}`} />
+  </head>
+  <body>
+    <section class="mini-hero" data-about-cursor-root>
+      <canvas
+        class="mini-hero__shader"
+        data-shader-canvas
+        data-shader-preset="projects"
+        aria-hidden="true"></canvas>
+      <div class="mini-hero__content">
+        <h1 data-about-cursor-select>Hi, nice to meet you!</h1>
+        <p class="mini-hero__intro" data-about-cursor-select>
+          I'm József Schaffer. I design, prototype, and code to help teams solve
+          complex problems.
+        </p>
+        <p class="mini-hero__intro" data-about-cursor-select>
+          I've been at it for 15+ years, currently at Inter IKEA.
+        </p>
+      </div>
+    </section>
+
+    <ul class="projects-grid case-study-grid case-study-cards">
+      {
+        cards.map((post: any) => (
+          <li class="project-card">
+            <a class="project-card__link" href={`${base}/${post.slug}/`}>
+              <div class="project-card__canvas">
+                {post.feature_image && (
+                  <img
+                    class="project-card__img"
+                    src={post.feature_image}
+                    alt=""
+                    loading="lazy"
+                  />
+                )}
+              </div>
+              <div class="project-card__content">
+                <h3 class="project-card__title">{post.title}</h3>
+                {post.displayTags.length > 0 && (
+                  <div class="project-card__tags">
+                    {post.displayTags.map((tag: string) => (
+                      <span
+                        class="tag-pill"
+                        data-tag={tag.toLowerCase().replace(/\s+/g, "-")}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {post.custom_excerpt && (
+                  <p class="project-card__excerpt">{post.custom_excerpt}</p>
+                )}
+                <span class="project-card__date">{post.updatedLabel}</span>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <section class="closing-callout">
+      <a
+        class="closing-callout__link"
+        href={`${base}/`}
+        data-about-cursor-active
+      >
+        <span class="closing-callout__lead">Continue to</span>
+        <span class="closing-callout__label">jozsefschaffer.com</span>
+        <span class="closing-callout__arrow" aria-hidden="true">→</span>
+      </a>
+    </section>
+
+    <SiteFooter />
+    <div class="about-cursor" data-about-cursor aria-hidden="true"></div>
+    <script is:inline type="module" define:vars={{ base }}>
+      import(`${base}/js/hero-shader.js`).then((m) => m.initHeroShader());
+      import(`${base}/js/about-cursor.js`).then((m) => m.initAboutCursor());
+    </script>
+  </body>
+</html>

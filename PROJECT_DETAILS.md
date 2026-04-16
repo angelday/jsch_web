@@ -41,11 +41,8 @@ src/
     styles.css           — homepage CSS entry (imports homepage/*)
     homepage/            — modular homepage CSS (tokens, base, fonts, hero, sections, modal, about-cursor, responsive)
     ghost-content.css    — Ghost content layout (grid, typography, images, video)
-    case-study.css       — case study page layout
     post.css             — post page layout
     lightbox.css         — lightbox overlay styles
-  assets/
-    grafana_logo.svg     — inlined at build time via ?raw import
 public/
   .nojekyll
   favicon.png
@@ -68,8 +65,7 @@ public/
 ## Content Types & Ghost Tags
 
 ### Control tags (internal, `#`-prefixed)
-- `#case-study` — renders the post as a case study (no header, wider padding, fact-sheet card support). Applied via `body.case-study` class.
-- `#hidden` — excludes the post from the `/projects/` index entirely.
+- `#case-study` — lists the post on `/design/` instead of `/projects/`. Detail pages use the normal post layout, but the nav points back to Design.
 
 ### Content type tags (user-facing)
 - **Post** — blog entry. Displayed in the "Blog" section of `/projects/` as a horizontal card. Sorted by **published date**. The published date is canonical — no "updated" label.
@@ -103,7 +99,6 @@ public/
 - **Ghost ref tracking:** `?ref=<host>` stripped from all link URLs via `/\?ref=[^"&\s]*/g` — host-agnostic so it works regardless of which machine builds (localhost, Tailscale, etc.)
 - **Blockquote conventions:** "Fact sheet" first line → `class="fact-sheet"` card (50% width, centered, plum tint)
 - **"My contribution" list:** `<br>`-separated lines → `<ul>` inside fact sheet
-- **Inline icons:** `{name}` tokens in Ghost prose → inline SVG (e.g. Grafana logo). Ghost strips one layer of braces.
 - **URL rewriting (post HTML):** Ghost origin (derived from `post.url`) → `base` in production builds only
 - **URL rewriting (projects index):** Same approach for `feature_image` URLs — Ghost origin derived from the first post's `url` field, rewritten to `base` in production. Without this, feature images 404 on the live site because they point to the Tailscale hostname.
 
@@ -136,9 +131,6 @@ Avoid duplicate `@media` blocks at the same breakpoint in the same CSS file. Sec
 
 ### Astro scoped styles race with global CSS
 `<style>` in `.astro` files is scoped via `data-astro-cid-*`. When competing with imported global CSS, scoped styles can flash then disappear during dev HMR. Fix: use `<style is:global>`.
-
-### Ghost strips curly braces
-`{{token}}` in Ghost editor → `{token}` in HTML output. Regex must match single braces.
 
 ### GitHub Pages + Jekyll
 Jekyll ignores `_` prefixed directories. Astro outputs CSS to `_astro/`. Must include `.nojekyll` in the deploy.

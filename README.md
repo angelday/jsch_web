@@ -55,8 +55,7 @@ Ghost tags drive how content is displayed:
 |-----|---------|------------|
 | **Post** | Horizontal card in "Blog" section, sorted by published date | Published date only |
 | **App** / **Knowledge Base** | Vertical card in "Projects" grid, sorted by updated date | "Updated [date]" on card; "Originally published / Updated" on post page |
-| `#case-study` | Full-width case study layout (no header, fact-sheet support) | — |
-| `#hidden` | Excluded from `/projects/` index | — |
+| `#case-study` | Listed on `/design/`; detail page uses the normal post layout with nav back to Design | Same as project pages |
 
 Tags prefixed with `#` are internal (control tags) and never shown to users.
 
@@ -67,7 +66,6 @@ src/
   pages/          — index.astro (homepage), projects/ (grid + blog), [slug].astro (Ghost posts)
   components/     — homepage sections (Hero, About, Contact, etc.)
   styles/         — homepage CSS (styles/) and Ghost content CSS
-  assets/         — SVGs inlined at build time
 public/
   fonts/          — custom fonts
   js/             — client-side scripts (shaders, lightbox, modals, etc.)
