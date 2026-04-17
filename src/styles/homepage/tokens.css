@@ -20,5 +20,6 @@
   --cga-cyan: #00aaaa;
   --text-dark: #2a1f23;
   --hero-radius: 40px;
+  --about-panel-padding: 56px;
   color-scheme: dark;
 }
