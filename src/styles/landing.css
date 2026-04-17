@@ -801,6 +801,11 @@ body {
     min-height: 100px;
   }
 
+  .work-grid {
+    gap: var(--shell-padding);
+    padding-top: var(--shell-padding);
+  }
+
   .about-panel__media {
     float: none;
     margin: calc(-1 * var(--about-panel-padding)) calc(-1 * var(--about-panel-padding)) 2rem;
