@@ -610,7 +610,7 @@ body {
 
 .about-panel__media-image {
   display: block;
-  width: min(40vw, 400px);
+  width: min(44vw, 480px);
   height: auto;
   image-rendering: pixelated;
 }
@@ -657,6 +657,11 @@ body {
   font-family: "Geist Pixel Square", sans-serif;
   font-size: var(--type-copy-size);
   line-height: 1.4;
+}
+
+.about-panel a {
+  color: var(--cga-pink);
+  text-decoration: none;
 }
 
 .about-panel__signoff {
@@ -794,6 +799,23 @@ body {
 
   .mini-hero--compact {
     min-height: 100px;
+  }
+
+  .about-panel__media {
+    float: none;
+    margin: calc(-1 * var(--about-panel-padding)) calc(-1 * var(--about-panel-padding)) 2rem;
+  }
+
+  .about-panel__media-image {
+    width: 100%;
+  }
+
+  .about-panel__media + .about-panel__header {
+    margin-top: 0;
+  }
+
+  .about-panel__signoff-gif {
+    width: 160px;
   }
 
   .projects-shell {

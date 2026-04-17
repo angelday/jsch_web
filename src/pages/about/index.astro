@@ -72,7 +72,13 @@ const assetVersion = "20260413-2";
             >
           </p>
           <footer class="about-panel__quote-attribution">
-            — Logan Kilpatrick
+            —
+            <a
+              href="https://logank.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-about-cursor-active>Logan Kilpatrick</a
+            >
           </footer>
         </blockquote>
       </section>
@@ -102,23 +108,61 @@ const assetVersion = "20260413-2";
           <dt class="about-panel__question">Did you create this website?</dt>
           <dd class="about-panel__answer">
             Yes. I originally designed it in Framer, then rebuilt it using
-            Jamstack and changed the design considerably.
+            <a
+              href="https://jamstack.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-about-cursor-active>Jamstack</a
+            >
+            and changed the design considerably.
           </dd>
 
           <dt class="about-panel__question">What tools did you use?</dt>
           <dd class="about-panel__answer">
-            Ghost as a headless CMS and Astro to render the site with a lot of
-            custom enhancements. I also used Framer for the initial design and
-            prototyping, Figma for some of the graphics, and Aseprite for
-            pixelart.
+            <a
+              href="https://ghost.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-about-cursor-active>Ghost</a
+            >
+            as a headless CMS and
+            <a
+              href="https://astro.build"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-about-cursor-active>Astro</a
+            >
+            to render the site with a lot of custom enhancements. I also used
+            <a
+              href="https://www.framer.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-about-cursor-active>Framer</a
+            >
+            for the initial design and prototyping, Figma for some of the
+            graphics, and
+            <a
+              href="https://www.aseprite.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-about-cursor-active>Aseprite</a
+            >
+            for pixelart.
           </dd>
 
           <dt class="about-panel__question">
-            What are these weird colors and fonts?
+            Did you make this pixel art? Or is it AI?
           </dt>
           <dd class="about-panel__answer">
-            A nod to late-'80s CGA graphics.
+            I created all the pixel art myself using Aseprite from a photo
+            reference. You know, pixel by pixel with a lot of iterations. It's a
+            very relaxing activity!
           </dd>
+
+          <dt class="about-panel__question">
+            What are these weird colors? This cursor?
+          </dt>
+          <dd class="about-panel__answer">A nod to late-'80s CGA graphics.</dd>
 
           <dt class="about-panel__question">
             What video game system do you recommend buying?
@@ -143,13 +187,13 @@ const assetVersion = "20260413-2";
     <script is:inline type="module" define:vars={{ base }}>
       import(`${base}/js/about-cursor.js`).then((m) => m.initAboutCursor());
 
-      const header = document.querySelector('.about-header');
+      const header = document.querySelector(".about-header");
       if (header) {
         const onScroll = () => {
-          header.classList.toggle('about-header--compact', window.scrollY > 40);
+          header.classList.toggle("about-header--compact", window.scrollY > 40);
         };
         onScroll();
-        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener("scroll", onScroll, { passive: true });
       }
     </script>
   </body>
