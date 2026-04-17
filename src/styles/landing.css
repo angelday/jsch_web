@@ -644,10 +644,10 @@ body {
 
 .about-panel__eyebrow {
   margin: 0;
-  font-family: "Geist Pixel Square", monospace;
-  font-size: var(--type-copy-size);
-  font-weight: 400;
-  line-height: 1.2;
+  font-family: "Geist Pixel Square", sans-serif;
+  font-size: var(--type-body-size);
+  font-weight: 100;
+  line-height: 1.05;
   color: #fff;
 }
 
