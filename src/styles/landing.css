@@ -55,8 +55,8 @@ body {
   width: var(--shell-width);
   display: grid;
   grid-template-columns: 1fr;
-  gap: 2.4rem;
-  padding-top: 3rem;
+  gap: var(--shell-padding);
+  padding-top: var(--shell-padding);
   padding-bottom: 8px;
 }
 
@@ -799,11 +799,6 @@ body {
 
   .mini-hero--compact {
     min-height: 100px;
-  }
-
-  .work-grid {
-    gap: var(--shell-padding);
-    padding-top: var(--shell-padding);
   }
 
   .about-panel__media {
