@@ -274,41 +274,6 @@ body {
   isolation: isolate;
 }
 
-.mini-hero--sticky {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  transition: min-height 0.2s ease, border-radius 0.2s ease;
-}
-
-.mini-hero--sticky .mini-hero__nav {
-  position: relative;
-  left: auto;
-  transform: none;
-  width: 100%;
-  padding: clamp(18px, 2.6vw, 32px) var(--about-panel-padding) 0;
-}
-
-.mini-hero--sticky .mini-hero__nav-item {
-  padding-left: 0;
-}
-
-.mini-hero--sticky.is-scrolled {
-  min-height: 0;
-  border-radius: 0;
-}
-
-.mini-hero--sticky.is-scrolled .mini-hero__nav {
-  padding-top: clamp(9px, 1.3vw, 16px);
-  padding-bottom: clamp(9px, 1.3vw, 16px);
-}
-
-.mini-hero--sticky.is-scrolled .mini-hero__nav-item {
-  font-size: 24px;
-  padding-top: clamp(3px, 0.5vw, 5px);
-  padding-bottom: clamp(5px, 0.7vw, 8px);
-}
-
 .mini-hero--compact {
   --hero-block-start: 0;
   --hero-block-end: 0;
@@ -536,7 +501,70 @@ body {
   outline: none;
 }
 
-/* About panel — standalone page version of the old modal */
+/* About page */
+.about-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  max-width: var(--shell-inner-max);
+  width: var(--shell-width);
+  margin: var(--shell-padding) auto 0;
+  padding: clamp(18px, 2.6vw, 32px) var(--about-panel-padding);
+  border-radius: var(--hero-radius);
+  background: var(--cga-black);
+  color: var(--cga-white);
+}
+
+.about-header__nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.about-header__link {
+  display: flex;
+  align-items: flex-start;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  font-family: "Geist Pixel Square", sans-serif;
+  font-size: var(--type-body-size);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  padding: clamp(6px, 1vw, 10px) clamp(24px, 4vw, 64px) clamp(14px, 1.8vw, 22px) 0;
+}
+
+.about-header__link-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: max-content;
+}
+
+.about-header__link-label {
+  display: block;
+}
+
+.about-header__link-arrow {
+  display: block;
+  font-family: "Geist Pixel Square", sans-serif;
+  line-height: 0.6;
+}
+
+.about-header__link:hover,
+.about-header__link:focus-visible {
+  background: var(--cga-white);
+  color: var(--cga-black);
+  outline: none;
+}
+
+.about-header__link:hover .about-header__link-arrow,
+.about-header__link:focus-visible .about-header__link-arrow {
+  align-self: flex-end;
+}
+
 .about-panel {
   position: relative;
   max-width: var(--shell-inner-max);
@@ -547,56 +575,6 @@ body {
   background: var(--cga-cyan);
   color: #000;
   overflow: hidden;
-}
-
-.about-panel__nav {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-}
-
-.about-panel__nav-item {
-  display: flex;
-  align-items: flex-start;
-  border: 0;
-  background: transparent;
-  color: #fff;
-  text-decoration: none;
-  cursor: pointer;
-  font-family: "Geist Pixel Square", sans-serif;
-  font-size: var(--type-body-size);
-  font-weight: 400;
-  letter-spacing: -0.04em;
-  padding: clamp(6px, 1vw, 10px) clamp(24px, 4vw, 64px) clamp(14px, 1.8vw, 22px) 0;
-}
-
-.about-panel__nav-copy {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: max-content;
-}
-
-.about-panel__nav-label {
-  display: block;
-}
-
-.about-panel__nav-arrow {
-  display: block;
-  font-family: "Geist Pixel Square", sans-serif;
-  line-height: 0.6;
-}
-
-.about-panel__nav-item:hover,
-.about-panel__nav-item:focus-visible {
-  background: var(--cga-white);
-  color: var(--cga-black);
-  outline: none;
-}
-
-.about-panel__nav-item:hover .about-panel__nav-arrow,
-.about-panel__nav-item:focus-visible .about-panel__nav-arrow {
-  align-self: flex-end;
 }
 
 .about-panel__media {
@@ -621,8 +599,7 @@ body {
   margin-top: 2.5rem;
 }
 
-.about-panel__media + .about-panel__nav,
-.about-panel__nav + .about-panel__header {
+.about-panel__media + .about-panel__header {
   margin-top: 0;
 }
 
@@ -711,6 +688,7 @@ body {
   .project-card__link,
   .blog-card__link,
   .mini-hero,
+  .about-header,
   .about-panel,
   .case-study-callout,
   .closing-callout {

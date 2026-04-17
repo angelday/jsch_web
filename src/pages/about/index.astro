@@ -14,21 +14,21 @@ const assetVersion = "20260413-2";
     <title>About — József Schaffer</title>
     <link rel="icon" href={`${base}/favicon.png?v=${assetVersion}`} />
   </head>
-  <body>
-    <section class="mini-hero mini-hero--compact mini-hero--sticky" data-about-cursor-root>
-      <header class="mini-hero__nav" aria-label="Site navigation">
+  <body data-about-cursor-root>
+    <header class="about-header" aria-label="Site navigation">
+      <nav class="about-header__nav">
         <a
-          class="mini-hero__nav-item"
+          class="about-header__link"
           href={`${base}/`}
           data-about-cursor-active
         >
-          <span class="mini-hero__nav-copy">
-            <span class="mini-hero__nav-label">Home</span>
-            <span class="mini-hero__nav-arrow" aria-hidden="true">←</span>
+          <span class="about-header__link-copy">
+            <span class="about-header__link-label">Home</span>
+            <span class="about-header__link-arrow" aria-hidden="true">←</span>
           </span>
         </a>
-      </header>
-    </section>
+      </nav>
+    </header>
 
     <div class="about-panel">
       <div class="about-panel__media">
@@ -145,13 +145,6 @@ const assetVersion = "20260413-2";
     <div class="about-cursor" data-about-cursor aria-hidden="true"></div>
     <script is:inline type="module" define:vars={{ base }}>
       import(`${base}/js/about-cursor.js`).then((m) => m.initAboutCursor());
-
-      const nav = document.querySelector('.mini-hero--sticky');
-      if (nav) {
-        const onScroll = () => nav.classList.toggle('is-scrolled', window.scrollY > 40);
-        window.addEventListener('scroll', onScroll, { passive: true });
-        onScroll();
-      }
     </script>
   </body>
 </html>
