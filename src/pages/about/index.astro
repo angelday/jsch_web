@@ -145,6 +145,15 @@ const assetVersion = "20260413-2";
     <div class="about-cursor" data-about-cursor aria-hidden="true"></div>
     <script is:inline type="module" define:vars={{ base }}>
       import(`${base}/js/about-cursor.js`).then((m) => m.initAboutCursor());
+
+      const header = document.querySelector('.about-header');
+      if (header) {
+        const onScroll = () => {
+          header.classList.toggle('about-header--compact', window.scrollY > 40);
+        };
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+      }
     </script>
   </body>
 </html>

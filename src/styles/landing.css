@@ -513,12 +513,29 @@ body {
   border-radius: var(--hero-radius);
   background: var(--cga-black);
   color: var(--cga-white);
+  transition:
+    max-width 0.2s ease,
+    width 0.2s ease,
+    margin 0.2s ease,
+    padding 0.2s ease,
+    border-radius 0.2s ease;
+}
+
+.about-header--compact {
+  margin: 0 auto;
+  padding: 0 var(--about-panel-padding);
+  border-radius: 0;
 }
 
 .about-header__nav {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
+  transition: padding 0.2s ease;
+}
+
+.about-header--compact .about-header__nav {
+  padding: clamp(9px, 1.3vw, 16px) 0;
 }
 
 .about-header__link {
@@ -533,7 +550,14 @@ body {
   font-size: var(--type-body-size);
   font-weight: 400;
   letter-spacing: -0.04em;
+  line-height: 1;
   padding: clamp(6px, 1vw, 10px) clamp(24px, 4vw, 64px) clamp(14px, 1.8vw, 22px) 0;
+  transition: font-size 0.2s ease, padding 0.2s ease;
+}
+
+.about-header--compact .about-header__link {
+  font-size: 24px;
+  padding: clamp(3px, 0.5vw, 5px) clamp(6px, 1vw, 12px) clamp(5px, 0.7vw, 8px) 0;
 }
 
 .about-header__link-copy {
