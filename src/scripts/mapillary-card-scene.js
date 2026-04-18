@@ -1,10 +1,18 @@
 import * as THREE from 'three';
 
 const PIXEL_SIZE = 6;
-const TEXTURE_ZOOM = 2.4;
+const DESKTOP_TEXTURE_ZOOM = 2.82;
+const MOBILE_TEXTURE_ZOOM = 1.64;
+const MOBILE_QUERY = '(max-width: 600px)';
 const SAMPLE_INTERVAL = 2500;
 const FADE_DURATION = 360;
 const BRIGHTNESS = 1.53;
+
+function getDefaultTextureZoom() {
+  return window.matchMedia(MOBILE_QUERY).matches
+    ? MOBILE_TEXTURE_ZOOM
+    : DESKTOP_TEXTURE_ZOOM;
+}
 
 function randomCenter(viewSize) {
   return new THREE.Vector2(
@@ -30,7 +38,9 @@ export function initMapillaryCardScene() {
 
   const imageAspect = { value: 1 };
   const cardAspect = { value: 1 };
-  const viewSize = new THREE.Vector2(1 / TEXTURE_ZOOM, 1 / TEXTURE_ZOOM);
+  const mobileZoomQuery = window.matchMedia(MOBILE_QUERY);
+  let textureZoom = getDefaultTextureZoom();
+  const viewSize = new THREE.Vector2(1 / textureZoom, 1 / textureZoom);
   const sampleCenter = new THREE.Vector2(0.5, 0.5);
   let nextCenter = sampleCenter.clone();
   let transitionStart = -Infinity;
@@ -123,12 +133,26 @@ export function initMapillaryCardScene() {
 
   function updateViewSize() {
     viewSize.set(
-      1 / TEXTURE_ZOOM,
-      imageAspect.value / (cardAspect.value * TEXTURE_ZOOM)
+      cardAspect.value / (imageAspect.value * textureZoom),
+      1 / textureZoom
     );
     viewSize.x = Math.min(viewSize.x, 1);
     viewSize.y = Math.min(viewSize.y, 1);
     material.uniforms.uViewSize.value.copy(viewSize);
+  }
+
+  function clampSampleCenter() {
+    sampleCenter.set(
+      THREE.MathUtils.clamp(sampleCenter.x, viewSize.x / 2, 1 - viewSize.x / 2),
+      THREE.MathUtils.clamp(sampleCenter.y, viewSize.y / 2, 1 - viewSize.y / 2)
+    );
+    material.uniforms.uCenter.value.copy(sampleCenter);
+  }
+
+  function setTextureZoom(value) {
+    textureZoom = THREE.MathUtils.clamp(value, 1.05, 6);
+    updateViewSize();
+    clampSampleCenter();
   }
 
   function resize() {
@@ -145,10 +169,14 @@ export function initMapillaryCardScene() {
 
     cardAspect.value = w / h;
     updateViewSize();
+    clampSampleCenter();
   }
 
   resize();
   new ResizeObserver(resize).observe(container);
+  mobileZoomQuery.addEventListener('change', (event) => {
+    setTextureZoom(event.matches ? MOBILE_TEXTURE_ZOOM : DESKTOP_TEXTURE_ZOOM);
+  });
 
   function beginTransition() {
     nextCenter = randomCenter(viewSize);
@@ -187,6 +215,7 @@ export function initMapillaryCardScene() {
     imageAspect.value = texture.image.width / texture.image.height;
     updateViewSize();
     sampleCenter.copy(randomCenter(viewSize));
+    clampSampleCenter();
     material.uniforms.uCenter.value.copy(sampleCenter);
     material.uniforms.tMap.value = texture;
 
