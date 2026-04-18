@@ -46,23 +46,23 @@
 .work-logo-card__logo-link {
   display: grid;
   place-items: center;
-  width: min(64%, 260px);
-  max-height: 96px;
+  width: min(100%, 303px);
 }
 
 .work-logo-card__logo-link--prezi {
-  width: min(52%, 210px);
+  width: min(100%, 303px);
 }
 
 .work-logo-card__logo-link--epam {
-  width: min(47.6%, 195.5px);
+  width: min(100%, 177px);
 }
 
 .work-logo-card__image {
   display: block;
   width: 100%;
-  max-height: 96px;
+  height: auto;
   object-fit: contain;
+  image-rendering: pixelated;
 }
 
 .work-logo-card__copy {
@@ -90,6 +90,16 @@
   .work-logo-grid .project-card,
   .work-logo-card {
     height: 100%;
+  }
+}
+
+@media (max-width: 540px) {
+  .work-logo-card__logo-link--prezi {
+    width: min(100%, 219px);
+  }
+
+  .work-logo-card__logo-link--epam {
+    width: min(100%, 128px);
   }
 }
 
