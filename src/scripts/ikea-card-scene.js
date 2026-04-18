@@ -13,6 +13,10 @@ const SPIN_SPEEDS = [0.8, -0.6, 0.5];
 const ORBIT_TILTS = [0.3, -0.2, 0.15];
 const ORBIT_START_ANGLES = [0, 2.1, 4.2];
 const VERTICAL_OFFSETS = [10, -15, 5];
+const BUOYANCY_SPEEDS = [0.72, 0.54, 0.64];
+const BUOYANCY_AMPLITUDES = [20, 16, 18];
+const BUOYANCY_PHASES = [0, 1.8, 3.4];
+const BUOYANCY_DEPTHS = [6, 8, 5];
 const CAMERA_POSITION = [-33.28, -33.05, 149.32];
 const CAMERA_TARGET = [0, 0, 0];
 const SHOW_TUNING_CONTROLS = false;
@@ -395,6 +399,11 @@ export function initIkeaCardScene() {
       pivot.rotation.y = ORBIT_START_ANGLES[i] + t * ORBIT_SPEEDS[i];
     });
     meshGroups.forEach((group, i) => {
+      const phase = t * BUOYANCY_SPEEDS[i] + BUOYANCY_PHASES[i];
+      const yOffset = Math.sin(phase) * BUOYANCY_AMPLITUDES[i];
+
+      group.position.y = VERTICAL_OFFSETS[i] + yOffset;
+      group.position.z = Math.cos(phase * 0.7) * BUOYANCY_DEPTHS[i];
       group.rotation.y = t * SPIN_SPEEDS[i];
       group.rotation.x = Math.sin(t * 0.3 + i * 2) * 0.15;
     });
