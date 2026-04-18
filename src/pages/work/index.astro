@@ -1,5 +1,6 @@
 ---
 import "../../styles/landing.css";
+import "../../styles/work.css";
 import "../../styles/homepage/about-cursor.css";
 import SiteFooter from "../../components/SiteFooter.astro";
 
@@ -38,9 +39,22 @@ const assetVersion = "20260413-2";
     <ul class="work-grid">
       <li class="project-card">
         <div class="project-card__link project-card__link--static project-card__link--scene">
-          <h3 class="project-card__title">Inter IKEA Systems</h3>
+          <div class="project-card__scene-copy">
+            <h3 class="project-card__title">
+              <span class="project-card__typewriter">Inter IKEA Systems</span>
+            </h3>
+            <div class="project-card__content project-card__content--scene">
+              <p class="project-card__role">
+                <strong>Product Designer (Kitchen Planner lead)</strong>
+                <span>Jul 2022 - Present</span>
+              </p>
+              <p class="project-card__role">
+                <strong>Product Designer (KALLAX, PLATSA, SMÅSTAD 3D planners, consultant)</strong>
+                <span>Nov 2020 - Jul 2022 · 1 yr 9 mos</span>
+              </p>
+            </div>
+          </div>
           <div class="project-card__canvas" data-ikea-canvas data-base={base}></div>
-          <div class="project-card__content"></div>
         </div>
       </li>
       <li class="project-card">

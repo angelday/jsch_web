@@ -1,0 +1,174 @@
+/* Work page card layouts and scene-credit animation. */
+
+.work-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: var(--shell-inner-max);
+  width: var(--shell-width);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--shell-padding);
+  padding-top: var(--shell-padding);
+  padding-bottom: 8px;
+}
+
+.work-grid .project-card__link--static > .project-card__title,
+.work-grid .project-card__scene-copy > .project-card__title {
+  font-size: clamp(40px, 5.5vw, 64px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.project-card__link--scene {
+  position: relative;
+  min-height: clamp(420px, 60vw, 700px);
+  isolation: isolate;
+}
+
+.project-card__scene-copy {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  color: var(--cga-black);
+  cursor: text;
+  pointer-events: auto;
+  user-select: text;
+}
+
+.project-card__scene-copy > .project-card__title {
+  --title-lift: clamp(96px, 12vw, 148px);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  max-width: calc(100% - 4rem);
+  margin: 0;
+  padding: 0;
+  color: var(--cga-black);
+  text-align: center;
+  transform: translate(-50%, -50%);
+  animation: ikeaTitleLift 0.95s cubic-bezier(0.72, 0, 0.2, 1) 2.8s both;
+}
+
+.project-card__typewriter {
+  display: inline-block;
+  width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  vertical-align: bottom;
+  white-space: nowrap;
+  border-right: 0.08em solid currentColor;
+  animation:
+    ikeaType 1.55s steps(18, end) 0.25s both,
+    ikeaCaret 0.7s step-end 0s 5,
+    ikeaCaretOff 0.01s linear 2.8s forwards;
+}
+
+.project-card__link--scene .project-card__content--scene {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: min(780px, calc(100% - 4rem));
+  margin: 0;
+  padding: 0;
+  color: var(--cga-black);
+  font-size: clamp(18px, 2.1vw, 25px);
+  line-height: 1.22;
+  opacity: 0;
+  transform: translate(-50%, 142px);
+  animation: ikeaDetailsRise 1s cubic-bezier(0.72, 0, 0.2, 1) 2.85s both;
+}
+
+.project-card__role {
+  margin: 0;
+}
+
+.project-card__role + .project-card__role {
+  margin-top: 1.2em;
+}
+
+.project-card__role strong,
+.project-card__role span {
+  display: block;
+}
+
+.project-card__role strong {
+  font-weight: 560;
+}
+
+.project-card__role span {
+  margin-top: 0.18em;
+  font-weight: 400;
+}
+
+.project-card__link--scene > .project-card__canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  height: 100%;
+  aspect-ratio: auto;
+}
+
+@keyframes ikeaType {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 18ch;
+  }
+}
+
+@keyframes ikeaCaret {
+  50% {
+    border-color: transparent;
+  }
+}
+
+@keyframes ikeaCaretOff {
+  to {
+    border-color: transparent;
+  }
+}
+
+@keyframes ikeaTitleLift {
+  from {
+    transform: translate(-50%, -50%);
+  }
+
+  to {
+    transform: translate(-50%, calc(-50% - var(--title-lift)));
+  }
+}
+
+@keyframes ikeaDetailsRise {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 142px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 26px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card__scene-copy > .project-card__title {
+    animation: none;
+    transform: translate(-50%, calc(-50% - var(--title-lift)));
+  }
+
+  .project-card__typewriter {
+    width: 18ch;
+    border-color: transparent;
+    animation: none;
+  }
+
+  .project-card__link--scene .project-card__content--scene {
+    opacity: 1;
+    transform: translate(-50%, 26px);
+    animation: none;
+  }
+}
