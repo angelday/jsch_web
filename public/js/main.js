@@ -3,7 +3,13 @@ import { initHeroNav } from "./hero-nav.js";
 import { initHeroShader } from "./hero-shader.js";
 import { initMailto } from "./mailto.js";
 
-initHeroShader();
+const cleanupHeroShader = initHeroShader();
 initHeroNav();
 initAboutCursor();
 initMailto();
+
+if (import.meta.hot) {
+  import.meta.hot.dispose(() => {
+    cleanupHeroShader?.();
+  });
+}

@@ -5,10 +5,31 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 const HIGHLIGHT_ASSET = 'models/c20pzu37els9.glb';
 const FADE_DURATION = 500;
+const CLEANUP_KEY = '__workVisualizationCleanup';
+
+function disposeMaterial(material) {
+  if (Array.isArray(material)) {
+    material.forEach(disposeMaterial);
+    return;
+  }
+
+  material?.dispose?.();
+}
+
+function disposeObject3d(object) {
+  object?.traverse?.((child) => {
+    child.geometry?.dispose?.();
+    disposeMaterial(child.material);
+  });
+}
 
 export function initWorkVisualization() {
   const canvas = document.querySelector('[data-work-canvas]');
   if (!canvas) return;
+
+  if (typeof canvas[CLEANUP_KEY] === 'function') {
+    canvas[CLEANUP_KEY]();
+  }
 
   const container = canvas.parentElement || canvas;
   const base = (canvas.dataset.vizBase || '').replace(/\/$/, '');
@@ -192,6 +213,8 @@ export function initWorkVisualization() {
   let animationFrame = 0;
   let isRendering = false;
   let isVisible = true;
+  let isDisposed = false;
+  let renderObserver = null;
   const fadingObjects = [];
 
   function startFadeIn(object) {
@@ -250,7 +273,7 @@ export function initWorkVisualization() {
   }
 
   if ('IntersectionObserver' in window) {
-    const renderObserver = new IntersectionObserver(
+    renderObserver = new IntersectionObserver(
       (entries) => {
         isVisible = entries.some((entry) => entry.isIntersecting);
         if (isVisible) {
@@ -266,13 +289,15 @@ export function initWorkVisualization() {
     startRendering();
   }
 
-  document.addEventListener('visibilitychange', () => {
+  function onVisibilityChange() {
     if (document.hidden) {
       stopRendering();
     } else if (isVisible) {
       startRendering();
     }
-  });
+  }
+
+  document.addEventListener('visibilitychange', onVisibilityChange);
 
   function applyTransform(obj, transform) {
     const p = transform?.position || [0, 0, 0];
@@ -360,6 +385,12 @@ export function initWorkVisualization() {
     if (!rootNode) throw new Error('No root node in scene.json');
 
     loadedRoot = await buildNode(rootNode, gltfCache);
+    if (isDisposed) {
+      disposeObject3d(loadedRoot);
+      loadedRoot = null;
+      return;
+    }
+
     scene.add(loadedRoot);
 
     const itemsToReveal = [];
@@ -387,9 +418,34 @@ export function initWorkVisualization() {
       const resp = await fetch(SCENE_JSON_URL);
       if (!resp.ok) throw new Error(`Failed to load scene (${resp.status})`);
       const sceneJson = await resp.json();
+      if (isDisposed) return;
       await rebuildFromSceneJson(sceneJson);
     } catch (e) {
       console.error('[work-visualization]', e);
     }
   })();
+
+  let didCleanup = false;
+  canvas[CLEANUP_KEY] = () => {
+    if (didCleanup) return;
+    didCleanup = true;
+    isDisposed = true;
+    stopRendering();
+    if (revealInterval) {
+      clearInterval(revealInterval);
+      revealInterval = null;
+    }
+    resizeObserver.disconnect();
+    renderObserver?.disconnect();
+    document.removeEventListener('visibilitychange', onVisibilityChange);
+    controls.dispose();
+    disposeObject3d(scene);
+    disposeObject3d(cgaScene);
+    cgaRenderTarget.dispose();
+    cgaMaterial.dispose();
+    dracoLoader.dispose();
+    renderer.dispose();
+    renderer.getContext().getExtension('WEBGL_lose_context')?.loseContext();
+    canvas[CLEANUP_KEY] = null;
+  };
 }

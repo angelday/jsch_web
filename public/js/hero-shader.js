@@ -155,6 +155,7 @@ const PRESETS = {
 };
 
 const COLOR_FADE_MS = 150;
+const SHADER_CLEANUP_KEY = "__heroShaderCleanup";
 
 function createShader(gl, type, source) {
   const shader = gl.createShader(type);
@@ -235,7 +236,7 @@ function setupInteractivePreset(canvas, setPreset) {
   const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
 
   if (!hoverPresetName || !(card instanceof HTMLElement)) {
-    return;
+    return () => {};
   }
 
   const activateHover = () => {
@@ -246,28 +247,41 @@ function setupInteractivePreset(canvas, setPreset) {
     setPreset(basePresetName);
   };
 
+  const handleFocus = () => {
+    if (card.matches(":focus-visible")) {
+      activateHover();
+    }
+  };
+  const handlePointerChange = (event) => {
+    if (!event.matches) {
+      deactivateHover();
+    }
+  };
+
   if (!finePointerQuery.matches) {
     deactivateHover();
-    return;
   }
 
   card.addEventListener("pointerenter", activateHover);
   card.addEventListener("pointerleave", deactivateHover);
-  card.addEventListener("focus", () => {
-    if (card.matches(":focus-visible")) {
-      activateHover();
-    }
-  });
+  card.addEventListener("focus", handleFocus);
   card.addEventListener("blur", deactivateHover);
+  finePointerQuery.addEventListener("change", handlePointerChange);
 
-  finePointerQuery.addEventListener("change", (event) => {
-    if (!event.matches) {
-      deactivateHover();
-    }
-  });
+  return () => {
+    card.removeEventListener("pointerenter", activateHover);
+    card.removeEventListener("pointerleave", deactivateHover);
+    card.removeEventListener("focus", handleFocus);
+    card.removeEventListener("blur", deactivateHover);
+    finePointerQuery.removeEventListener("change", handlePointerChange);
+  };
 }
 
 function mountShader(canvas) {
+  if (typeof canvas[SHADER_CLEANUP_KEY] === "function") {
+    canvas[SHADER_CLEANUP_KEY]();
+  }
+
   const gl = canvas.getContext("webgl", { antialias: true, alpha: false });
 
   if (!gl) {
@@ -288,6 +302,10 @@ function mountShader(canvas) {
   let colorTransitionStart = 0;
   let phaseTime = 0;
   let lastFrameTime = 0;
+  let isRendering = false;
+  let isVisible = true;
+  let cleanupInteractivePreset = () => {};
+  let visibilityObserver = null;
 
   try {
     program = createProgram(gl);
@@ -328,6 +346,8 @@ function mountShader(canvas) {
     };
 
     const render = (now) => {
+      if (!isRendering) return;
+
       resize();
 
       if (lastFrameTime === 0) {
@@ -372,17 +392,30 @@ function mountShader(canvas) {
       animationFrame = window.requestAnimationFrame(render);
     };
 
-    const onVisibilityChange = () => {
-      if (document.hidden) {
-        window.cancelAnimationFrame(animationFrame);
-        lastFrameTime = 0;
-        return;
-      }
-
+    const startRendering = () => {
+      if (isRendering || document.hidden || !isVisible) return;
+      isRendering = true;
       animationFrame = window.requestAnimationFrame(render);
     };
 
-    setupInteractivePreset(canvas, (presetName) => {
+    const stopRendering = () => {
+      isRendering = false;
+      if (animationFrame) {
+        window.cancelAnimationFrame(animationFrame);
+        animationFrame = 0;
+        lastFrameTime = 0;
+      }
+    };
+
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        stopRendering();
+      } else {
+        startRendering();
+      }
+    };
+
+    cleanupInteractivePreset = setupInteractivePreset(canvas, (presetName) => {
       const nextPreset = PRESETS[presetName] || PRESETS.hero;
       preset = nextPreset;
       startColors = cloneColors(currentColors);
@@ -394,15 +427,41 @@ function mountShader(canvas) {
 
     window.addEventListener("resize", resize);
     document.addEventListener("visibilitychange", onVisibilityChange);
-    animationFrame = window.requestAnimationFrame(render);
 
-    return () => {
-      window.cancelAnimationFrame(animationFrame);
+    if ("IntersectionObserver" in window) {
+      visibilityObserver = new IntersectionObserver(
+        (entries) => {
+          isVisible = entries.some((entry) => entry.isIntersecting);
+          if (isVisible) {
+            startRendering();
+          } else {
+            stopRendering();
+          }
+        },
+        { rootMargin: "200px 0px" }
+      );
+      visibilityObserver.observe(canvas);
+    } else {
+      startRendering();
+    }
+
+    let didCleanup = false;
+    const cleanup = () => {
+      if (didCleanup) return;
+      didCleanup = true;
+      stopRendering();
+      cleanupInteractivePreset();
+      visibilityObserver?.disconnect();
       window.removeEventListener("resize", resize);
       document.removeEventListener("visibilitychange", onVisibilityChange);
       gl.deleteBuffer(positionBuffer);
       gl.deleteProgram(program);
+      gl.getExtension("WEBGL_lose_context")?.loseContext();
+      canvas[SHADER_CLEANUP_KEY] = null;
     };
+
+    canvas[SHADER_CLEANUP_KEY] = cleanup;
+    return cleanup;
   } catch (error) {
     console.error("Hero shader failed to initialize.", error);
     canvas.remove();
@@ -411,10 +470,18 @@ function mountShader(canvas) {
 
 export function initHeroShader() {
   const canvases = document.querySelectorAll("[data-shader-canvas]");
+  const cleanups = [];
 
   canvases.forEach((canvas) => {
     if (canvas instanceof HTMLCanvasElement) {
-      mountShader(canvas);
+      const cleanup = mountShader(canvas);
+      if (typeof cleanup === "function") {
+        cleanups.push(cleanup);
+      }
     }
   });
+
+  return () => {
+    cleanups.forEach((cleanup) => cleanup());
+  };
 }
