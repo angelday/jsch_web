@@ -2,6 +2,8 @@
   position: relative;
   overflow: hidden;
   border-radius: var(--hero-radius);
+  color: inherit;
+  text-decoration: none;
 }
 
 .section--work {
@@ -214,13 +216,21 @@
   line-height: 0.6;
 }
 
+.section:hover .section__link,
+.section:focus-visible .section__link,
 .section__link:hover,
 .section__link:focus-visible {
   background: #fff;
   color: #000;
+}
+
+.section:focus-visible,
+.section__link:focus-visible {
   outline: none;
 }
 
+.section:hover .section__link-arrow,
+.section:focus-visible .section__link-arrow,
 .section__link:hover .section__link-arrow,
 .section__link:focus-visible .section__link-arrow {
   align-self: flex-end;

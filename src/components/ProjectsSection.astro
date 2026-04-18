@@ -5,26 +5,24 @@ interface Props {
 const { base } = Astro.props;
 ---
 
-<section
+<a
   class="section section--projects"
+  href={`${base}/projects/`}
   id="projects"
   aria-label="Projects section"
+  data-about-cursor-active
 >
   <div class="section__content">
     <div class="section__body">
       <p class="section__copy-text" data-about-cursor-select>
         Outside of work, I like to tinker with code, design, and pixel art.
       </p>
-      <a
-        class="section__link"
-        href={`${base}/projects/`}
-        data-about-cursor-active
-      >
+      <span class="section__link">
         <span class="section__link-copy">
           <span class="section__link-label">Side projects</span>
           <span class="section__link-arrow" aria-hidden="true">→</span>
         </span>
-      </a>
+      </span>
     </div>
   </div>
   <picture class="section__backdrop" aria-hidden="true">
@@ -44,4 +42,4 @@ const { base } = Astro.props;
       decoding="async"
     />
   </picture>
-</section>
+</a>
