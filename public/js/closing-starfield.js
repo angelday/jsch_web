@@ -1,4 +1,4 @@
-// Closing callout — 4×4 CGA hyperspace starfield that fires on link hover.
+// Closing callout — 4×4 CGA hyperspace starfield that fires on callout hover.
 // Stars zoom from a vanishing point outward; short trails give the
 // "jumping to lightspeed" feel. Idle = intensity 0, no drawing.
 
@@ -6,8 +6,7 @@ export function initClosingStarfield() {
   const callout = document.querySelector(".closing-callout");
   if (!callout) return;
   const canvas = callout.querySelector("[data-starfield]");
-  const link = callout.querySelector(".closing-callout__link");
-  if (!canvas || !link) return;
+  if (!canvas) return;
 
   if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
 
@@ -138,18 +137,18 @@ export function initClosingStarfield() {
     }
   }
 
-  link.addEventListener("pointerenter", () => {
+  callout.addEventListener("pointerenter", () => {
     hovering = true;
     activateInactive();
   });
-  link.addEventListener("pointerleave", () => {
+  callout.addEventListener("pointerleave", () => {
     hovering = false;
   });
-  link.addEventListener("focus", () => {
+  callout.addEventListener("focus", () => {
     hovering = true;
     activateInactive();
   });
-  link.addEventListener("blur", () => {
+  callout.addEventListener("blur", () => {
     hovering = false;
   });
 

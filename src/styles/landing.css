@@ -519,6 +519,7 @@ body {
   border-radius: var(--hero-radius);
   background: var(--cga-black);
   color: var(--cga-white);
+  text-decoration: none;
   overflow: hidden;
   isolation: isolate;
 }
@@ -550,10 +551,13 @@ body {
   padding: clamp(10px, 1.4vw, 16px) clamp(16px, 2vw, 28px);
 }
 
-.closing-callout__link:hover,
-.closing-callout__link:focus-visible {
+.closing-callout:hover .closing-callout__link,
+.closing-callout:focus-visible .closing-callout__link {
   background: var(--cga-white);
   color: var(--cga-black);
+}
+
+.closing-callout:focus-visible {
   outline: none;
 }
 

@@ -149,19 +149,19 @@ const cards = allPosts
       }
     </ul>
 
-    <section class="closing-callout">
+    <a
+      class="closing-callout"
+      href={`${base}/`}
+      data-about-cursor-active
+    >
       <canvas
         class="closing-callout__starfield"
         data-starfield
         aria-hidden="true"></canvas>
-      <a
-        class="closing-callout__link"
-        href={`${base}/`}
-        data-about-cursor-active
-      >
+      <span class="closing-callout__link">
         Continue to jozsefschaffer.com →
-      </a>
-    </section>
+      </span>
+    </a>
 
     <SiteFooter />
     <div class="about-cursor" data-about-cursor aria-hidden="true"></div>
