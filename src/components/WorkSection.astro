@@ -41,6 +41,32 @@ const { base } = Astro.props;
 </section>
 
 <script>
-  import { initWorkVisualization } from "../scripts/work-visualization.js";
-  initWorkVisualization();
+  const canvas = document.querySelector("[data-work-canvas]");
+  let didLoad = false;
+
+  async function loadWorkVisualization() {
+    if (didLoad || !canvas) return;
+    didLoad = true;
+    const { initWorkVisualization } = await import(
+      "../scripts/work-visualization.js"
+    );
+    initWorkVisualization();
+  }
+
+  if (canvas) {
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            observer.disconnect();
+            loadWorkVisualization();
+          }
+        },
+        { rootMargin: "600px 0px" },
+      );
+      observer.observe(canvas);
+    } else {
+      loadWorkVisualization();
+    }
+  }
 </script>

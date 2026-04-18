@@ -1,8 +1,8 @@
 /* Work page card layouts. */
 
 .work-hero {
-  background: var(--cga-pink);
-  color: var(--cga-black);
+  background: var(--cga-black);
+  color: var(--cga-white);
 }
 
 .work-hero .mini-hero__nav-item {
@@ -57,6 +57,10 @@
   cursor: text;
   pointer-events: auto;
   user-select: text;
+}
+
+.project-card__link--mapillary .project-card__scene-copy {
+  gap: clamp(24px, 4vw, 44px);
 }
 
 .project-card__scene-copy > .project-card__title {

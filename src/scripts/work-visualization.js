@@ -189,6 +189,9 @@ export function initWorkVisualization() {
 
   let loadedRoot = null;
   let revealInterval = null;
+  let animationFrame = 0;
+  let isRendering = false;
+  let isVisible = true;
   const fadingObjects = [];
 
   function startFadeIn(object) {
@@ -200,9 +203,7 @@ export function initWorkVisualization() {
     });
   }
 
-  function animate() {
-    requestAnimationFrame(animate);
-
+  function renderFrame() {
     const now = performance.now();
     for (let i = fadingObjects.length - 1; i >= 0; i--) {
       const item = fadingObjects[i];
@@ -227,7 +228,51 @@ export function initWorkVisualization() {
     renderer.setRenderTarget(null);
     renderer.render(cgaScene, cgaCamera);
   }
-  animate();
+
+  function tick() {
+    if (!isRendering) return;
+    renderFrame();
+    animationFrame = requestAnimationFrame(tick);
+  }
+
+  function startRendering() {
+    if (isRendering || document.hidden) return;
+    isRendering = true;
+    tick();
+  }
+
+  function stopRendering() {
+    isRendering = false;
+    if (animationFrame) {
+      cancelAnimationFrame(animationFrame);
+      animationFrame = 0;
+    }
+  }
+
+  if ('IntersectionObserver' in window) {
+    const renderObserver = new IntersectionObserver(
+      (entries) => {
+        isVisible = entries.some((entry) => entry.isIntersecting);
+        if (isVisible) {
+          startRendering();
+        } else {
+          stopRendering();
+        }
+      },
+      { rootMargin: '200px 0px' }
+    );
+    renderObserver.observe(container);
+  } else {
+    startRendering();
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopRendering();
+    } else if (isVisible) {
+      startRendering();
+    }
+  });
 
   function applyTransform(obj, transform) {
     const p = transform?.position || [0, 0, 0];
