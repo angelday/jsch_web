@@ -40,7 +40,7 @@ body {
   margin: 0;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2.4rem;
+  gap: var(--shell-padding);
 }
 
 .case-study-grid {
@@ -62,12 +62,6 @@ body {
   border: 0;
   border-radius: var(--hero-radius);
   overflow: hidden;
-  transition: transform 0.18s ease;
-}
-
-.project-card__link:hover,
-.project-card__link:focus-visible {
-  transform: translateY(-6px);
 }
 
 .project-card__link--static:hover,
@@ -208,7 +202,7 @@ body {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: var(--shell-padding);
 }
 
 .blog-card__link {
@@ -220,12 +214,6 @@ body {
   border: 0;
   border-radius: var(--hero-radius);
   overflow: hidden;
-  transition: transform 0.18s ease;
-}
-
-.blog-card__link:hover,
-.blog-card__link:focus-visible {
-  transform: translateY(-6px);
 }
 
 .blog-card__thumb {
@@ -331,6 +319,10 @@ body {
   width: min(100%, 1120px);
   padding-inline: clamp(16px, 2vw, 32px);
   transform: none;
+}
+
+.mini-hero.design-hero h1 {
+  margin-bottom: clamp(10px, 1.8vw, 24px);
 }
 
 .mini-hero__shader {
@@ -556,10 +548,6 @@ body {
   line-height: 1.04;
   letter-spacing: -0.03em;
   padding: clamp(10px, 1.4vw, 16px) clamp(16px, 2vw, 28px);
-}
-
-.closing-callout__arrow {
-  font-family: "Geist Pixel Square", sans-serif;
 }
 
 .closing-callout__link:hover,
@@ -863,6 +851,11 @@ body {
     width: 100%;
     padding-top: clamp(24px, 6vw, 26px);
   }
+
+  .case-study-cards,
+  .closing-callout {
+    margin-top: var(--shell-padding);
+  }
 }
 
 @media (max-width: 540px) {
@@ -919,7 +912,7 @@ body {
   }
 
   .closing-callout {
-    margin-top: 2.4rem;
+    margin-top: var(--shell-padding);
     padding: 40px 24px;
   }
 
@@ -967,20 +960,5 @@ body {
   .mini-hero h1 {
     white-space: normal;
     text-wrap: balance;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-  .project-card__link,
-  .blog-card__link {
-    transition: none;
-  }
-
-  .project-card__link:hover,
-  .project-card__link:focus-visible,
-  .blog-card__link:hover,
-  .blog-card__link:focus-visible {
-    transform: none;
   }
 }
