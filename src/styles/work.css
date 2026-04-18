@@ -34,6 +34,37 @@
   letter-spacing: -0.02em;
 }
 
+.work-logo-row,
+.work-logo-grid {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.work-logo-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--shell-padding);
+}
+
+.work-logo-card {
+  min-height: clamp(180px, 24vw, 300px);
+  display: grid;
+  place-items: center;
+  color: var(--cga-black);
+  font-family: "Geist", system-ui, -apple-system, sans-serif;
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 520;
+  line-height: 1;
+  text-align: center;
+}
+
+@media (min-width: 760px) {
+  .work-logo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 .project-card__link--scene {
   position: relative;
   min-height: clamp(420px, 60vw, 700px);

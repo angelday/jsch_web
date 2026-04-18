@@ -32,9 +32,28 @@ const TUNING_DEFAULTS = {
   keyLight: 2.62
 };
 
+const CLEANUP_KEY = '__ikeaCardSceneCleanup';
+
+function resetSceneContainer(container) {
+  if (typeof container[CLEANUP_KEY] === 'function') {
+    container[CLEANUP_KEY]();
+  }
+
+  container.querySelectorAll('canvas').forEach((existingCanvas) => {
+    const gl =
+      existingCanvas.getContext('webgl2') ||
+      existingCanvas.getContext('webgl') ||
+      existingCanvas.getContext('experimental-webgl');
+    gl?.getExtension('WEBGL_lose_context')?.loseContext();
+    existingCanvas.remove();
+  });
+}
+
 export function initIkeaCardScene() {
   const container = document.querySelector('[data-ikea-canvas]');
   if (!container) return;
+
+  resetSceneContainer(container);
 
   const canvas = document.createElement('canvas');
   canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%';
@@ -170,7 +189,8 @@ export function initIkeaCardScene() {
     camera.updateProjectionMatrix();
   }
   resize();
-  new ResizeObserver(resize).observe(container);
+  const resizeObserver = new ResizeObserver(resize);
+  resizeObserver.observe(container);
 
   const svgPaths = [
     `${base}/img/ikea_obj_1.svg`,
@@ -235,8 +255,10 @@ export function initIkeaCardScene() {
     }
   );
 
+  let animationFrame = 0;
+
   function animate() {
-    requestAnimationFrame(animate);
+    animationFrame = requestAnimationFrame(animate);
     const t = performance.now() * 0.001;
 
     orbitPivots.forEach((pivot, i) => {
@@ -257,5 +279,16 @@ export function initIkeaCardScene() {
     renderer.setRenderTarget(null);
     renderer.render(cgaScene, cgaCam);
   }
+
+  container[CLEANUP_KEY] = () => {
+    cancelAnimationFrame(animationFrame);
+    resizeObserver.disconnect();
+    cgaRT.dispose();
+    cgaMat.dispose();
+    renderer.dispose();
+    canvas.remove();
+    container[CLEANUP_KEY] = null;
+  };
+
   animate();
 }

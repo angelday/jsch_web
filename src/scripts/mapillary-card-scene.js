@@ -7,6 +7,22 @@ const MOBILE_QUERY = '(max-width: 600px)';
 const SAMPLE_INTERVAL = 2500;
 const FADE_DURATION = 360;
 const BRIGHTNESS = 1.53;
+const CLEANUP_KEY = '__mapillaryCardSceneCleanup';
+
+function resetSceneContainer(container) {
+  if (typeof container[CLEANUP_KEY] === 'function') {
+    container[CLEANUP_KEY]();
+  }
+
+  container.querySelectorAll('canvas').forEach((existingCanvas) => {
+    const gl =
+      existingCanvas.getContext('webgl2') ||
+      existingCanvas.getContext('webgl') ||
+      existingCanvas.getContext('experimental-webgl');
+    gl?.getExtension('WEBGL_lose_context')?.loseContext();
+    existingCanvas.remove();
+  });
+}
 
 function getDefaultTextureZoom() {
   return window.matchMedia(MOBILE_QUERY).matches
@@ -24,6 +40,8 @@ function randomCenter(viewSize) {
 export function initMapillaryCardScene() {
   const container = document.querySelector('[data-mapillary-canvas]');
   if (!container) return;
+
+  resetSceneContainer(container);
 
   const canvas = document.createElement('canvas');
   container.appendChild(canvas);
@@ -173,10 +191,12 @@ export function initMapillaryCardScene() {
   }
 
   resize();
-  new ResizeObserver(resize).observe(container);
-  mobileZoomQuery.addEventListener('change', (event) => {
+  const resizeObserver = new ResizeObserver(resize);
+  resizeObserver.observe(container);
+  function handleMobileZoomChange(event) {
     setTextureZoom(event.matches ? MOBILE_TEXTURE_ZOOM : DESKTOP_TEXTURE_ZOOM);
-  });
+  }
+  mobileZoomQuery.addEventListener('change', handleMobileZoomChange);
 
   function beginTransition() {
     nextCenter = randomCenter(viewSize);
@@ -184,8 +204,12 @@ export function initMapillaryCardScene() {
     hasSwapped = false;
   }
 
+  let animationFrame = 0;
+  let transitionTimer = 0;
+  let loadedTexture = null;
+
   function animate() {
-    requestAnimationFrame(animate);
+    animationFrame = requestAnimationFrame(animate);
 
     const elapsed = performance.now() - transitionStart;
     if (elapsed < FADE_DURATION * 2) {
@@ -207,6 +231,7 @@ export function initMapillaryCardScene() {
   }
 
   new THREE.TextureLoader().load(`${base}/img/mapillary.png`, (texture) => {
+    loadedTexture = texture;
     texture.colorSpace = THREE.SRGBColorSpace;
     texture.minFilter = THREE.NearestFilter;
     texture.magFilter = THREE.NearestFilter;
@@ -220,9 +245,21 @@ export function initMapillaryCardScene() {
     material.uniforms.tMap.value = texture;
 
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      window.setInterval(beginTransition, SAMPLE_INTERVAL);
+      transitionTimer = window.setInterval(beginTransition, SAMPLE_INTERVAL);
     }
   });
+
+  container[CLEANUP_KEY] = () => {
+    cancelAnimationFrame(animationFrame);
+    window.clearInterval(transitionTimer);
+    resizeObserver.disconnect();
+    mobileZoomQuery.removeEventListener('change', handleMobileZoomChange);
+    loadedTexture?.dispose();
+    material.dispose();
+    renderer.dispose();
+    canvas.remove();
+    container[CLEANUP_KEY] = null;
+  };
 
   animate();
 }
