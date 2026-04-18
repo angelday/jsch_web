@@ -51,18 +51,25 @@ const cards = allPosts
   </head>
   <body>
     <section class="mini-hero design-hero" data-about-cursor-root>
+      <div
+        class="design-hero__logo-scene"
+        data-gitlab-hero-canvas
+        data-base={base}
+        aria-hidden="true"
+      >
+      </div>
       <div class="mini-hero__content">
         <h1 data-about-cursor-select>Hi GitLab, nice to meet you!</h1>
         <p class="mini-hero__intro" data-about-cursor-select>
-          I'm József Schaffer. I design, prototype, and code to help teams solve
+          I’m József Schaffer. I design, prototype, and code to help teams solve
           complex problems.
         </p>
         <p class="mini-hero__intro" data-about-cursor-select>
-          I've been at it for 15+ years, currently at Inter IKEA.
+          I’ve been doing this for 15+ years and currently work at Inter IKEA.
         </p>
         <p class="mini-hero__intro" data-about-cursor-select>
-          These here are my design case studies. I encourage you to explore the
-          rest of the site to know a bit more about me.
+          Here are a few of my design case studies. Feel free to explore the
+          rest of the site to learn a bit more about me.
         </p>
       </div>
     </section>
@@ -154,9 +161,11 @@ const cards = allPosts
     <SiteFooter />
     <div class="about-cursor" data-about-cursor aria-hidden="true"></div>
     <script>
+      import { initGitLabHeroScene } from "../../scripts/gitlab-hero-scene.js";
       import { initIkeaCardScene } from "../../scripts/ikea-card-scene.js";
       import { initMapillaryCardScene } from "../../scripts/mapillary-card-scene.js";
 
+      initGitLabHeroScene();
       initIkeaCardScene();
       initMapillaryCardScene();
     </script>
