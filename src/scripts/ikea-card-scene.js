@@ -19,12 +19,11 @@ const BUOYANCY_PHASES = [0, 1.8, 3.4];
 const BUOYANCY_DEPTHS = [6, 8, 5];
 const CAMERA_POSITION = [-33.28, -33.05, 149.32];
 const CAMERA_TARGET = [0, 0, 0];
-const SHOW_TUNING_CONTROLS = false;
 
 const TUNING_DEFAULTS = {
   inkLow: 0.2,
   inkHigh: 1.0,
-  exposure: 1.74,
+  exposure: 2.5,
   inkGray: 0.667,
   pixelSize: PIXEL_SIZE,
   materialGray: 0.79,
@@ -189,161 +188,6 @@ export function initIkeaCardScene() {
     roughness: TUNING_DEFAULTS.roughness,
     side: THREE.DoubleSide
   });
-
-  function setMaterialValue(key, value) {
-    material[key] = value;
-    meshGroups.forEach((group) => {
-      group.traverse((child) => {
-        if (child.isMesh && child.material) {
-          child.material[key] = value;
-          child.material.needsUpdate = true;
-        }
-      });
-    });
-  }
-
-  function setMaterialGray(value) {
-    material.color.setScalar(value);
-    meshGroups.forEach((group) => {
-      group.traverse((child) => {
-        if (child.isMesh && child.material) {
-          child.material.color.setScalar(value);
-        }
-      });
-    });
-  }
-
-  if (SHOW_TUNING_CONTROLS) {
-    function addTuningControl({ label, min, max, step, value, onInput }) {
-      const row = document.createElement('label');
-      row.style.cssText = 'display:grid;grid-template-columns:82px 1fr 44px;align-items:center;gap:8px';
-
-      const name = document.createElement('span');
-      name.textContent = label;
-
-      const input = document.createElement('input');
-      input.type = 'range';
-      input.min = min;
-      input.max = max;
-      input.step = step;
-      input.value = value;
-
-      const readout = document.createElement('output');
-      readout.value = Number(value).toFixed(2);
-      readout.textContent = readout.value;
-      readout.style.cssText = 'font-variant-numeric:tabular-nums;text-align:right';
-
-      input.addEventListener('input', () => {
-        const nextValue = Number(input.value);
-        const actualValue = onInput(nextValue) ?? nextValue;
-        input.value = actualValue;
-        readout.value = actualValue.toFixed(2);
-        readout.textContent = readout.value;
-      });
-
-      row.append(name, input, readout);
-      return row;
-    }
-
-    const controls = document.createElement('div');
-    controls.style.cssText = [
-      'position:absolute',
-      'left:12px',
-      'bottom:12px',
-      'z-index:2',
-      'display:grid',
-      'gap:6px',
-      'width:min(360px,calc(100% - 24px))',
-      'padding:10px 12px',
-      'background:rgba(255,255,255,0.92)',
-      'color:#000',
-      'border:1px solid #aaa',
-      'border-radius:8px',
-      'font:12px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace'
-    ].join(';');
-
-    controls.append(
-      addTuningControl({
-        label: 'gray start',
-        min: '0.10',
-        max: '0.90',
-        step: '0.01',
-        value: TUNING_DEFAULTS.inkLow,
-        onInput: (value) => {
-          const nextValue = Math.min(value, cgaMat.uniforms.uInkHigh.value - 0.01);
-          cgaMat.uniforms.uInkLow.value = nextValue;
-          return nextValue;
-        }
-      }),
-      addTuningControl({
-        label: 'white point',
-        min: '0.20',
-        max: '1.00',
-        step: '0.01',
-        value: TUNING_DEFAULTS.inkHigh,
-        onInput: (value) => {
-          const nextValue = Math.max(value, cgaMat.uniforms.uInkLow.value + 0.01);
-          cgaMat.uniforms.uInkHigh.value = nextValue;
-          return nextValue;
-        }
-      }),
-      addTuningControl({
-        label: 'exposure',
-        min: '0.50',
-        max: '2.50',
-        step: '0.01',
-        value: TUNING_DEFAULTS.exposure,
-        onInput: (value) => {
-          cgaMat.uniforms.uExposure.value = value;
-        }
-      }),
-      addTuningControl({
-        label: 'pixel',
-        min: '2.00',
-        max: '14.00',
-        step: '1.00',
-        value: TUNING_DEFAULTS.pixelSize,
-        onInput: (value) => {
-          cgaMat.uniforms.uPixelSize.value = value;
-        }
-      }),
-      addTuningControl({
-        label: 'base gray',
-        min: '0.10',
-        max: '1.00',
-        step: '0.01',
-        value: TUNING_DEFAULTS.materialGray,
-        onInput: (value) => setMaterialGray(value)
-      }),
-      addTuningControl({
-        label: 'metal',
-        min: '0.00',
-        max: '1.00',
-        step: '0.01',
-        value: TUNING_DEFAULTS.metalness,
-        onInput: (value) => setMaterialValue('metalness', value)
-      }),
-      addTuningControl({
-        label: 'rough',
-        min: '0.00',
-        max: '1.00',
-        step: '0.01',
-        value: TUNING_DEFAULTS.roughness,
-        onInput: (value) => setMaterialValue('roughness', value)
-      }),
-      addTuningControl({
-        label: 'key light',
-        min: '0.00',
-        max: '4.00',
-        step: '0.01',
-        value: TUNING_DEFAULTS.keyLight,
-        onInput: (value) => {
-          dirLight.intensity = value;
-        }
-      })
-    );
-    container.appendChild(controls);
-  }
 
   Promise.all(svgPaths.map((url) => fetch(url).then((r) => r.text()))).then(
     (svgTexts) => {
