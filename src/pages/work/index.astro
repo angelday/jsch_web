@@ -37,9 +37,9 @@ const assetVersion = "20260413-2";
 
     <ul class="work-grid">
       <li class="project-card">
-        <div class="project-card__link project-card__link--static">
+        <div class="project-card__link project-card__link--static project-card__link--scene">
           <h3 class="project-card__title">Inter IKEA Systems</h3>
-          <div class="project-card__canvas"></div>
+          <div class="project-card__canvas" data-ikea-canvas data-base={base}></div>
           <div class="project-card__content"></div>
         </div>
       </li>
@@ -54,6 +54,10 @@ const assetVersion = "20260413-2";
 
     <SiteFooter />
     <div class="about-cursor" data-about-cursor aria-hidden="true"></div>
+    <script>
+      import { initIkeaCardScene } from "../../scripts/ikea-card-scene.js";
+      initIkeaCardScene();
+    </script>
     <script is:inline type="module" define:vars={{ base }}>
       import(`${base}/js/hero-shader.js`).then((m) => m.initHeroShader());
       import(`${base}/js/about-cursor.js`).then((m) => m.initAboutCursor());

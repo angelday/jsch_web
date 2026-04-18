@@ -102,6 +102,33 @@ body {
   letter-spacing: -0.02em;
 }
 
+.project-card__link--scene {
+  position: relative;
+  min-height: clamp(420px, 60vw, 700px);
+  isolation: isolate;
+}
+
+.project-card__link--scene > .project-card__title {
+  position: relative;
+  z-index: 1;
+  max-width: min(760px, 100%);
+  cursor: text;
+  pointer-events: auto;
+  user-select: text;
+}
+
+.project-card__link--scene > .project-card__canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  height: 100%;
+  aspect-ratio: auto;
+}
+
+.project-card__link--scene > .project-card__content {
+  display: none;
+}
+
 .project-card__canvas {
   position: relative;
   width: 100%;
@@ -681,7 +708,7 @@ body {
 
 .about-panel__signoff-gif {
   display: block;
-  width: 210px;
+  width: 180px;
   max-width: 100%;
   height: auto;
   image-rendering: pixelated;
@@ -821,7 +848,7 @@ body {
   }
 
   .about-panel__signoff-gif {
-    width: 160px;
+    width: 140px;
   }
 
   .projects-shell {
