@@ -49,8 +49,8 @@ const cards = allPosts
     <title>Design — József Schaffer</title>
     <link rel="icon" href={`${base}/favicon.png?v=${assetVersion}`} />
   </head>
-  <body>
-    <section class="mini-hero design-hero" data-about-cursor-root>
+  <body data-about-cursor-root>
+    <section class="mini-hero design-hero">
       <div
         class="design-hero__logo-scene"
         data-gitlab-hero-canvas
@@ -89,6 +89,7 @@ const cards = allPosts
                 post.visualKind && "project-card__link--effect",
               ]}
               href={`${base}/${post.slug}/`}
+              data-about-cursor-active
             >
               <div
                 class:list={[
@@ -148,7 +149,7 @@ const cards = allPosts
       }
     </ul>
 
-    <section class="closing-callout" data-about-cursor-root>
+    <section class="closing-callout">
       <canvas
         class="closing-callout__starfield"
         data-starfield

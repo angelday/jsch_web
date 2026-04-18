@@ -847,9 +847,9 @@ body {
     margin: 0 auto clamp(18px, 5vw, 28px);
   }
 
-  .design-hero .mini-hero__content {
+  .mini-hero.design-hero .mini-hero__content {
     width: 100%;
-    padding-top: clamp(24px, 6vw, 26px);
+    padding-top: 0;
   }
 
   .case-study-cards,
