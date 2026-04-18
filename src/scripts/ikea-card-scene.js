@@ -50,9 +50,15 @@ function resetSceneContainer(container) {
 }
 
 export function initIkeaCardScene() {
-  const container = document.querySelector('[data-ikea-canvas]');
-  if (!container) return;
+  const containers = document.querySelectorAll('[data-ikea-canvas]');
+  if (containers.length === 0) return;
 
+  containers.forEach((container) => {
+    initIkeaCardSceneContainer(container);
+  });
+}
+
+function initIkeaCardSceneContainer(container) {
   resetSceneContainer(container);
 
   const canvas = document.createElement('canvas');

@@ -31,6 +31,11 @@ const cards = allPosts
       title: p.title,
       custom_excerpt: p.custom_excerpt ?? null,
       feature_image: rewriteUrl(p.feature_image),
+      visualKind: p.slug.includes("ikea")
+        ? "ikea"
+        : p.slug.includes("mapillary")
+          ? "mapillary"
+          : null,
       displayTags,
       updatedLabel: `Updated ${new Date(p.updated_at).toLocaleDateString("en-GB", dateFmt)}`,
     };
@@ -68,8 +73,17 @@ const cards = allPosts
         cards.map((post: any) => (
           <li class="project-card">
             <a class="project-card__link" href={`${base}/${post.slug}/`}>
-              <div class="project-card__canvas">
-                {post.feature_image && (
+              <div
+                class:list={[
+                  "project-card__canvas",
+                  post.visualKind &&
+                    `project-card__canvas--${post.visualKind}`,
+                ]}
+                data-ikea-canvas={post.visualKind === "ikea" ? true : undefined}
+                data-mapillary-canvas={post.visualKind === "mapillary" ? true : undefined}
+                data-base={post.visualKind ? base : undefined}
+              >
+                {!post.visualKind && post.feature_image && (
                   <img
                     class="project-card__img"
                     src={post.feature_image}
@@ -121,6 +135,13 @@ const cards = allPosts
 
     <SiteFooter />
     <div class="about-cursor" data-about-cursor aria-hidden="true"></div>
+    <script>
+      import { initIkeaCardScene } from "../../scripts/ikea-card-scene.js";
+      import { initMapillaryCardScene } from "../../scripts/mapillary-card-scene.js";
+
+      initIkeaCardScene();
+      initMapillaryCardScene();
+    </script>
     <script is:inline type="module" define:vars={{ base }}>
       import(`${base}/js/hero-shader.js`).then((m) => m.initHeroShader());
       import(`${base}/js/about-cursor.js`).then((m) => m.initAboutCursor());

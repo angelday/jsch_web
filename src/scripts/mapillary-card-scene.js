@@ -38,12 +38,19 @@ function randomCenter(viewSize) {
 }
 
 export function initMapillaryCardScene() {
-  const container = document.querySelector('[data-mapillary-canvas]');
-  if (!container) return;
+  const containers = document.querySelectorAll('[data-mapillary-canvas]');
+  if (containers.length === 0) return;
 
+  containers.forEach((container) => {
+    initMapillaryCardSceneContainer(container);
+  });
+}
+
+function initMapillaryCardSceneContainer(container) {
   resetSceneContainer(container);
 
   const canvas = document.createElement('canvas');
+  canvas.style.cssText = 'display:block;width:100%;height:100%';
   container.appendChild(canvas);
 
   const base = (container.dataset.base || '').replace(/\/$/, '');
