@@ -62,8 +62,13 @@ const assetVersion = "20260413-2";
       <li class="project-card">
         <div
           class="project-card__link project-card__link--static project-card__link--scene project-card__link--mapillary"
-          data-mapillary-card
         >
+          <div
+            class="project-card__mapillary-canvas"
+            data-mapillary-canvas
+            data-base={base}
+          >
+          </div>
           <div class="project-card__scene-copy">
             <h3 class="project-card__title">Mapillary</h3>
             <div class="project-card__content project-card__content--scene">
@@ -85,26 +90,12 @@ const assetVersion = "20260413-2";
     <div class="about-cursor" data-about-cursor aria-hidden="true"></div>
     <script>
       import { initIkeaCardScene } from "../../scripts/ikea-card-scene.js";
+      import { initMapillaryCardScene } from "../../scripts/mapillary-card-scene.js";
+
       initIkeaCardScene();
+      initMapillaryCardScene();
     </script>
     <script is:inline type="module" define:vars={{ base }}>
-      const mapillaryCard = document.querySelector("[data-mapillary-card]");
-      const reduceMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      );
-
-      if (mapillaryCard && !reduceMotion.matches) {
-        const sampleTexture = () => {
-          const u = Math.round(Math.random() * 100);
-          const v = Math.round(Math.random() * 100);
-          mapillaryCard.style.setProperty("--mapillary-u", `${u}%`);
-          mapillaryCard.style.setProperty("--mapillary-v", `${v}%`);
-        };
-
-        sampleTexture();
-        window.setInterval(sampleTexture, 2500);
-      }
-
       import(`${base}/js/about-cursor.js`).then((m) => m.initAboutCursor());
     </script>
   </body>
