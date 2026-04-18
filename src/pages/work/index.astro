@@ -16,12 +16,10 @@ const assetVersion = "20260413-2";
     <link rel="icon" href={`${base}/favicon.png?v=${assetVersion}`} />
   </head>
   <body>
-    <section class="mini-hero mini-hero--compact" data-about-cursor-root>
-      <canvas
-        class="mini-hero__shader"
-        data-shader-canvas
-        data-shader-preset="projects"
-        aria-hidden="true"></canvas>
+    <section
+      class="mini-hero mini-hero--compact work-hero"
+      data-about-cursor-root
+    >
       <header class="mini-hero__nav" aria-label="Site navigation">
         <a
           class="mini-hero__nav-item"
@@ -38,30 +36,47 @@ const assetVersion = "20260413-2";
 
     <ul class="work-grid">
       <li class="project-card">
-        <div class="project-card__link project-card__link--static project-card__link--scene">
+        <div
+          class="project-card__link project-card__link--static project-card__link--scene"
+        >
           <div class="project-card__scene-copy">
-            <h3 class="project-card__title">
-              <span class="project-card__typewriter">Inter IKEA Systems</span>
-            </h3>
+            <h3 class="project-card__title">Inter IKEA Systems</h3>
             <div class="project-card__content project-card__content--scene">
               <p class="project-card__role">
                 <strong>Product Designer (Kitchen Planner lead)</strong>
                 <span>Jul 2022 - Present</span>
               </p>
               <p class="project-card__role">
-                <strong>Product Designer (KALLAX, PLATSA, SMÅSTAD 3D planners, consultant)</strong>
-                <span>Nov 2020 - Jul 2022 · 1 yr 9 mos</span>
+                <strong
+                  >Product Designer (KALLAX, PLATSA, SMÅSTAD 3D planners,
+                  consultant)</strong
+                >
+                <span>Nov 2020 - Jul 2022</span>
               </p>
             </div>
           </div>
-          <div class="project-card__canvas" data-ikea-canvas data-base={base}></div>
+          <div class="project-card__canvas" data-ikea-canvas data-base={base}>
+          </div>
         </div>
       </li>
       <li class="project-card">
-        <div class="project-card__link project-card__link--static">
-          <h3 class="project-card__title">Mapillary</h3>
-          <div class="project-card__canvas"></div>
-          <div class="project-card__content"></div>
+        <div
+          class="project-card__link project-card__link--static project-card__link--scene project-card__link--mapillary"
+          data-mapillary-card
+        >
+          <div class="project-card__scene-copy">
+            <h3 class="project-card__title">Mapillary</h3>
+            <div class="project-card__content project-card__content--scene">
+              <p class="project-card__role">
+                <strong>Principal Designer</strong>
+                <span>Sep 2018 - Jun 2020</span>
+              </p>
+              <p class="project-card__role">
+                <strong>Lead Designer</strong>
+                <span>Mar 2016 - Sep 2018</span>
+              </p>
+            </div>
+          </div>
         </div>
       </li>
     </ul>
@@ -73,7 +88,23 @@ const assetVersion = "20260413-2";
       initIkeaCardScene();
     </script>
     <script is:inline type="module" define:vars={{ base }}>
-      import(`${base}/js/hero-shader.js`).then((m) => m.initHeroShader());
+      const mapillaryCard = document.querySelector("[data-mapillary-card]");
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      );
+
+      if (mapillaryCard && !reduceMotion.matches) {
+        const sampleTexture = () => {
+          const u = Math.round(Math.random() * 100);
+          const v = Math.round(Math.random() * 100);
+          mapillaryCard.style.setProperty("--mapillary-u", `${u}%`);
+          mapillaryCard.style.setProperty("--mapillary-v", `${v}%`);
+        };
+
+        sampleTexture();
+        window.setInterval(sampleTexture, 2500);
+      }
+
       import(`${base}/js/about-cursor.js`).then((m) => m.initAboutCursor());
     </script>
   </body>
