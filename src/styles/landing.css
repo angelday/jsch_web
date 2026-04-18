@@ -498,30 +498,13 @@ body {
   flex: 1 1 auto;
 }
 
-.case-study-cards .project-card__effect-title h3,
-.case-study-cards .project-card__title,
-.case-study-cards .project-card__excerpt,
-.case-study-cards .project-card__date,
-.case-study-cards .tag-pill {
-  transition:
-    border-color 160ms ease,
-    color 160ms ease;
+.case-study-cards .project-card__effect-title h3 {
+  transition: color 160ms ease;
 }
 
 .case-study-cards .project-card__link:hover .project-card__effect-title h3,
-.case-study-cards .project-card__link:focus-visible .project-card__effect-title h3,
-.case-study-cards .project-card__link:hover .project-card__title,
-.case-study-cards .project-card__link:focus-visible .project-card__title,
-.case-study-cards .project-card__link:hover .project-card__excerpt,
-.case-study-cards .project-card__link:focus-visible .project-card__excerpt,
-.case-study-cards .project-card__link:hover .project-card__date,
-.case-study-cards .project-card__link:focus-visible .project-card__date {
+.case-study-cards .project-card__link:focus-visible .project-card__effect-title h3 {
   color: var(--gitlab-orange);
-}
-
-.case-study-cards .project-card__link:hover .tag-pill,
-.case-study-cards .project-card__link:focus-visible .tag-pill {
-  --tag-color: var(--gitlab-orange);
 }
 
 .case-study-callout__text {
