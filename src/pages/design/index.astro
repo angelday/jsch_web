@@ -101,6 +101,12 @@ const cards = allPosts
                   post.visualKind === "mapillary" ? true : undefined
                 }
                 data-base={post.visualKind ? base : undefined}
+                data-desktop-texture-zoom={
+                  post.visualKind === "mapillary" ? "1.82" : undefined
+                }
+                data-mobile-texture-zoom={
+                  post.visualKind === "mapillary" ? "1.24" : undefined
+                }
               >
                 {!post.visualKind && post.feature_image && (
                   <img

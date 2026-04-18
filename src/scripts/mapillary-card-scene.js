@@ -24,10 +24,22 @@ function resetSceneContainer(container) {
   });
 }
 
-function getDefaultTextureZoom() {
+function getTextureZoomConfig(container) {
+  const desktopZoom = Number.parseFloat(container.dataset.desktopTextureZoom);
+  const mobileZoom = Number.parseFloat(container.dataset.mobileTextureZoom);
+
+  return {
+    desktop: Number.isFinite(desktopZoom)
+      ? desktopZoom
+      : DESKTOP_TEXTURE_ZOOM,
+    mobile: Number.isFinite(mobileZoom) ? mobileZoom : MOBILE_TEXTURE_ZOOM
+  };
+}
+
+function getDefaultTextureZoom(zoomConfig) {
   return window.matchMedia(MOBILE_QUERY).matches
-    ? MOBILE_TEXTURE_ZOOM
-    : DESKTOP_TEXTURE_ZOOM;
+    ? zoomConfig.mobile
+    : zoomConfig.desktop;
 }
 
 function randomCenter(viewSize) {
@@ -64,7 +76,8 @@ function initMapillaryCardSceneContainer(container) {
   const imageAspect = { value: 1 };
   const cardAspect = { value: 1 };
   const mobileZoomQuery = window.matchMedia(MOBILE_QUERY);
-  let textureZoom = getDefaultTextureZoom();
+  const zoomConfig = getTextureZoomConfig(container);
+  let textureZoom = getDefaultTextureZoom(zoomConfig);
   const viewSize = new THREE.Vector2(1 / textureZoom, 1 / textureZoom);
   const sampleCenter = new THREE.Vector2(0.5, 0.5);
   let nextCenter = sampleCenter.clone();
@@ -201,7 +214,7 @@ function initMapillaryCardSceneContainer(container) {
   const resizeObserver = new ResizeObserver(resize);
   resizeObserver.observe(container);
   function handleMobileZoomChange(event) {
-    setTextureZoom(event.matches ? MOBILE_TEXTURE_ZOOM : DESKTOP_TEXTURE_ZOOM);
+    setTextureZoom(event.matches ? zoomConfig.mobile : zoomConfig.desktop);
   }
   mobileZoomQuery.addEventListener('change', handleMobileZoomChange);
 
