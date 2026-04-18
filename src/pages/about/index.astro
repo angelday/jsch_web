@@ -1,6 +1,7 @@
 ---
 import "../../styles/landing.css";
 import "../../styles/homepage/about-cursor.css";
+import PageHeader from "../../components/PageHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -15,20 +16,7 @@ const assetVersion = "20260413-2";
     <link rel="icon" href={`${base}/favicon.png?v=${assetVersion}`} />
   </head>
   <body data-about-cursor-root>
-    <header class="about-header" aria-label="Site navigation">
-      <nav class="about-header__nav">
-        <a
-          class="about-header__link"
-          href={`${base}/`}
-          data-about-cursor-active
-        >
-          <span class="about-header__link-copy">
-            <span class="about-header__link-label">Home</span>
-            <span class="about-header__link-arrow" aria-hidden="true">←</span>
-          </span>
-        </a>
-      </nav>
-    </header>
+    <PageHeader base={base} />
 
     <div class="about-panel">
       <div class="about-panel__media">
@@ -191,15 +179,6 @@ const assetVersion = "20260413-2";
     <div class="about-cursor" data-about-cursor aria-hidden="true"></div>
     <script is:inline type="module" define:vars={{ base }}>
       import(`${base}/js/about-cursor.js`).then((m) => m.initAboutCursor());
-
-      const header = document.querySelector(".about-header");
-      if (header) {
-        const onScroll = () => {
-          header.classList.toggle("about-header--compact", window.scrollY > 40);
-        };
-        onScroll();
-        window.addEventListener("scroll", onScroll, { passive: true });
-      }
     </script>
   </body>
 </html>

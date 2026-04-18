@@ -1,19 +1,5 @@
 /* Work page card layouts. */
 
-.work-hero {
-  background: var(--cga-black);
-  color: var(--cga-white);
-}
-
-.work-hero .mini-hero__nav-item {
-  color: var(--cga-white);
-}
-
-.work-hero .mini-hero__nav-item:hover,
-.work-hero .mini-hero__nav-item:focus-visible {
-  color: var(--cga-black);
-}
-
 .work-grid {
   list-style: none;
   padding: 0;

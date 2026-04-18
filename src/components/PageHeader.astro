@@ -1,0 +1,37 @@
+---
+const { base = "" } = Astro.props;
+---
+
+<header class="about-header" aria-label="Site navigation" data-compact-header>
+  <nav class="about-header__nav">
+    <a class="about-header__link" href={`${base}/`} data-about-cursor-active>
+      <span class="about-header__link-copy">
+        <span class="about-header__link-label">Home</span>
+        <span class="about-header__link-arrow" aria-hidden="true">←</span>
+      </span>
+    </a>
+  </nav>
+</header>
+
+<script>
+  const initCompactHeaders = () => {
+    const headers = document.querySelectorAll("[data-compact-header]");
+
+    headers.forEach((header) => {
+      const onScroll = () => {
+        header.classList.toggle("about-header--compact", window.scrollY > 40);
+      };
+
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initCompactHeaders, {
+      once: true,
+    });
+  } else {
+    initCompactHeaders();
+  }
+</script>
