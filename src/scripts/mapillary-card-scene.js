@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 const PIXEL_SIZE = 6;
 const DESKTOP_TEXTURE_ZOOM = 2.82;
-const MOBILE_TEXTURE_ZOOM = 1.64;
+const MOBILE_TEXTURE_ZOOM = 2.24;
 const MOBILE_QUERY = '(max-width: 600px)';
 const SAMPLE_INTERVAL = 2500;
 const FADE_DURATION = 360;
