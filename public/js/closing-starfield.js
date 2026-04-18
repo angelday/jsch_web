@@ -119,17 +119,7 @@ export function initClosingStarfield() {
       const maxY = Math.max(sy1, sy2);
       if (maxX < 0 || minX > w || maxY < 0 || minY > h) continue;
 
-      const brightness = (Z_FAR - s.z) / (Z_FAR - Z_NEAR);
-
-      const color =
-        brightness > 0.42
-          ? "#ffffff"
-          : brightness > 0.24
-            ? "#aaaaaa"
-            : brightness > 0.16
-              ? "#00aaaa"
-              : "#aa00aa";
-      ctx.fillStyle = color;
+      ctx.fillStyle = "#ffffff";
 
       const dx = sx2 - sx1;
       const dy = sy2 - sy1;

@@ -50,14 +50,9 @@ const cards = allPosts
     <link rel="icon" href={`${base}/favicon.png?v=${assetVersion}`} />
   </head>
   <body>
-    <section class="mini-hero" data-about-cursor-root>
-      <canvas
-        class="mini-hero__shader"
-        data-shader-canvas
-        data-shader-preset="projects"
-        aria-hidden="true"></canvas>
+    <section class="mini-hero design-hero" data-about-cursor-root>
       <div class="mini-hero__content">
-        <h1 data-about-cursor-select>Hi, nice to meet you!</h1>
+        <h1 data-about-cursor-select>Hi GitLab, nice to meet you!</h1>
         <p class="mini-hero__intro" data-about-cursor-select>
           I'm József Schaffer. I design, prototype, and code to help teams solve
           complex problems.
@@ -65,22 +60,39 @@ const cards = allPosts
         <p class="mini-hero__intro" data-about-cursor-select>
           I've been at it for 15+ years, currently at Inter IKEA.
         </p>
+        <p class="mini-hero__intro" data-about-cursor-select>
+          These here are my design case studies. I encourage you to explore the
+          rest of the site to know a bit more about me.
+        </p>
       </div>
     </section>
 
     <ul class="projects-grid case-study-grid case-study-cards">
       {
         cards.map((post: any) => (
-          <li class="project-card">
-            <a class="project-card__link" href={`${base}/${post.slug}/`}>
+          <li
+            class:list={[
+              "project-card",
+              post.visualKind && `project-card--${post.visualKind}`,
+            ]}
+          >
+            <a
+              class:list={[
+                "project-card__link",
+                post.visualKind && "project-card__link--effect",
+              ]}
+              href={`${base}/${post.slug}/`}
+            >
               <div
                 class:list={[
                   "project-card__canvas",
-                  post.visualKind &&
-                    `project-card__canvas--${post.visualKind}`,
+                  post.visualKind && "project-card__canvas--effect",
+                  post.visualKind && `project-card__canvas--${post.visualKind}`,
                 ]}
                 data-ikea-canvas={post.visualKind === "ikea" ? true : undefined}
-                data-mapillary-canvas={post.visualKind === "mapillary" ? true : undefined}
+                data-mapillary-canvas={
+                  post.visualKind === "mapillary" ? true : undefined
+                }
                 data-base={post.visualKind ? base : undefined}
               >
                 {!post.visualKind && post.feature_image && (
@@ -92,25 +104,31 @@ const cards = allPosts
                   />
                 )}
               </div>
-              <div class="project-card__content">
-                <h3 class="project-card__title">{post.title}</h3>
-                {post.displayTags.length > 0 && (
-                  <div class="project-card__tags">
-                    {post.displayTags.map((tag: string) => (
-                      <span
-                        class="tag-pill"
-                        data-tag={tag.toLowerCase().replace(/\s+/g, "-")}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
-                {post.custom_excerpt && (
-                  <p class="project-card__excerpt">{post.custom_excerpt}</p>
-                )}
-                <span class="project-card__date">{post.updatedLabel}</span>
-              </div>
+              {post.visualKind ? (
+                <div class="project-card__effect-title">
+                  <h3>{post.title}</h3>
+                </div>
+              ) : (
+                <div class="project-card__content">
+                  <h3 class="project-card__title">{post.title}</h3>
+                  {post.displayTags.length > 0 && (
+                    <div class="project-card__tags">
+                      {post.displayTags.map((tag: string) => (
+                        <span
+                          class="tag-pill"
+                          data-tag={tag.toLowerCase().replace(/\s+/g, "-")}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  {post.custom_excerpt && (
+                    <p class="project-card__excerpt">{post.custom_excerpt}</p>
+                  )}
+                  <span class="project-card__date">{post.updatedLabel}</span>
+                </div>
+              )}
             </a>
           </li>
         ))
@@ -143,7 +161,6 @@ const cards = allPosts
       initMapillaryCardScene();
     </script>
     <script is:inline type="module" define:vars={{ base }}>
-      import(`${base}/js/hero-shader.js`).then((m) => m.initHeroShader());
       import(`${base}/js/about-cursor.js`).then((m) => m.initAboutCursor());
       import(`${base}/js/closing-starfield.js`).then((m) =>
         m.initClosingStarfield(),
