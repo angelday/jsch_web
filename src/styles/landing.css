@@ -651,6 +651,11 @@ body {
   text-decoration: none;
 }
 
+.about-panel a:hover,
+.about-panel a:focus-visible {
+  color: var(--cga-white);
+}
+
 .about-panel__signoff {
   margin: 0;
   font-family: "Geist Pixel Square", sans-serif;

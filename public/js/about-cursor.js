@@ -20,13 +20,13 @@ export function initAboutCursor() {
   let isVisible = false;
 
   const updatePosition = (event) => {
-    const isSelectTarget =
-      event.target instanceof Element &&
-      Boolean(event.target.closest("[data-about-cursor-select]"));
     const isActiveTarget =
-      !isSelectTarget &&
       event.target instanceof Element &&
       Boolean(event.target.closest("[data-about-cursor-active]"));
+    const isSelectTarget =
+      !isActiveTarget &&
+      event.target instanceof Element &&
+      Boolean(event.target.closest("[data-about-cursor-select]"));
     const hotspotX = isSelectTarget ? SELECT_HOTSPOT_X : POINTER_HOTSPOT_X;
     const hotspotY = isSelectTarget ? SELECT_HOTSPOT_Y : POINTER_HOTSPOT_Y;
 
