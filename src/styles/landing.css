@@ -79,7 +79,7 @@ button {
   background: var(--cga-white);
 }
 
-.project-card__link--static > .project-card__title {
+.project-card__link--static>.project-card__title {
   margin: 0;
   padding: 1.6rem 2.2rem;
   font-size: var(--type-body-size);
@@ -263,6 +263,21 @@ button {
 
   .projects-page .project-card__link:hover .project-card__title,
   .projects-page .blog-card__link:hover .blog-card__title {
+    color: var(--cga-cyan);
+  }
+}
+
+// Touch devices don't have a hover state, so we apply the hover color on focus and active states instead. Bug: still not visible (?)
+@media (hover: none),
+(pointer: coarse) {
+
+  .projects-page .project-card__link:is(:hover, :focus, :focus-visible) .project-card__title,
+  .projects-page .blog-card__link:is(:hover, :focus, :focus-visible) .blog-card__title {
+    color: var(--cga-pink);
+  }
+
+  .projects-page .project-card__link:active .project-card__title,
+  .projects-page .blog-card__link:active .blog-card__title {
     color: var(--cga-cyan);
   }
 }
@@ -533,6 +548,14 @@ button {
   }
 }
 
+@media (hover: none),
+(pointer: coarse) {
+
+  .case-study-cards .project-card__link:active .project-card__effect-title h3 {
+    color: var(--gitlab-orange);
+  }
+}
+
 .case-study-callout__text {
   max-width: min(760px, 100%);
   margin: 0;
@@ -719,7 +742,7 @@ button {
   margin-top: 2.5rem;
 }
 
-.about-panel__media + .about-panel__header {
+.about-panel__media+.about-panel__header {
   margin-top: 0;
 }
 
@@ -938,7 +961,7 @@ button {
     width: 100%;
   }
 
-  .about-panel__media + .about-panel__header {
+  .about-panel__media+.about-panel__header {
     margin-top: 0;
   }
 
