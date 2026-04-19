@@ -746,6 +746,12 @@ button {
   margin-top: 0;
 }
 
+@media (min-width: 541px) {
+  .about-panel__media+.about-panel__header {
+    padding-top: clamp(12px, 2vw, 24px);
+  }
+}
+
 .about-panel__footer {
   justify-items: center;
   padding-block: 1.5rem 2rem;
