@@ -21,6 +21,11 @@ select {
   font: inherit;
 }
 
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
 .page-shell {
   display: flex;
   flex-direction: column;

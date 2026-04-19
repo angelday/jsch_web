@@ -16,6 +16,11 @@ body {
   margin: 0;
 }
 
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* Shell — shared width container used by hero, grids, callouts */
 .shell {
   max-width: var(--shell-inner-max);

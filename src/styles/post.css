@@ -4,6 +4,11 @@ body.post {
   background-color: #e5e5e5;
 }
 
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
 .post-nav {
   --content-width: 720px;
   --container-width: 1200px;
