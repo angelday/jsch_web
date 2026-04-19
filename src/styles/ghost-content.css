@@ -191,8 +191,18 @@ h3 {
   color: rgba(0, 0, 0, 0.5);
   font-size: 1.3rem;
   line-height: 1.4;
-  padding-top: 8px;
+  margin-top: 8px;
   text-align: center;
+}
+
+@media (min-width: 601px) {
+  .kg-card figcaption {
+    font-size: 1.6rem;
+  }
+}
+
+.kg-card figcaption p {
+  margin: 0;
 }
 
 /* Ghost caption lines — each top-level run in the caption's <p> becomes its own line */
@@ -213,7 +223,8 @@ h3 {
 
 .gh-content h2 {
   font-family: "Geist Pixel Square", system-ui, -apple-system, sans-serif;
-  font-size: 3.2rem;
+  font-size: 4.2rem;
+  font-weight: 400;
   letter-spacing: -0.02em;
   color: #aa00aa;
 }
@@ -226,6 +237,11 @@ h3 {
 .gh-content a {
   color: #E55A1B;
   text-decoration: underline;
+}
+
+.gh-content strong,
+.gh-content b {
+  font-weight: 600;
 }
 
 /* Lists */
