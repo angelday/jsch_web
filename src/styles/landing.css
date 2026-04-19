@@ -862,6 +862,7 @@ button {
     --section-height: calc(80svh - var(--shell-padding));
     --type-nameplate-size: min(84px, 11vw);
     --type-body-size: 32px;
+    --type-copy-size: 18px;
     --subhero-section-height: clamp(400px, 60svh, 520px);
     --subhero-title-size: clamp(46px, 8vw, 72px);
     --subhero-intro-size: 28px;
@@ -937,6 +938,7 @@ button {
     --section-height: calc(80svh - var(--shell-padding));
     --type-nameplate-size: min(56px, 14vw);
     --type-body-size: 24px;
+    --type-copy-size: 16px;
     --subhero-section-height: clamp(380px, 60svh, 480px);
     --subhero-title-size: clamp(38px, 13vw, 54px);
     --subhero-intro-size: 22px;
