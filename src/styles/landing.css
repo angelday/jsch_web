@@ -116,6 +116,7 @@ body {
   letter-spacing: -0.01em;
   color: var(--cga-pink);
   margin: 0 0 0.8rem;
+  transition: color 120ms ease;
 }
 
 .project-card__excerpt {
@@ -245,6 +246,12 @@ body {
   letter-spacing: -0.01em;
   color: var(--cga-pink);
   margin: 0 0 0.5rem;
+  transition: color 120ms ease;
+}
+
+.projects-page .project-card__link:is(:hover, :focus-visible) .project-card__title,
+.projects-page .blog-card__link:is(:hover, :focus-visible) .blog-card__title {
+  color: var(--cga-cyan);
 }
 
 .blog-card__excerpt {

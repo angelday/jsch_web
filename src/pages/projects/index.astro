@@ -59,8 +59,8 @@ const blogPosts = visible
     <title>Projects & Blog — József Schaffer</title>
     <link rel="icon" href={`${base}/favicon.png?v=${assetVersion}`} />
   </head>
-  <body>
-    <section class="mini-hero" data-about-cursor-root>
+  <body class="projects-page" data-about-cursor-root>
+    <section class="mini-hero">
       <canvas
         class="mini-hero__shader"
         data-shader-canvas
@@ -90,7 +90,11 @@ const blogPosts = visible
         {
           cards.map((post: any) => (
             <li class="project-card">
-              <a class="project-card__link" href={`${base}/${post.slug}/`}>
+              <a
+                class="project-card__link"
+                href={`${base}/${post.slug}/`}
+                data-about-cursor-active
+              >
                 <div class="project-card__canvas">
                   {post.feature_image && (
                     <img
@@ -135,7 +139,11 @@ const blogPosts = visible
             <ul class="blog-list">
               {blogPosts.map((post: any) => (
                 <li class="blog-card">
-                  <a class="blog-card__link" href={`${base}/${post.slug}/`}>
+                  <a
+                    class="blog-card__link"
+                    href={`${base}/${post.slug}/`}
+                    data-about-cursor-active
+                  >
                     {post.feature_image && (
                       <div class="blog-card__thumb">
                         <img src={post.feature_image} alt="" loading="lazy" />
