@@ -254,9 +254,17 @@ button {
   transition: color 120ms ease;
 }
 
-.projects-page .project-card__link:is(:hover, :focus-visible) .project-card__title,
-.projects-page .blog-card__link:is(:hover, :focus-visible) .blog-card__title {
+.projects-page .project-card__link:focus-visible .project-card__title,
+.projects-page .blog-card__link:focus-visible .blog-card__title {
   color: var(--cga-cyan);
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+  .projects-page .project-card__link:hover .project-card__title,
+  .projects-page .blog-card__link:hover .blog-card__title {
+    color: var(--cga-cyan);
+  }
 }
 
 .blog-card__excerpt {
@@ -514,9 +522,15 @@ button {
   transition: color 160ms ease;
 }
 
-.case-study-cards .project-card__link:hover .project-card__effect-title h3,
 .case-study-cards .project-card__link:focus-visible .project-card__effect-title h3 {
   color: var(--gitlab-orange);
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+  .case-study-cards .project-card__link:hover .project-card__effect-title h3 {
+    color: var(--gitlab-orange);
+  }
 }
 
 .case-study-callout__text {
