@@ -267,7 +267,7 @@ button {
   }
 }
 
-// Touch devices don't have a hover state, so we apply the hover color on focus and active states instead. Bug: still not visible (?)
+/* Touch devices don't have a hover state, so we apply the hover color on focus and active states instead. Bug: still not visible (?) */
 @media (hover: none),
 (pointer: coarse) {
 
