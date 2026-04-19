@@ -217,19 +217,21 @@ if (import.meta.env.PROD) {
       <div class="gh-content">
         <header class="post-header">
           <h1>{post.title}</h1>
-          <div class="post-byline">
-            {authorName && <span>{authorName}</span>}
-            {authorName && publishedDate && <span> · </span>}
-            {isBlogPost ? (
-              publishedDate && <span>{publishedDate}</span>
-            ) : (
-              <>
-                {hasBeenUpdated && publishedDate && <span>Originally published {publishedDate}</span>}
-                {hasBeenUpdated && <span> · </span>}
-                {updatedDate && <span>{hasBeenUpdated ? `Updated ${updatedDate}` : publishedDate}</span>}
-              </>
-            )}
-          </div>
+          {!isCaseStudy && (
+            <div class="post-byline">
+              {authorName && <span>{authorName}</span>}
+              {authorName && publishedDate && <span> · </span>}
+              {isBlogPost ? (
+                publishedDate && <span>{publishedDate}</span>
+              ) : (
+                <>
+                  {hasBeenUpdated && publishedDate && <span>Originally published {publishedDate}</span>}
+                  {hasBeenUpdated && <span> · </span>}
+                  {updatedDate && <span>{hasBeenUpdated ? `Updated ${updatedDate}` : publishedDate}</span>}
+                </>
+              )}
+            </div>
+          )}
         </header>
         <Fragment set:html={post.html} />
       </div>

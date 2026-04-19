@@ -845,6 +845,14 @@ body {
 
 }
 
+@media (max-width: 1100px) {
+
+  .case-study-cards,
+  .closing-callout {
+    margin-top: var(--shell-padding);
+  }
+}
+
 @media (max-width: 600px) {
   .blog-card__link {
     flex-direction: column;
@@ -873,10 +881,6 @@ body {
     padding-top: 0;
   }
 
-  .case-study-cards,
-  .closing-callout {
-    margin-top: var(--shell-padding);
-  }
 }
 
 @media (max-width: 540px) {
