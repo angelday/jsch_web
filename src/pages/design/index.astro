@@ -9,7 +9,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const assetVersion = "20260413-2";
 
 const res = await fetch(
-  `${GHOST_URL}/ghost/api/content/posts/?key=${GHOST_API_KEY}&include=tags&fields=slug,title,updated_at,custom_excerpt,feature_image,url&order=updated_at%20desc`,
+  `${GHOST_URL}/ghost/api/content/posts/?key=${GHOST_API_KEY}&include=tags&fields=slug,title,updated_at,custom_excerpt,feature_image,url`,
 );
 const { posts: allPosts } = await res.json();
 const ghostOrigin = allPosts[0]?.url
@@ -20,8 +20,17 @@ const rewriteUrl = (url: string | null) => {
   return url.replace(ghostOrigin, base);
 };
 const dateFmt = { day: "numeric", month: "long", year: "numeric" } as const;
+const caseStudyOrder = ["design-case-study-ikea", "design-case-study-mapillary"];
 const cards = allPosts
   .filter((p: any) => p.tags?.some((t: any) => t.name === "#case-study"))
+  .sort((a: any, b: any) => {
+    const aIndex = caseStudyOrder.indexOf(a.slug);
+    const bIndex = caseStudyOrder.indexOf(b.slug);
+    return (
+      (aIndex === -1 ? Number.POSITIVE_INFINITY : aIndex) -
+      (bIndex === -1 ? Number.POSITIVE_INFINITY : bIndex)
+    );
+  })
   .map((p: any) => {
     const displayTags = (p.tags ?? [])
       .filter((t: any) => !t.name.startsWith("#"))
