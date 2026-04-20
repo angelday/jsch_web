@@ -98,16 +98,16 @@ const blogPosts = visible
                 href={`${base}/${post.slug}/`}
                 data-about-cursor-active
               >
-                <div class="project-card__canvas">
-                  {post.feature_image && (
+                {post.feature_image && (
+                  <div class="project-card__canvas">
                     <img
                       class="project-card__img"
                       src={post.feature_image}
                       alt=""
                       loading="lazy"
                     />
-                  )}
-                </div>
+                  </div>
+                )}
                 <div class="project-card__content">
                   <h2 class="project-card__title">{post.title}</h2>
                   {post.displayTags.length > 0 && (
