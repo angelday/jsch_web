@@ -4,7 +4,7 @@ const { base = "" } = Astro.props;
 
 <header class="about-header" aria-label="Site navigation" data-compact-header>
   <nav class="about-header__nav">
-    <a class="about-header__link" href={`${base}/`} data-about-cursor-active>
+    <a class="about-header__link" href={`${base}/`} data-about-cursor-active data-pc-sound="/sounds/enter_2.mp3">
       <span class="about-header__link-copy">
         <span class="about-header__link-label">Home</span>
         <span class="about-header__link-arrow" aria-hidden="true">←</span>

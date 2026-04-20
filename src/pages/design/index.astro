@@ -1,6 +1,7 @@
 ---
 import "../../styles/landing.css";
 import "../../styles/homepage/about-cursor.css";
+import PcSound from "../../components/PcSound.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 
 const GHOST_URL = import.meta.env.GHOST_URL;
@@ -164,6 +165,7 @@ const cards = allPosts
       class="closing-callout"
       href={`${base}/`}
       data-about-cursor-active
+      data-pc-sound="/sounds/enter_2.mp3"
     >
       <canvas
         class="closing-callout__starfield"
@@ -175,6 +177,7 @@ const cards = allPosts
     </a>
 
     <SiteFooter />
+    <PcSound />
     <div class="about-cursor" data-about-cursor aria-hidden="true"></div>
     <script>
       import { initGitLabHeroScene } from "../../scripts/gitlab-hero-scene.js";

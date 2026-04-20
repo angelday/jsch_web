@@ -1,6 +1,7 @@
 ---
 import "../../styles/landing.css";
 import "../../styles/homepage/about-cursor.css";
+import PcSound from "../../components/PcSound.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 
 const GHOST_URL = import.meta.env.GHOST_URL;
@@ -72,6 +73,7 @@ const blogPosts = visible
           class="mini-hero__nav-item"
           href={`${base}/`}
           data-about-cursor-active
+          data-pc-sound="/sounds/enter_2.mp3"
         >
           <span class="mini-hero__nav-copy">
             <span class="mini-hero__nav-label">Home</span>
@@ -166,6 +168,7 @@ const blogPosts = visible
       }
     </main>
     <SiteFooter />
+    <PcSound />
     <div class="about-cursor" data-about-cursor aria-hidden="true"></div>
     <script is:inline type="module" define:vars={{ base }}>
       import(`${base}/js/hero-shader.js`).then((m) => m.initHeroShader());

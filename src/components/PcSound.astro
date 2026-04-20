@@ -1,0 +1,13 @@
+<script>
+  import { playSound } from "../../public/js/pc-sound.js";
+
+  document.querySelectorAll("[data-pc-sound]").forEach((el) => {
+    el.addEventListener("click", (e) => {
+      const href = el.closest("a")?.href || (el instanceof HTMLAnchorElement ? el.href : null);
+      if (href) e.preventDefault();
+      playSound(el.dataset.pcSound).then(() => {
+        if (href) window.location.href = href;
+      });
+    });
+  });
+</script>

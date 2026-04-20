@@ -1,0 +1,30 @@
+const buffers = new Map();
+let ctx = null;
+
+function getContext() {
+  if (!ctx) {
+    ctx = new AudioContext();
+  }
+  return ctx;
+}
+
+async function loadSound(url) {
+  if (buffers.has(url)) return buffers.get(url);
+  const response = await fetch(url);
+  const arrayBuffer = await response.arrayBuffer();
+  const buffer = await getContext().decodeAudioData(arrayBuffer);
+  buffers.set(url, buffer);
+  return buffer;
+}
+
+export async function playSound(url) {
+  const audioCtx = getContext();
+  const buf = await loadSound(url);
+  const source = audioCtx.createBufferSource();
+  source.buffer = buf;
+  source.connect(audioCtx.destination);
+  source.start();
+  return new Promise((resolve) => {
+    source.onended = resolve;
+  });
+}

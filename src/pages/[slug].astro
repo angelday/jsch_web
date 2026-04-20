@@ -3,6 +3,7 @@ import '../styles/ghost-content.css';
 import '../styles/post.css';
 import '../styles/lightbox.css';
 import '../styles/homepage/about-cursor.css';
+import PcSound from '../components/PcSound.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 
 export async function getStaticPaths() {
@@ -196,6 +197,7 @@ if (import.meta.env.PROD) {
           class="post-nav__item"
           href={`${base}/${isCaseStudy ? 'design' : 'projects'}/`}
           data-about-cursor-active
+          data-pc-sound="/sounds/enter_2.mp3"
         >
           <span class="post-nav__copy">
             <span class="post-nav__label">{isCaseStudy ? 'Design' : 'Projects'}</span>
@@ -206,6 +208,7 @@ if (import.meta.env.PROD) {
           class="post-nav__item post-nav__item--end"
           href={`${base}/`}
           data-about-cursor-active
+          data-pc-sound="/sounds/enter_2.mp3"
         >
           <span class="post-nav__copy">
             <span class="post-nav__label">jozsefschaffer.com</span>
@@ -237,6 +240,7 @@ if (import.meta.env.PROD) {
       </div>
     </article>
     <SiteFooter />
+    <PcSound />
     <div class="about-cursor" data-about-cursor aria-hidden="true"></div>
     <script is:inline type="module" define:vars={{ base }}>
       import(`${base}/js/about-cursor.js`).then((m) => m.initAboutCursor());
