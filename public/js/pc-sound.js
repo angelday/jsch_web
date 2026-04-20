@@ -21,8 +21,11 @@ export async function playSound(url) {
   const audioCtx = getContext();
   const buf = await loadSound(url);
   const source = audioCtx.createBufferSource();
+  const gain = audioCtx.createGain();
+  gain.gain.value = 0.5;
   source.buffer = buf;
-  source.connect(audioCtx.destination);
+  source.connect(gain);
+  gain.connect(audioCtx.destination);
   source.start();
   return new Promise((resolve) => {
     source.onended = resolve;
