@@ -13,7 +13,10 @@ document.querySelectorAll("[data-pc-sound]").forEach((el) => {
   el.addEventListener("click", (e) => {
     const href = el.closest("a")?.href;
     if (href) e.preventDefault();
-    playSound(el.dataset.pcSound).then(() => {
+    playSound(el.dataset.pcSound, {
+      onStart: () => el.dispatchEvent(new CustomEvent("pc-sound-start")),
+    }).then(() => {
+      el.dispatchEvent(new CustomEvent("pc-sound-end"));
       if (href) window.location.href = href;
     });
   });

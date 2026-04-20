@@ -13,6 +13,8 @@ export function initClosingStarfield() {
   const ctx = canvas.getContext("2d");
   const STAR_COUNT = 240;
   const SPEED = 0.035;
+  const JUMP_SPEED = 0.11;
+  const JUMP_ACCEL = 0.0045;
   const Z_NEAR = 0.15;
   const Z_FAR = 1.5;
 
@@ -32,6 +34,9 @@ export function initClosingStarfield() {
   let ratioY = 0;
   let stars = [];
   let hovering = false;
+  let jumping = false;
+  let jumpSpeed = SPEED;
+  let lastFrameTime = 0;
 
   function resize() {
     const dpr = window.devicePixelRatio || 1;
@@ -83,17 +88,25 @@ export function initClosingStarfield() {
     }
   }
 
-  function step() {
+  function step(now = 0) {
     requestAnimationFrame(step);
+    const frameScale = lastFrameTime ? (now - lastFrameTime) / (1000 / 60) : 1;
+    lastFrameTime = now;
+    if (jumping) {
+      jumpSpeed = Math.min(JUMP_SPEED, jumpSpeed + JUMP_ACCEL * frameScale);
+    } else {
+      jumpSpeed = SPEED;
+    }
+
     ctx.clearRect(0, 0, w, h);
 
     for (const s of stars) {
       if (!s.active) continue;
       const prevZ = s.z;
-      s.z -= SPEED;
+      s.z -= (jumping ? jumpSpeed : SPEED) * frameScale;
 
       if (s.z <= Z_NEAR) {
-        if (hovering) {
+        if (hovering || jumping) {
           s.x = (Math.random() - 0.5) * 2 * ratioX;
           s.y = (Math.random() - 0.5) * 2 * ratioY;
           s.z = spawnDepth();
@@ -150,6 +163,14 @@ export function initClosingStarfield() {
   });
   callout.addEventListener("blur", () => {
     hovering = false;
+  });
+  callout.addEventListener("pc-sound-start", () => {
+    jumping = true;
+    jumpSpeed = SPEED;
+    activateInactive();
+  });
+  callout.addEventListener("pc-sound-end", () => {
+    jumping = false;
   });
 
   new ResizeObserver(resize).observe(callout);

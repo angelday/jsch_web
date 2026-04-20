@@ -17,7 +17,7 @@ async function loadSound(url) {
   return buffer;
 }
 
-export async function playSound(url) {
+export async function playSound(url, options = {}) {
   const audioCtx = getContext();
   const buf = await loadSound(url);
   const source = audioCtx.createBufferSource();
@@ -26,6 +26,7 @@ export async function playSound(url) {
   source.buffer = buf;
   source.connect(gain);
   gain.connect(audioCtx.destination);
+  options.onStart?.();
   source.start();
   return new Promise((resolve) => {
     source.onended = resolve;
