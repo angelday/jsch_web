@@ -19,19 +19,7 @@ const assetVersion = "20260413-2";
     <link rel="icon" href={`${base}/favicon.png?v=${assetVersion}`} />
   </head>
   <body data-about-cursor-root>
-    <PageHeader base={base}>
-      <canvas slot="backdrop" class="waveform waveform--hidden" data-waveform aria-hidden="true"></canvas>
-      <button
-        class="about-header__play"
-        type="button"
-        data-music-toggle
-        data-music-src="/sounds/menu_music_1.mp3"
-        data-about-cursor-active
-        aria-label="Play music"
-      >
-        <span class="about-header__play-label">Play epic music</span>
-      </button>
-    </PageHeader>
+    <PageHeader base={base} showMusicPlayer />
 
     <ul class="work-grid">
       <li class="project-card">
@@ -161,117 +149,6 @@ const assetVersion = "20260413-2";
 
       initIkeaCardScene();
       initMapillaryCardScene();
-    </script>
-    <script>
-      const btn = document.querySelector("[data-music-toggle]");
-      if (btn) {
-        const textLabel = btn.querySelector(".about-header__play-label");
-        const header = document.querySelector("[data-compact-header]");
-        const canvas = header.querySelector("[data-waveform]");
-        const canvasCtx = canvas.getContext("2d");
-        const PX = 2;
-
-        let audio = null;
-        let audioCtx = null;
-        let analyser = null;
-        let waveData = null;
-        let rafId = null;
-        let playing = false;
-
-        const waveHide = "waveform--hidden";
-
-        function sizeCanvas() {
-          const rect = header.getBoundingClientRect();
-          canvas.width = Math.floor(rect.width / PX);
-          canvas.height = Math.floor(rect.height / PX);
-        }
-
-        function drawWaveform() {
-          const W = canvas.width;
-          const H = canvas.height;
-          analyser.getByteTimeDomainData(waveData);
-          canvasCtx.clearRect(0, 0, W, H);
-          canvasCtx.fillStyle = "#aaaaaa";
-
-          const mid = H / 2;
-          const step = waveData.length / W;
-          let prevY = Math.floor(mid + ((waveData[0] - 128) / 128) * mid);
-          for (let x = 0; x < W; x++) {
-            const index = Math.min(waveData.length - 1, Math.floor(x * step));
-            const v = (waveData[index] - 128) / 128;
-            const y = Math.floor(mid + v * mid);
-            const top = Math.min(y, prevY);
-            const bot = Math.max(y, prevY);
-            canvasCtx.fillRect(x, top, 1, bot - top + 1);
-            prevY = y;
-          }
-
-          canvasCtx.fillStyle = "#000";
-          for (let y = 1; y < H; y += 2) {
-            canvasCtx.fillRect(0, y, W, 1);
-          }
-          rafId = requestAnimationFrame(drawWaveform);
-        }
-
-        function setPlaying(state) {
-          playing = state;
-          textLabel.textContent = state ? "Stop epic music" : "Play epic music";
-          canvas.classList.toggle(waveHide, !state);
-          btn.setAttribute("aria-label", state ? "Stop music" : "Play music");
-
-          if (state) {
-            sizeCanvas();
-            rafId = requestAnimationFrame(drawWaveform);
-          } else {
-            cancelAnimationFrame(rafId);
-            canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
-          }
-        }
-
-        function stopMusic() {
-          if (!audio) return;
-          audio.pause();
-          audio.currentTime = 0;
-          setPlaying(false);
-        }
-
-        window.addEventListener("resize", () => {
-          if (playing) sizeCanvas();
-        });
-
-        header.querySelectorAll("[data-pc-sound]").forEach((el) => {
-          el.addEventListener(
-            "click",
-            () => {
-              if (playing) stopMusic();
-            },
-            { capture: true },
-          );
-        });
-
-        btn.addEventListener("click", async () => {
-          if (playing) {
-            stopMusic();
-          } else {
-            if (!audio) {
-              audio = new Audio(btn.dataset.musicSrc);
-              const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-              audioCtx = new AudioContextClass();
-              const source = audioCtx.createMediaElementSource(audio);
-              analyser = audioCtx.createAnalyser();
-              analyser.fftSize = 1024;
-              waveData = new Uint8Array(analyser.fftSize);
-              source.connect(analyser);
-              source.connect(audioCtx.destination);
-              audio.addEventListener("ended", () => setPlaying(false));
-            }
-
-            await audioCtx.resume();
-            await audio.play();
-            setPlaying(true);
-          }
-        });
-      }
     </script>
     <script is:inline type="module" define:vars={{ base }}>
       import(`${base}/js/about-cursor.js`).then((m) => m.initAboutCursor());

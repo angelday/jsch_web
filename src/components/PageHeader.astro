@@ -1,8 +1,11 @@
 ---
-const { base = "" } = Astro.props;
+const { base = "", showMusicPlayer = false } = Astro.props;
 ---
 
 <header class="about-header" aria-label="Site navigation" data-compact-header>
+  {showMusicPlayer && (
+    <canvas class="waveform waveform--hidden" data-waveform aria-hidden="true"></canvas>
+  )}
   <slot name="backdrop" />
   <nav class="about-header__nav">
     <a class="about-header__link" href={`${base}/`} data-about-cursor-active data-pc-sound="/sounds/enter_2.mp3">
@@ -12,6 +15,18 @@ const { base = "" } = Astro.props;
       </span>
     </a>
     <slot />
+    {showMusicPlayer && (
+      <button
+        class="about-header__play"
+        type="button"
+        data-music-toggle
+        data-music-src={`${base}/sounds/menu_music_1.mp3`}
+        data-about-cursor-active
+        aria-label="Play epic music"
+      >
+        <span class="about-header__play-label">Play epic music</span>
+      </button>
+    )}
   </nav>
 </header>
 
@@ -35,5 +50,132 @@ const { base = "" } = Astro.props;
     });
   } else {
     initCompactHeaders();
+  }
+
+  const initMusicHeaders = () => {
+    const buttons = document.querySelectorAll("[data-music-toggle]");
+
+    buttons.forEach((btn) => {
+      const textLabel = btn.querySelector(".about-header__play-label");
+      const header = btn.closest("[data-compact-header]");
+      const canvas = header?.querySelector("[data-waveform]");
+      if (!textLabel || !header || !canvas) return;
+
+      const canvasCtx = canvas.getContext("2d");
+      const PX = 2;
+
+      let audio = null;
+      let audioCtx = null;
+      let analyser = null;
+      let waveData = null;
+      let rafId = null;
+      let playing = false;
+
+      const waveHide = "waveform--hidden";
+
+      function sizeCanvas() {
+        const rect = header.getBoundingClientRect();
+        canvas.width = Math.floor(rect.width / PX);
+        canvas.height = Math.floor(rect.height / PX);
+      }
+
+      function drawWaveform() {
+        const W = canvas.width;
+        const H = canvas.height;
+        analyser.getByteTimeDomainData(waveData);
+        canvasCtx.clearRect(0, 0, W, H);
+        canvasCtx.fillStyle = "#aaaaaa";
+
+        const mid = H / 2;
+        const step = waveData.length / W;
+        let prevY = Math.floor(mid + ((waveData[0] - 128) / 128) * mid);
+        for (let x = 0; x < W; x++) {
+          const index = Math.min(waveData.length - 1, Math.floor(x * step));
+          const v = (waveData[index] - 128) / 128;
+          const y = Math.floor(mid + v * mid);
+          const top = Math.min(y, prevY);
+          const bot = Math.max(y, prevY);
+          canvasCtx.fillRect(x, top, 1, bot - top + 1);
+          prevY = y;
+        }
+
+        canvasCtx.fillStyle = "#000";
+        for (let y = 1; y < H; y += 2) {
+          canvasCtx.fillRect(0, y, W, 1);
+        }
+        rafId = requestAnimationFrame(drawWaveform);
+      }
+
+      function setPlaying(state) {
+        playing = state;
+        textLabel.textContent = state ? "Stop epic music" : "Play epic music";
+        canvas.classList.toggle(waveHide, !state);
+        btn.setAttribute(
+          "aria-label",
+          state ? "Stop epic music" : "Play epic music",
+        );
+
+        if (state) {
+          sizeCanvas();
+          rafId = requestAnimationFrame(drawWaveform);
+        } else {
+          cancelAnimationFrame(rafId);
+          canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+
+      function stopMusic() {
+        if (!audio) return;
+        audio.pause();
+        audio.currentTime = 0;
+        setPlaying(false);
+      }
+
+      window.addEventListener("resize", () => {
+        if (playing) sizeCanvas();
+      });
+
+      header.querySelectorAll("[data-pc-sound]").forEach((el) => {
+        el.addEventListener(
+          "click",
+          () => {
+            if (playing) stopMusic();
+          },
+          { capture: true },
+        );
+      });
+
+      btn.addEventListener("click", async () => {
+        if (playing) {
+          stopMusic();
+        } else {
+          if (!audio) {
+            audio = new Audio(btn.dataset.musicSrc);
+            const AudioContextClass =
+              window.AudioContext || window.webkitAudioContext;
+            audioCtx = new AudioContextClass();
+            const source = audioCtx.createMediaElementSource(audio);
+            analyser = audioCtx.createAnalyser();
+            analyser.fftSize = 1024;
+            waveData = new Uint8Array(analyser.fftSize);
+            source.connect(analyser);
+            source.connect(audioCtx.destination);
+            audio.addEventListener("ended", () => setPlaying(false));
+          }
+
+          await audioCtx.resume();
+          await audio.play();
+          setPlaying(true);
+        }
+      });
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initMusicHeaders, {
+      once: true,
+    });
+  } else {
+    initMusicHeaders();
   }
 </script>
