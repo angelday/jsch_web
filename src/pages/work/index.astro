@@ -19,7 +19,24 @@ const assetVersion = "20260413-2";
     <link rel="icon" href={`${base}/favicon.png?v=${assetVersion}`} />
   </head>
   <body data-about-cursor-root>
-    <PageHeader base={base} />
+    <PageHeader base={base}>
+      <button
+        class="about-header__play"
+        type="button"
+        data-music-toggle
+        data-music-src="/sounds/menu_music_1.mp3"
+        data-about-cursor-active
+        aria-label="Play music"
+      >
+        <span class="about-header__play-label">Play</span>
+        <svg class="about-header__play-icon" data-icon-play width="12" height="14" viewBox="0 0 12 14" fill="currentColor" aria-hidden="true">
+          <path d="M0 0v14l12-7z" />
+        </svg>
+        <svg class="about-header__play-icon about-header__play-icon--hidden" data-icon-stop width="12" height="12" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
+          <rect width="12" height="12" />
+        </svg>
+      </button>
+    </PageHeader>
 
     <ul class="work-grid">
       <li class="project-card">
@@ -149,6 +166,44 @@ const assetVersion = "20260413-2";
 
       initIkeaCardScene();
       initMapillaryCardScene();
+    </script>
+    <script>
+      const btn = document.querySelector("[data-music-toggle]");
+      if (btn) {
+        const label = btn.querySelector("[data-icon-play]")
+          ? btn
+          : null;
+        const playIcon = btn.querySelector("[data-icon-play]");
+        const stopIcon = btn.querySelector("[data-icon-stop]");
+        const textLabel = btn.querySelector(".about-header__play-label");
+        let audio = null;
+        let playing = false;
+
+        const hide = "about-header__play-icon--hidden";
+
+        function setPlaying(state) {
+          playing = state;
+          textLabel.textContent = state ? "Stop" : "Play";
+          playIcon.classList.toggle(hide, state);
+          stopIcon.classList.toggle(hide, !state);
+          btn.setAttribute("aria-label", state ? "Stop music" : "Play music");
+        }
+
+        btn.addEventListener("click", () => {
+          if (playing) {
+            audio?.pause();
+            audio.currentTime = 0;
+            setPlaying(false);
+          } else {
+            if (!audio) {
+              audio = new Audio(btn.dataset.musicSrc);
+              audio.addEventListener("ended", () => setPlaying(false));
+            }
+            audio.play();
+            setPlaying(true);
+          }
+        });
+      }
     </script>
     <script is:inline type="module" define:vars={{ base }}>
       import(`${base}/js/about-cursor.js`).then((m) => m.initAboutCursor());

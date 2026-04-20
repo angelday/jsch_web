@@ -708,6 +708,46 @@ button {
   align-self: flex-end;
 }
 
+.about-header__play {
+  margin-left: auto;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-family: "Geist Pixel Square", sans-serif;
+  font-size: var(--type-body-size);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  padding: clamp(6px, 1vw, 10px) 0 clamp(14px, 1.8vw, 22px);
+  transition: font-size 0.2s ease, padding 0.2s ease;
+}
+
+.about-header--compact .about-header__play {
+  font-size: 24px;
+  padding: clamp(3px, 0.5vw, 5px) 0 clamp(5px, 0.7vw, 8px);
+}
+
+.about-header__play:hover,
+.about-header__play:focus-visible {
+  background: var(--cga-white);
+  color: var(--cga-black);
+  outline: none;
+}
+
+.about-header__play-icon {
+  width: 0.6em;
+  height: 0.7em;
+}
+
+.about-header__play-icon--hidden {
+  display: none;
+}
+
 .about-panel {
   position: relative;
   max-width: var(--shell-inner-max);
