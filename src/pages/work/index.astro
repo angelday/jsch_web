@@ -223,15 +223,30 @@ const assetVersion = "20260413-2";
           }
         }
 
+        function stopMusic() {
+          if (!audio) return;
+          audio.pause();
+          audio.currentTime = 0;
+          setPlaying(false);
+        }
+
         window.addEventListener("resize", () => {
           if (playing) sizeCanvas();
         });
 
+        header.querySelectorAll("[data-pc-sound]").forEach((el) => {
+          el.addEventListener(
+            "click",
+            () => {
+              if (playing) stopMusic();
+            },
+            { capture: true },
+          );
+        });
+
         btn.addEventListener("click", async () => {
           if (playing) {
-            audio?.pause();
-            audio.currentTime = 0;
-            setPlaying(false);
+            stopMusic();
           } else {
             if (!audio) {
               audio = new Audio(btn.dataset.musicSrc);
