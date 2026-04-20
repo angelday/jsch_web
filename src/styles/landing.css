@@ -630,6 +630,7 @@ button {
   margin: var(--shell-padding) auto 0;
   padding: clamp(18px, 2.6vw, 32px) var(--about-panel-padding);
   border-radius: var(--hero-radius);
+  overflow: hidden;
   background: var(--cga-black);
   color: var(--cga-white);
   transition:

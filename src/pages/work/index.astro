@@ -205,6 +205,11 @@ const assetVersion = "20260413-2";
             canvasCtx.fillRect(x, top, 1, bot - top + 1);
             prevY = y;
           }
+
+          canvasCtx.fillStyle = "#000";
+          for (let y = 1; y < H; y += 2) {
+            canvasCtx.fillRect(0, y, W, 1);
+          }
           rafId = requestAnimationFrame(drawWaveform);
         }
 
