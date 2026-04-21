@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader.js';
 
-const CLEANUP_KEY = '__gitlabHeroSceneCleanup';
+const CLEANUP_KEY = '__brandHeroSceneCleanup';
 const EXTRUDE_DEPTH = 5;
 const BEVEL_THICKNESS = 0.65;
 const BEVEL_SIZE = 0.65;
@@ -37,17 +37,29 @@ function disposeObject3d(object) {
   });
 }
 
-export function initGitLabHeroScene() {
-  const container = document.querySelector('[data-gitlab-hero-canvas]');
+function resolveAssetUrl(path, base) {
+  const trimmedPath = path?.trim();
+  if (!trimmedPath) return '';
+  if (/^(?:https?:)?\/\//.test(trimmedPath) || trimmedPath.startsWith('/')) {
+    return trimmedPath;
+  }
+  return `${base}/${trimmedPath.replace(/^\/+/, '')}`;
+}
+
+export function initBrandHeroScene() {
+  const container = document.querySelector('[data-brand-hero-canvas]');
   if (!container) return;
 
   resetSceneContainer(container);
+
+  const base = (container.dataset.base || '').replace(/\/$/, '');
+  const brandSvg = resolveAssetUrl(container.dataset.brandSvg, base);
+  if (!brandSvg) return;
 
   const canvas = document.createElement('canvas');
   canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%';
   container.appendChild(canvas);
 
-  const base = (container.dataset.base || '').replace(/\/$/, '');
   const renderer = new THREE.WebGLRenderer({
     canvas,
     alpha: true,
@@ -182,7 +194,7 @@ export function initGitLabHeroScene() {
   const resizeObserver = new ResizeObserver(resize);
   resizeObserver.observe(container);
 
-  fetch(`${base}/img/gitlab.svg`)
+  fetch(brandSvg)
     .then((response) => response.text())
     .then((svgText) => {
       if (disposed) return;

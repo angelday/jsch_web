@@ -8,6 +8,10 @@ const GHOST_URL = import.meta.env.GHOST_URL;
 const GHOST_API_KEY = import.meta.env.GHOST_API_KEY;
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const assetVersion = "20260413-2";
+const heroBrand = {
+  color: "var(--cga-cyan)",
+  svg: "",
+};
 
 const res = await fetch(
   `${GHOST_URL}/ghost/api/content/posts/?key=${GHOST_API_KEY}&include=tags&fields=slug,title,updated_at,custom_excerpt,feature_image,url`,
@@ -21,7 +25,10 @@ const rewriteUrl = (url: string | null) => {
   return url.replace(ghostOrigin, base);
 };
 const dateFmt = { day: "numeric", month: "long", year: "numeric" } as const;
-const caseStudyOrder = ["design-case-study-ikea", "design-case-study-mapillary"];
+const caseStudyOrder = [
+  "design-case-study-ikea",
+  "design-case-study-mapillary",
+];
 const cards = allPosts
   .filter((p: any) => p.tags?.some((t: any) => t.name === "#case-study"))
   .sort((a: any, b: any) => {
@@ -60,17 +67,21 @@ const cards = allPosts
     <title>Design — József Schaffer</title>
     <link rel="icon" href={`${base}/favicon.png?v=${assetVersion}`} />
   </head>
-  <body data-about-cursor-root>
-    <section class="mini-hero design-hero">
+  <body data-about-cursor-root style={`--brand-tint: ${heroBrand.color};`}>
+    <section
+      class="mini-hero design-hero"
+      data-has-brand-model={heroBrand.svg.trim() ? true : undefined}
+    >
       <div
         class="design-hero__logo-scene"
-        data-gitlab-hero-canvas
+        data-brand-hero-canvas
         data-base={base}
+        data-brand-svg={heroBrand.svg}
         aria-hidden="true"
       >
       </div>
       <div class="mini-hero__content">
-        <h1 data-about-cursor-select>Hi GitLab,<br />I’m József.</h1>
+        <h1 data-about-cursor-select>Hi, I’m József.</h1>
         <p class="mini-hero__intro" data-about-cursor-select>
           I design complex product systems, prototype the hard parts, and code
           when it helps the team move faster.
@@ -180,11 +191,11 @@ const cards = allPosts
     <PcSound />
     <div class="about-cursor" data-about-cursor aria-hidden="true"></div>
     <script>
-      import { initGitLabHeroScene } from "../../scripts/gitlab-hero-scene.js";
+      import { initBrandHeroScene } from "../../scripts/brand-hero-scene.js";
       import { initIkeaCardScene } from "../../scripts/ikea-card-scene.js";
       import { initMapillaryCardScene } from "../../scripts/mapillary-card-scene.js";
 
-      initGitLabHeroScene();
+      initBrandHeroScene();
       initIkeaCardScene();
       initMapillaryCardScene();
     </script>

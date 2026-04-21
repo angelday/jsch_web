@@ -332,7 +332,11 @@ button {
 .design-hero {
   min-height: 0;
   padding-block: clamp(28px, 4vw, 48px) clamp(24px, 3.5vw, 44px);
-  background: #e24329;
+  background: var(--brand-tint, #e24329);
+}
+
+.design-hero:not([data-has-brand-model]) {
+  padding-block: clamp(20px, 3vw, 36px);
 }
 
 .design-hero__logo-scene {
@@ -501,7 +505,6 @@ button {
 }
 
 .case-study-cards {
-  --gitlab-orange: #fc6d26;
   max-width: var(--shell-inner-max);
   width: var(--shell-width);
   margin: clamp(24px, 3vw, 40px) auto 0;
@@ -538,13 +541,13 @@ button {
 }
 
 .case-study-cards .project-card__link:focus-visible .project-card__effect-title h3 {
-  color: var(--gitlab-orange);
+  color: var(--brand-tint, #e24329);
 }
 
 @media (hover: hover) and (pointer: fine) {
 
   .case-study-cards .project-card__link:hover .project-card__effect-title h3 {
-    color: var(--gitlab-orange);
+    color: var(--brand-tint, #e24329);
   }
 }
 
@@ -552,7 +555,7 @@ button {
 (pointer: coarse) {
 
   .case-study-cards .project-card__link:active .project-card__effect-title h3 {
-    color: var(--gitlab-orange);
+    color: var(--brand-tint, #e24329);
   }
 }
 
@@ -973,7 +976,12 @@ button {
     justify-items: stretch;
   }
 
-  .design-hero__logo-scene {
+  .design-hero:not([data-has-brand-model]) {
+    padding-top: 64px;
+    padding-bottom: 18px;
+  }
+
+  .design-hero[data-has-brand-model] .design-hero__logo-scene {
     position: relative;
     top: auto;
     right: auto;
