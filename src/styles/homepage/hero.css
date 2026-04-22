@@ -13,7 +13,7 @@
   isolation: isolate;
 }
 
-@supports (corner-shape: squircle) {
+@supports (font: -apple-system-body) and (corner-shape: squircle) {
   .hero {
     corner-shape: superellipse(2.5);
   }

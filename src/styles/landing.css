@@ -901,7 +901,7 @@ button {
 }
 
 /* Squircle progressive enhancement — consolidated */
-@supports (corner-shape: squircle) {
+@supports (font: -apple-system-body) and (corner-shape: squircle) {
 
   .project-card__link,
   .blog-card__link,
