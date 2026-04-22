@@ -33,13 +33,34 @@ const { base = "", showMusicPlayer = false } = Astro.props;
 <script>
   const initCompactHeaders = () => {
     const headers = document.querySelectorAll("[data-compact-header]");
+    const compactAt = 72;
+    const expandAt = 1;
 
     headers.forEach((header) => {
-      const onScroll = () => {
-        header.classList.toggle("about-header--compact", window.scrollY > 40);
+      if (header.dataset.compactHeaderReady) return;
+      header.dataset.compactHeaderReady = "true";
+
+      let isCompact = header.classList.contains("about-header--compact");
+      let scrollFrame = 0;
+
+      const syncCompactState = () => {
+        scrollFrame = 0;
+        const scrollY = window.scrollY;
+        const shouldCompact = isCompact
+          ? scrollY > expandAt
+          : scrollY >= compactAt;
+
+        if (shouldCompact === isCompact) return;
+        isCompact = shouldCompact;
+        header.classList.toggle("about-header--compact", isCompact);
       };
 
-      onScroll();
+      const onScroll = () => {
+        if (scrollFrame) return;
+        scrollFrame = requestAnimationFrame(syncCompactState);
+      };
+
+      syncCompactState();
       window.addEventListener("scroll", onScroll, { passive: true });
     });
   };
@@ -75,8 +96,11 @@ const { base = "", showMusicPlayer = false } = Astro.props;
 
       function sizeCanvas() {
         const rect = header.getBoundingClientRect();
-        canvas.width = Math.floor(rect.width / PX);
-        canvas.height = Math.floor(rect.height / PX);
+        const width = Math.max(1, Math.floor(rect.width / PX));
+        const height = Math.max(1, Math.floor(rect.height / PX));
+        if (canvas.width === width && canvas.height === height) return;
+        canvas.width = width;
+        canvas.height = height;
       }
 
       function drawWaveform() {
@@ -120,6 +144,7 @@ const { base = "", showMusicPlayer = false } = Astro.props;
           rafId = requestAnimationFrame(drawWaveform);
         } else {
           cancelAnimationFrame(rafId);
+          rafId = null;
           canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
         }
       }
@@ -130,6 +155,17 @@ const { base = "", showMusicPlayer = false } = Astro.props;
         audio.currentTime = 0;
         setPlaying(false);
       }
+
+      let resizeFrame = 0;
+      const queueCanvasResize = () => {
+        if (!playing || resizeFrame) return;
+        resizeFrame = requestAnimationFrame(() => {
+          resizeFrame = 0;
+          sizeCanvas();
+        });
+      };
+      const resizeObserver = new ResizeObserver(queueCanvasResize);
+      resizeObserver.observe(header);
 
       window.addEventListener("resize", () => {
         if (playing) sizeCanvas();
