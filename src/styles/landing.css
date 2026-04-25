@@ -307,6 +307,7 @@ button {
   --hero-inline-padding: 40px;
   --hero-block-start: 112px;
   --hero-block-end: 72px;
+  --hero-nav-clearance: 144px;
   position: relative;
   display: grid;
   place-items: center;
@@ -320,6 +321,12 @@ button {
   background: var(--cga-black);
   color: var(--cga-white);
   isolation: isolate;
+}
+
+.mini-hero--with-nav {
+  align-content: center;
+  justify-items: center;
+  padding-top: var(--hero-nav-clearance);
 }
 
 .mini-hero--compact {
@@ -388,9 +395,9 @@ button {
   flex-wrap: wrap;
   align-items: flex-start;
   gap: 0;
-  width: min(100%, 1120px);
+  width: min(calc(100% - (var(--hero-inline-padding) * 2)), 1120px);
   transform: translateX(-50%);
-  padding: clamp(18px, 2.6vw, 32px) clamp(20px, 3vw, 40px) 0;
+  padding-top: clamp(18px, 2.6vw, 32px);
   transition: padding 0.2s ease;
 }
 
@@ -408,6 +415,7 @@ button {
   font-size: var(--type-body-size);
   font-weight: 400;
   letter-spacing: -0.04em;
+  line-height: 1;
   padding: clamp(6px, 1vw, 10px) clamp(24px, 4vw, 64px) clamp(14px, 1.8vw, 22px) 0;
   transition: font-size 0.2s ease, padding 0.2s ease;
 }
@@ -442,17 +450,13 @@ button {
 }
 
 .mini-hero__content {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
+  position: relative;
   display: grid;
   align-content: center;
   justify-items: flex-start;
   gap: 18px;
   width: min(100%, 1120px);
-  transform: translateX(-50%);
-  padding: var(--hero-block-start) clamp(20px, 3vw, 40px) var(--hero-block-end);
+  padding: 0;
   text-align: left;
 }
 
@@ -932,6 +936,7 @@ button {
     --hero-inline-padding: 28px;
     --hero-block-start: 96px;
     --hero-block-end: 56px;
+    --hero-nav-clearance: 116px;
   }
 
   .mini-hero__nav {
@@ -944,13 +949,31 @@ button {
 
   .mini-hero__content {
     gap: 16px;
-    padding: var(--hero-block-start) clamp(20px, 3vw, 40px) var(--hero-block-end);
+    padding: 0;
   }
 
   .mini-hero--compact {
     min-height: 140px;
   }
 
+}
+
+@media (max-width: 950px) and (max-height: 520px) and (orientation: landscape) {
+  :root {
+    --subhero-section-height: 430px;
+    --subhero-title-size: 72px;
+    --subhero-intro-size: 28px;
+  }
+
+  .mini-hero {
+    --hero-block-start: 88px;
+    --hero-block-end: 54px;
+    --hero-nav-clearance: 104px;
+  }
+
+  .mini-hero__content {
+    gap: 16px;
+  }
 }
 
 @media (max-width: 1100px) {
@@ -1013,15 +1036,21 @@ button {
     --hero-inline-padding: 18px;
     --hero-block-start: 104px;
     --hero-block-end: 40px;
+    --hero-nav-clearance: 96px;
   }
 
   .mini-hero__content {
     gap: 16px;
-    padding: var(--hero-block-start) 20px var(--hero-block-end);
+    padding: 0;
   }
 
   .mini-hero--compact {
     min-height: 100px;
+  }
+
+  .mini-hero--with-nav {
+    min-height: clamp(280px, 42svh, 340px);
+    padding-block: 80px;
   }
 
   .about-panel__media {
