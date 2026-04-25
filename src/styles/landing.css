@@ -450,14 +450,27 @@ button {
 }
 
 .mini-hero__content {
-  position: relative;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
   display: grid;
   align-content: center;
   justify-items: flex-start;
   gap: 18px;
   width: min(100%, 1120px);
-  padding: 0;
+  transform: translateX(-50%);
+  padding: var(--hero-block-start) clamp(20px, 3vw, 40px) var(--hero-block-end);
   text-align: left;
+}
+
+.mini-hero--with-nav .mini-hero__content {
+  position: relative;
+  top: auto;
+  bottom: auto;
+  left: auto;
+  transform: none;
+  padding: 0;
 }
 
 .mini-hero h1 {
@@ -949,6 +962,10 @@ button {
 
   .mini-hero__content {
     gap: 16px;
+    padding: var(--hero-block-start) clamp(20px, 3vw, 40px) var(--hero-block-end);
+  }
+
+  .mini-hero--with-nav .mini-hero__content {
     padding: 0;
   }
 
@@ -1041,6 +1058,10 @@ button {
 
   .mini-hero__content {
     gap: 16px;
+    padding: var(--hero-block-start) 20px var(--hero-block-end);
+  }
+
+  .mini-hero--with-nav .mini-hero__content {
     padding: 0;
   }
 
