@@ -1,0 +1,619 @@
+{
+  "version": 1,
+  "generator": "vpc-display-export",
+  "exportedAt": "2025-12-22T06:33:37.807Z",
+  "rootName": "Products",
+  "scene": {
+    "background": {
+      "type": "color",
+      "hex": 15790320
+    }
+  },
+  "nodes": [
+    {
+      "name": "Products",
+      "type": "Group",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "userData": {},
+      "children": [
+        {
+          "name": "cascade-scene-0",
+          "type": "Group",
+          "transform": {
+            "position": [
+              -1.8707326804494022,
+              0.001372284928821737,
+              1.509728455843071
+            ],
+            "quaternion": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "userData": {
+            "entityId": "83",
+            "catalogRef": "00501243"
+          },
+          "children": [],
+          "asset": "models/845f90pnzl10.glb",
+          "assetOriginalUrl": "https://content.dexf.ikea.com/cdn/asset/bedroom/rt/845f90pnzl10.glb"
+        },
+        {
+          "name": "Scene",
+          "type": "Group",
+          "transform": {
+            "position": [
+              -0.11077279209626613,
+              0.0006841314555263095,
+              -0.40093661815393217
+            ],
+            "quaternion": [
+              -5.551115123125783e-17,
+              -8.040613114788646e-17,
+              -4.4634369060706757e-33,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "userData": {
+            "entityId": "84",
+            "catalogRef": "40291078"
+          },
+          "children": [],
+          "asset": "models/859u7sab7b9o.glb",
+          "assetOriginalUrl": "https://content.dexf.ikea.com/cdn/asset/officeplanner/rt/859u7sab7b9o.glb"
+        },
+        {
+          "name": "product:85",
+          "type": "Group",
+          "transform": {
+            "position": [
+              0.01485370666663033,
+              0.009749244071812409,
+              -0.46340593713033695
+            ],
+            "quaternion": [
+              0,
+              -0.7071067811865477,
+              0,
+              0.7071067811865474
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "userData": {
+            "entityId": "85",
+            "catalogRef": "20470047"
+          },
+          "children": [],
+          "asset": "models/9pk2gzi2ry4g.glb",
+          "assetOriginalUrl": "https://content.dexf.ikea.com/cdn/asset/kombinera/rt/9pk2gzi2ry4g.glb"
+        },
+        {
+          "name": "Scene",
+          "type": "Group",
+          "transform": {
+            "position": [
+              -1.7255,
+              0.08800000000000002,
+              -0.409686449738303
+            ],
+            "quaternion": [
+              -5.551115123125783e-17,
+              0.7071067811865475,
+              -5.551115123125783e-17,
+              0.7071067811865476
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "userData": {
+            "entityId": "86",
+            "catalogRef": "40445392"
+          },
+          "children": [],
+          "asset": "models/vbjoklco7d81.glb",
+          "assetOriginalUrl": "https://content.dexf.ikea.com/cdn/asset/bedroom/rt/vbjoklco7d81.glb"
+        },
+        {
+          "name": "Scene",
+          "type": "Group",
+          "transform": {
+            "position": [
+              -0.10464068461170063,
+              0.08800000000000002,
+              1.0169756213718832
+            ],
+            "quaternion": [
+              -3.399077980256689e-33,
+              -1,
+              -5.551115123125783e-17,
+              6.123233995736766e-17
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "userData": {
+            "entityId": "87",
+            "catalogRef": "40445392"
+          },
+          "children": [],
+          "asset": "models/vbjoklco7d81.glb",
+          "assetOriginalUrl": "https://content.dexf.ikea.com/cdn/asset/bedroom/rt/vbjoklco7d81.glb"
+        },
+        {
+          "name": "Scene",
+          "type": "Group",
+          "transform": {
+            "position": [
+              -0.23457426098052817,
+              0.003500000000000003,
+              -2.125
+            ],
+            "quaternion": [
+              -5.551115123125783e-17,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "userData": {
+            "entityId": "88",
+            "catalogRef": "BESTÅ BURS N TV bnch 180x41x49 high-gloss white"
+          },
+          "children": [],
+          "asset": "models/s9mi89c2ogu0.glb",
+          "assetOriginalUrl": "https://content.dexf.ikea.com/cdn/asset/bedroom/rt/s9mi89c2ogu0.glb"
+        },
+        {
+          "name": "product:90",
+          "type": "Group",
+          "transform": {
+            "position": [
+              -1.7948050989082847,
+              0.22528009388177822,
+              -2.0544660859535506
+            ],
+            "quaternion": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "userData": {
+            "entityId": "90",
+            "catalogRef": "LACK NN side tbl 55x55 white"
+          },
+          "children": [],
+          "asset": "models/yru4zf53zn9e.glb",
+          "assetOriginalUrl": "https://content.dexf.ikea.com/cdn/asset/kombinera/rt/yru4zf53zn9e.glb"
+        },
+        {
+          "name": "Scene",
+          "type": "Group",
+          "transform": {
+            "position": [
+              1.7616600049185778,
+              -0.01699999999999946,
+              -2.18
+            ],
+            "quaternion": [
+              -5.5511151231257815e-17,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "userData": {
+            "entityId": "91",
+            "catalogRef": "BILLY bookcs/glass-drs 80x30x202 grey/metallic eff"
+          },
+          "children": [],
+          "asset": "models/4nlnk466dsvl.glb",
+          "assetOriginalUrl": "https://content.dexf.ikea.com/cdn/asset/bedroom/rt/4nlnk466dsvl.glb"
+        },
+        {
+          "name": "Scene",
+          "type": "Group",
+          "transform": {
+            "position": [
+              -0.17433702300781534,
+              1.2941832061673058,
+              -2.3090000000000015
+            ],
+            "quaternion": [
+              0.7071067811865475,
+              0,
+              0,
+              0.7071067811865476
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "userData": {
+            "entityId": "94",
+            "catalogRef": "30326766"
+          },
+          "children": [],
+          "asset": "models/s645bh1qbnee.glb",
+          "assetOriginalUrl": "https://content.dexf.ikea.com/cdn/asset/bedroom/rt/s645bh1qbnee.glb"
+        },
+        {
+          "name": "cascade-scene-0",
+          "type": "Group",
+          "transform": {
+            "position": [
+              -1.6299476409416866,
+              0.45,
+              -2.1247662715364313
+            ],
+            "quaternion": [
+              -5.551115123125783e-17,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "userData": {
+            "entityId": "96",
+            "catalogRef": "20591921"
+          },
+          "children": [],
+          "asset": "models/bb2a38ftb616.glb",
+          "assetOriginalUrl": "https://content.dexf.ikea.com/cdn/asset/bedroom/rt/bb2a38ftb616.glb"
+        },
+        {
+          "name": "cascade-scene-0",
+          "type": "Group",
+          "transform": {
+            "position": [
+              -0.23457426098052817,
+              0.49000000000000005,
+              -2.125
+            ],
+            "quaternion": [
+              -5.551115123125783e-17,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "userData": {
+            "entityId": "97",
+            "catalogRef": "20590498"
+          },
+          "children": [],
+          "asset": "models/6bd79z5b8xou.glb",
+          "assetOriginalUrl": "https://content.dexf.ikea.com/cdn/asset/bedroom/rt/6bd79z5b8xou.glb"
+        },
+        {
+          "name": "cascade-scene-0",
+          "type": "Group",
+          "transform": {
+            "position": [
+              -0.15497978384332964,
+              0.4770000000000004,
+              -0.579167412040226
+            ],
+            "quaternion": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "userData": {
+            "entityId": "98",
+            "catalogRef": "60574986"
+          },
+          "children": [],
+          "asset": "models/x0gtat22i4pm.glb",
+          "assetOriginalUrl": "https://content.dexf.ikea.com/cdn/asset/bedroom/rt/x0gtat22i4pm.glb"
+        },
+        {
+          "name": "cascade-scene-0",
+          "type": "Group",
+          "transform": {
+            "position": [
+              -0.26161048758503697,
+              0.4769999999999991,
+              -0.3720491674858149
+            ],
+            "quaternion": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "userData": {
+            "entityId": "99",
+            "catalogRef": "90590503"
+          },
+          "children": [],
+          "asset": "models/v2rmbk32ubtn.glb",
+          "assetOriginalUrl": "https://content.dexf.ikea.com/cdn/asset/bedroom/rt/v2rmbk32ubtn.glb"
+        },
+        {
+          "name": "cascade-scene-0",
+          "type": "Group",
+          "transform": {
+            "position": [
+              -0.48794431519900694,
+              0.477,
+              -0.3615540232338369
+            ],
+            "quaternion": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "userData": {
+            "entityId": "100",
+            "catalogRef": "90590503"
+          },
+          "children": [],
+          "asset": "models/v2rmbk32ubtn.glb",
+          "assetOriginalUrl": "https://content.dexf.ikea.com/cdn/asset/bedroom/rt/v2rmbk32ubtn.glb"
+        },
+        {
+          "name": "cascade-scene-0",
+          "type": "Group",
+          "transform": {
+            "position": [
+              -1.7471280708518675,
+              0.44999999999999996,
+              -1.9471279403131887
+            ],
+            "quaternion": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "userData": {
+            "entityId": "101",
+            "catalogRef": "GESTALTA N artist's dummy 33 natural"
+          },
+          "children": [],
+          "asset": "models/c20pzu37els9.glb",
+          "assetOriginalUrl": "https://content.dexf.ikea.com/cdn/asset/bedroom/rt/c20pzu37els9.glb"
+        },
+        {
+          "name": "cascade-scene-0",
+          "type": "Group",
+          "transform": {
+            "position": [
+              0.1839553198405083,
+              0.4785,
+              -0.4147101530886607
+            ],
+            "quaternion": [
+              0,
+              0.519911751235177,
+              0,
+              0.8542199780662891
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "userData": {
+            "entityId": "102",
+            "catalogRef": "KOPPARBJÖRK decoration dish 16x33 bright yellow"
+          },
+          "children": [],
+          "asset": "models/46njk6c9sabd.glb",
+          "assetOriginalUrl": "https://content.dexf.ikea.com/cdn/asset/bedroom/rt/46njk6c9sabd.glb"
+        },
+        {
+          "name": "Scene",
+          "type": "Group",
+          "transform": {
+            "position": [
+              -2.19,
+              1.515159617489238,
+              0.2524972938309702
+            ],
+            "quaternion": [
+              0.5000000000000002,
+              0.5,
+              -0.4999999999999999,
+              0.5000000000000002
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "userData": {
+            "entityId": "105",
+            "catalogRef": "50326765"
+          },
+          "children": [],
+          "asset": "models/yt2u8oc93ddo.glb",
+          "assetOriginalUrl": "https://content.dexf.ikea.com/cdn/asset/bedroom/rt/yt2u8oc93ddo.glb"
+        },
+        {
+          "name": "cascade-scene-0",
+          "type": "Group",
+          "transform": {
+            "position": [
+              -2.2095,
+              1.515159617489238,
+              0.2524972938309702
+            ],
+            "quaternion": [
+              0.5000000000000002,
+              0.5,
+              -0.4999999999999999,
+              0.5000000000000002
+            ],
+            "scale": [
+              0.96,
+              0.96,
+              1
+            ]
+          },
+          "userData": {
+            "entityId": "106",
+            "catalogRef": "50479857"
+          },
+          "children": [],
+          "asset": "models/olk1lrntxxbo.glb",
+          "assetOriginalUrl": "https://content.dexf.ikea.com/cdn/asset/bedroom/rt/olk1lrntxxbo.glb"
+        },
+        {
+          "name": "cascade-scene-0",
+          "type": "Group",
+          "transform": {
+            "position": [
+              -2.19,
+              1.5200094430087752,
+              -1.1785798866054715
+            ],
+            "quaternion": [
+              0.5000000000000001,
+              0.5000000000000001,
+              -0.49999999999999983,
+              0.5000000000000001
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "userData": {
+            "entityId": "107",
+            "catalogRef": "80329159"
+          },
+          "children": [],
+          "asset": "models/jffjqdm0oqqr.glb",
+          "assetOriginalUrl": "https://content.dexf.ikea.com/cdn/asset/bedroom/rt/jffjqdm0oqqr.glb"
+        },
+        {
+          "name": "cascade-scene-0",
+          "type": "Group",
+          "transform": {
+            "position": [
+              1.8097075828201599,
+              0.0009482965800542361,
+              1.2002356642287122
+            ],
+            "quaternion": [
+              -7.850462159063936e-17,
+              -1,
+              2.614729153407776e-32,
+              2.83276944882399e-16
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "userData": {
+            "entityId": "112",
+            "catalogRef": "20594750"
+          },
+          "children": [],
+          "asset": "models/u0nuvo6kyrtm.glb",
+          "assetOriginalUrl": "https://content.dexf.ikea.com/cdn/asset/bedroom/rt/u0nuvo6kyrtm.glb"
+        }
+      ]
+    }
+  ]
+}
