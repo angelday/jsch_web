@@ -745,13 +745,13 @@ button {
   font-weight: 400;
   letter-spacing: -0.04em;
   line-height: 1;
-  padding: clamp(6px, 1vw, 10px) 0 clamp(14px, 1.8vw, 22px);
+  padding: clamp(10px, 1.4vw, 16px) 0;
   transition: font-size 0.2s ease, padding 0.2s ease;
 }
 
 .about-header--compact .about-header__play {
   font-size: 24px;
-  padding: clamp(3px, 0.5vw, 5px) 0 clamp(5px, 0.7vw, 8px);
+  padding: clamp(5px, 0.7vw, 8px) 0;
 }
 
 .about-header__play:hover,
