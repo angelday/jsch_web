@@ -33,7 +33,7 @@ button {
   max-width: var(--shell-inner-max);
   width: var(--shell-width);
   margin: 0 auto;
-  padding: 3rem 0 8px;
+  padding: var(--shell-padding) 0 8px;
   position: relative;
   z-index: 2;
 }
@@ -1092,7 +1092,7 @@ button {
   }
 
   .projects-shell {
-    padding: 2.4rem 0 8px;
+    padding: var(--shell-padding) 0 8px;
   }
 
   .case-study-callout {
